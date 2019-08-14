@@ -9,9 +9,7 @@ import com.azure.core.implementation.annotation.ReturnType;
 import com.azure.core.implementation.annotation.ServiceClient;
 import com.azure.core.implementation.annotation.ServiceMethod;
 import com.azure.messaging.eventhubs.implementation.ConnectionOptions;
-import com.azure.messaging.eventhubs.models.EventHubConsumerOptions;
 import com.azure.messaging.eventhubs.models.EventHubProducerOptions;
-import com.azure.messaging.eventhubs.models.EventPosition;
 
 import java.io.Closeable;
 import java.time.Duration;
@@ -37,7 +35,6 @@ public class EventHubClient implements Closeable {
     private final EventHubAsyncClient client;
     private final RetryOptions retry;
     private final EventHubProducerOptions defaultProducerOptions;
-    private final EventHubConsumerOptions defaultConsumerOptions;
 
     EventHubClient(EventHubAsyncClient client, ConnectionOptions connectionOptions) {
         Objects.requireNonNull(connectionOptions);
@@ -46,9 +43,6 @@ public class EventHubClient implements Closeable {
         this.retry = connectionOptions.retry();
         this.defaultProducerOptions = new EventHubProducerOptions()
             .retry(connectionOptions.retry());
-        this.defaultConsumerOptions = new EventHubConsumerOptions()
-            .retry(connectionOptions.retry())
-            .scheduler(connectionOptions.scheduler());
     }
 
     /**
@@ -113,65 +107,6 @@ public class EventHubClient implements Closeable {
             : defaultProducerOptions.retry().tryTimeout();
 
         return new EventHubProducer(producer, tryTimeout);
-    }
-
-    /**
-     * Creates an Event Hub consumer responsible for reading {@link EventData} from a specific Event Hub partition, as a
-     * member of the specified consumer group, and begins reading events from the {@code eventPosition}.
-     *
-     * The consumer created is non-exclusive, allowing multiple consumers from the same consumer group to be actively
-     * reading events from the partition. These non-exclusive consumers are sometimes referred to as "Non-epoch
-     * Consumers".
-     *
-     * @param consumerGroup The name of the consumer group this consumer is associated with. Events are read in the
-     *     context of this group. The name of the consumer group that is created by default is {@link
-     *     EventHubAsyncClient#DEFAULT_CONSUMER_GROUP_NAME "$Default"}.
-     * @param partitionId The identifier of the Event Hub partition.
-     * @param eventPosition The position within the partition where the consumer should begin reading events.
-     * @return A new {@link EventHubConsumer} that receives events from the partition at the given position.
-     * @throws NullPointerException If {@code eventPosition}, {@code consumerGroup}, {@code partitionId}, or {@code
-     *     options} is {@code null}.
-     * @throws IllegalArgumentException If {@code consumerGroup} or {@code partitionId} is an empty string.
-     */
-    public EventHubConsumer createConsumer(String consumerGroup, String partitionId, EventPosition eventPosition) {
-        final EventHubAsyncConsumer consumer = client.createConsumer(consumerGroup, partitionId, eventPosition);
-        return new EventHubConsumer(consumer, defaultConsumerOptions);
-    }
-
-    /**
-     * Creates an Event Hub consumer responsible for reading {@link EventData} from a specific Event Hub partition, as a
-     * member of the configured consumer group, and begins reading events from the specified {@code eventPosition}.
-     *
-     * <p>
-     * A consumer may be exclusive, which asserts ownership over the partition for the consumer group to ensure that
-     * only one consumer from that group is reading from the partition. These exclusive consumers are sometimes referred
-     * to as "Epoch Consumers."
-     *
-     * A consumer may also be non-exclusive, allowing multiple consumers from the same consumer group to be actively
-     * reading events from the partition. These non-exclusive consumers are sometimes referred to as "Non-epoch
-     * Consumers."
-     *
-     * Designating a consumer as exclusive may be specified in the {@code options}, by setting {@link
-     * EventHubConsumerOptions#ownerLevel(Long)} to a non-null value. By default, consumers are created as
-     * non-exclusive.
-     * </p>
-     *
-     * @param consumerGroup The name of the consumer group this consumer is associated with. Events are read in the
-     *     context of this group. The name of the consumer group that is created by default is {@link
-     *     EventHubAsyncClient#DEFAULT_CONSUMER_GROUP_NAME "$Default"}.
-     * @param partitionId The identifier of the Event Hub partition from which events will be received.
-     * @param eventPosition The position within the partition where the consumer should begin reading events.
-     * @param options The set of options to apply when creating the consumer.
-     * @return An new {@link EventHubConsumer} that receives events from the partition with all configured {@link
-     *     EventHubConsumerOptions}.
-     * @throws NullPointerException If {@code eventPosition}, {@code consumerGroup}, {@code partitionId}, or {@code
-     *     options} is {@code null}.
-     * @throws IllegalArgumentException If {@code consumerGroup} or {@code partitionId} is an empty string.
-     */
-    public EventHubConsumer createConsumer(String consumerGroup, String partitionId, EventPosition eventPosition,
-                                           EventHubConsumerOptions options) {
-        final EventHubAsyncConsumer consumer = client.createConsumer(consumerGroup, partitionId, eventPosition, options);
-        return new EventHubConsumer(consumer, options);
     }
 
     /**
