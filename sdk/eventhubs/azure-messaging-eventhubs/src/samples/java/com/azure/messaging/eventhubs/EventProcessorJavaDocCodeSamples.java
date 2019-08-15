@@ -21,8 +21,11 @@ public final class EventProcessorJavaDocCodeSamples {
         // BEGIN: com.azure.messaging.eventhubs.eventprocessor.instantiation
         String connectionString = "Endpoint={endpoint};SharedAccessKeyName={sharedAccessKeyName};"
             + "SharedAccessKey={sharedAccessKey};EntityPath={eventHubName}";
-        EventProcessor eventProcessor = new EventHubClientBuilder()
+        EventHubAsyncClient client = new EventHubClientBuilder()
             .connectionString(connectionString)
+            .buildAsyncClient();
+        EventProcessor eventProcessor = new EventProcessorBuilder()
+            .eventHubAsyncClient(client)
             .partitionProcessorFactory((PartitionProcessorImpl::new))
             .consumerGroupName("consumer-group")
             .buildEventProcessor();
@@ -46,11 +49,8 @@ public final class EventProcessorJavaDocCodeSamples {
      * No-op partition processor used in code snippet to demo creating an instance of {@link EventProcessor}.
      * This class will not be visible in the code snippet.
      */
-    private static final class PartitionProcessorImpl implements PartitionProcessor {
-
+    private static final class PartitionProcessorImpl extends PartitionProcessor {
         private final ClientLogger logger = new ClientLogger(PartitionProcessorImpl.class);
-        private final PartitionContext partitionContext;
-        private final CheckpointManager checkpointManager;
 
         /**
          * Creates new instance.
@@ -59,8 +59,7 @@ public final class EventProcessorJavaDocCodeSamples {
          * @param checkpointManager The checkpoint manager for this partition processor.
          */
         private PartitionProcessorImpl(PartitionContext partitionContext, CheckpointManager checkpointManager) {
-            this.partitionContext = partitionContext;
-            this.checkpointManager = checkpointManager;
+            super(partitionContext, checkpointManager);
         }
 
         /**
@@ -70,7 +69,7 @@ public final class EventProcessorJavaDocCodeSamples {
          */
         @Override
         public Mono<Void> initialize() {
-            logger.info("Initializing partition processor for {}", this.partitionContext.partitionId());
+            logger.info("Initializing partition processor for {}", partitionContext().partitionId());
             return Mono.empty();
         }
 
@@ -81,7 +80,7 @@ public final class EventProcessorJavaDocCodeSamples {
          */
         @Override
         public Mono<Void> processEvent(EventData eventData) {
-            this.checkpointManager.updateCheckpoint(eventData);
+            checkpointManager().updateCheckpoint(eventData);
             return Mono.empty();
         }
 
