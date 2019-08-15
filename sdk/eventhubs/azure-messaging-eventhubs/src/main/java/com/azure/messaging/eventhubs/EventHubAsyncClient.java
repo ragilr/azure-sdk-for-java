@@ -136,6 +136,14 @@ public class EventHubAsyncClient implements Closeable {
     }
 
     /**
+     * Returns the name of the Event Hub this client is associated with.
+     * @return The Event Hub name this client is associated with.
+     */
+    public String eventHubName() {
+        return this.eventHubName;
+    }
+
+    /**
      * Creates an Event Hub producer responsible for transmitting {@link EventData} to the Event Hub, grouped together
      * in batches. Event data is automatically routed to an available partition.
      *

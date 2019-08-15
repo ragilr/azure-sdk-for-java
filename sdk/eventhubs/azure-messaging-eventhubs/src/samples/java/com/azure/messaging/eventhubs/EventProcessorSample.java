@@ -19,29 +19,24 @@ public class EventProcessorSample {
      * @throws Exception If there are any errors while running the {@link EventProcessor}.
      */
     public static void main(String[] args) throws Exception {
-        EventHubClientBuilder eventHubClientBuilder = new EventHubClientBuilder()
+        EventHubAsyncClient eventHubAsyncClient = new EventHubClientBuilder()
             .connectionString(EH_CONNECTION_STRING)
+            .buildAsyncClient();
+
+        EventProcessor eventProcessor = new EventProcessorBuilder()
+            .eventHubAsyncClient(eventHubAsyncClient)
             .consumerGroupName(EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME)
             .partitionProcessorFactory(LogPartitionProcessor::new)
-            .partitionManager(new InMemoryPartitionManager());
+            .partitionManager(new InMemoryPartitionManager())
+            .buildEventProcessor();
 
-        EventProcessor eventProcessor = eventHubClientBuilder.buildEventProcessor();
         System.out.println("Starting event processor");
         eventProcessor.start();
-        eventProcessor.start(); // should be a no-op
 
         // do other stuff
         Thread.sleep(TimeUnit.MINUTES.toMillis(1));
 
-        System.out.println("Stopping event processor");
-        eventProcessor.stop();
 
-        Thread.sleep(TimeUnit.SECONDS.toMillis(40));
-        System.out.println("Starting a new instance of event processor");
-        eventProcessor = eventHubClientBuilder.buildEventProcessor();
-        eventProcessor.start();
-        // do other stuff
-        Thread.sleep(TimeUnit.MINUTES.toMillis(1));
         System.out.println("Stopping event processor");
         eventProcessor.stop();
         System.out.println("Exiting process");
