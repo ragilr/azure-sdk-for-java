@@ -32,8 +32,8 @@ import java.util.Objects;
 
 /**
  * This class provides a fluent builder API to aid the instantiation of {@link EventHubAsyncClient} and
- * {@link EventHubClient}. Calling {@link #buildAsyncClient()} or {@link #buildClient()} constructs an instance of each
- * respective client.
+ * {@link EventHubClient}. Calling {@link #buildAsyncClient() buildAsyncClient()} or
+ * {@link #buildClient() buildClient()} constructs an instance of the respective client.
  *
  * <p>
  * <strong>Credentials are required</strong> to perform operations against Azure Event Hubs. They can be set by using
