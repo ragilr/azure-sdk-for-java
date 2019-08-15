@@ -38,11 +38,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <p>
  * To create an instance of EventProcessor, use the fluent {@link EventProcessorBuilder}.
  * </p>
- * <p><strong>Creating an {@link EventProcessor} instance using Event Hub instance connection
- * string</strong></p>
- *
- * {@codesnippet com.azure.messaging.eventhubs.eventprocessor.instantiation}
- *
  * @see EventProcessorBuilder
  */
 public class EventProcessor {

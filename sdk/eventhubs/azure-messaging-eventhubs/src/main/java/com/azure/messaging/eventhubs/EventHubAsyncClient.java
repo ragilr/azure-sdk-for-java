@@ -138,9 +138,10 @@ public class EventHubAsyncClient implements Closeable {
 
     /**
      * Returns the name of the Event Hub this client is associated with.
+     *
      * @return The Event Hub name this client is associated with.
      */
-    public String eventHubName() {
+    String eventHubName() {
         return this.eventHubName;
     }
 
