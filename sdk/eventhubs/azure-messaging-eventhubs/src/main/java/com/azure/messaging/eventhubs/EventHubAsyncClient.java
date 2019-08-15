@@ -49,6 +49,10 @@ import static com.azure.core.amqp.MessageConstant.SEQUENCE_NUMBER_ANNOTATION_NAM
  * specific Event Hub and allows operations for sending event data, receiving data, and inspecting the Event Hub's
  * metadata.
  *
+ * <p>
+ * Instantiated through {@link EventHubClientBuilder}.
+ * </p>
+ *
  * @see EventHubClientBuilder
  * @see EventHubClient See EventHubClient to communicate with an Event Hub using a synchronous client.
  * @see <a href="https://docs.microsoft.com/Azure/event-hubs/event-hubs-about">About Azure Event Hubs</a>
