@@ -6,17 +6,14 @@ package com.azure.messaging.eventhubs;
 import com.azure.core.util.logging.ClientLogger;
 import com.azure.messaging.eventhubs.models.Checkpoint;
 import com.azure.messaging.eventhubs.models.PartitionOwnership;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
- * A simple in-memory implementation of a {@link PartitionManager}. This implementation keeps track of partition
- * ownership details including checkpointing information in-memory. Using this implementation will only facilitate
- * checkpointing and load balancing of Event Processors running within this process.
+ * A simple in-memory implementation of a {@link PartitionManager}.
  */
 public class InMemoryPartitionManager implements PartitionManager {
 
@@ -33,9 +30,7 @@ public class InMemoryPartitionManager implements PartitionManager {
     @Override
     public Flux<PartitionOwnership> listOwnership(String eventHubName, String consumerGroupName) {
         logger.info("Listing partition ownership");
-        return Flux.fromStream(partitionOwnershipMap.values()
-            .stream()
-            .filter(po -> po.consumerGroupName().equals(consumerGroupName) && po.eventHubName().equals(eventHubName)));
+        return Flux.fromIterable(partitionOwnershipMap.values());
     }
 
     /**
@@ -50,12 +45,8 @@ public class InMemoryPartitionManager implements PartitionManager {
     public Flux<PartitionOwnership> claimOwnership(PartitionOwnership... requestedPartitionOwnerships) {
         return Flux.fromArray(requestedPartitionOwnerships)
             .filter(partitionOwnership -> {
-
-                final String key = getKey(partitionOwnership.eventHubName(), partitionOwnership.consumerGroupName(),
-                    partitionOwnership.partitionId());
-
-                return !partitionOwnershipMap.containsKey(key)
-                    || partitionOwnershipMap.get(key).eTag()
+                return !partitionOwnershipMap.containsKey(partitionOwnership.partitionId())
+                    || partitionOwnershipMap.get(partitionOwnership.partitionId()).eTag()
                     .equals(partitionOwnership.eTag());
             })
             .doOnNext(partitionOwnership -> logger
@@ -64,11 +55,7 @@ public class InMemoryPartitionManager implements PartitionManager {
             .map(partitionOwnership -> {
                 partitionOwnership.eTag(UUID.randomUUID().toString())
                     .lastModifiedTime(System.currentTimeMillis());
-
-                final String key = getKey(partitionOwnership.eventHubName(), partitionOwnership.consumerGroupName(),
-                    partitionOwnership.partitionId());
-
-                partitionOwnershipMap.put(key, partitionOwnership);
+                partitionOwnershipMap.put(partitionOwnership.partitionId(), partitionOwnership);
                 return partitionOwnership;
             });
     }
@@ -81,20 +68,13 @@ public class InMemoryPartitionManager implements PartitionManager {
      */
     @Override
     public Mono<String> updateCheckpoint(final Checkpoint checkpoint) {
-        final String key = getKey(checkpoint.eventHubName(), checkpoint.consumerGroupName(), checkpoint.partitionId());
-        final String updatedETag = UUID.randomUUID().toString();
-
-        //TODO (conniey): What happens if the partitionOwnershipMap does not contain the key?
-        partitionOwnershipMap.get(key)
+        String updatedETag = UUID.randomUUID().toString();
+        partitionOwnershipMap.get(checkpoint.partitionId())
             .sequenceNumber(checkpoint.sequenceNumber())
             .offset(checkpoint.offset())
             .eTag(updatedETag);
         logger.info("Updated checkpoint for partition {} with sequence number {}", checkpoint.partitionId(),
             checkpoint.sequenceNumber());
         return Mono.just(updatedETag);
-    }
-
-    private static String getKey(String eventHubName, String consumerGroupName, String partitionId) {
-        return String.join(",", eventHubName, consumerGroupName, partitionId);
     }
 }
