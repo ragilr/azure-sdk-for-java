@@ -14,8 +14,7 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
- * The baseline set of options that can be specified when creating a {@link EventHubAsyncConsumer} to configure its
- * behavior.
+ * A set of options that can be specified when creating an {@link EventHubAsyncConsumer}.
  *
  * @see EventHubAsyncConsumer
  * @see EventHubAsyncClient#createConsumer(String, String, EventPosition, EventHubConsumerOptions)

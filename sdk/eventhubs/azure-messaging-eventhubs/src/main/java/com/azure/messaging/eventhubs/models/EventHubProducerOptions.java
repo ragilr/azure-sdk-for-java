@@ -7,12 +7,15 @@ import com.azure.core.amqp.RetryOptions;
 import com.azure.core.implementation.annotation.Fluent;
 import com.azure.messaging.eventhubs.EventHubAsyncClient;
 import com.azure.messaging.eventhubs.EventHubAsyncProducer;
+import com.azure.messaging.eventhubs.EventHubClient;
+import com.azure.messaging.eventhubs.EventHubProducer;
 
 /**
- * The set of options that can be specified when creating an {@link EventHubAsyncProducer} to configure its behavior.
+ * The set of options that can be specified when creating an {@link EventHubAsyncProducer} or {@link EventHubProducer}
+ * to configure its behavior.
  *
- * @see EventHubAsyncProducer
  * @see EventHubAsyncClient#createProducer(EventHubProducerOptions)
+ * @see EventHubClient#createProducer(EventHubProducerOptions)
  */
 @Fluent
 public class EventHubProducerOptions implements Cloneable {
