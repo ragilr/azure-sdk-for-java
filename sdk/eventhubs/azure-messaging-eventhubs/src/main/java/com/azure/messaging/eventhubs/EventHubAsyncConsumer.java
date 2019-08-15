@@ -8,7 +8,6 @@ import com.azure.core.util.logging.ClientLogger;
 import com.azure.messaging.eventhubs.implementation.AmqpReceiveLink;
 import com.azure.messaging.eventhubs.models.EventHubConsumerOptions;
 import com.azure.messaging.eventhubs.models.EventPosition;
-import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -31,17 +30,6 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
  * {@link EventHubConsumerOptions#ownerLevel()} when creating consumers. This non-exclusive consumer is sometimes
  * referred to as a "Non-Epoch Consumer."</li>
  * </ul>
- *
- * <p><strong>Consuming events from Event Hub</strong></p>
- *
- * {@codesnippet com.azure.messaging.eventhubs.eventhubasyncconsumer.receive}
- *
- * <p><strong>Rate limiting consumption of events from Event Hub</strong></p>
- *
- * For event consumers that need to limit the number of events they receive at a given time, they can use {@link
- * BaseSubscriber#request(long)}.
- *
- * {@codesnippet com.azure.messaging.eventhubs.eventhubasyncconsumer.receive#basesubscriber}
  *
  * @see EventHubAsyncClient#createConsumer(String, String, EventPosition)
  * @see EventHubAsyncClient#createConsumer(String, String, EventPosition, EventHubConsumerOptions)

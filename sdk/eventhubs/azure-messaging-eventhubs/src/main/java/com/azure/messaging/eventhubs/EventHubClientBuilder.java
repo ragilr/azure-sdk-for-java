@@ -46,18 +46,6 @@ import java.util.Objects;
  *     credentials authorized to use the Event Hub.</li>
  * </ul>
  *
- * <p>
- * <strong>Creating an asynchronous {@link EventHubAsyncClient} using Event Hubs namespace connection string</strong>
- * </p>
- *
- * {@codesnippet com.azure.messaging.eventhubs.eventhubasyncclient.instantiation#string-string}
- *
- * <p>
- * <strong>Creating a synchronous {@link EventHubClient} using an Event Hub instance connection string</strong>
- * </p>
- *
- * {@codesnippet com.azure.messaging.eventhubs.eventhubclient.instantiation}
- *
  * @see EventHubAsyncClient
  */
 @ServiceClientBuilder(serviceClients = {EventHubAsyncClient.class, EventHubClient.class})

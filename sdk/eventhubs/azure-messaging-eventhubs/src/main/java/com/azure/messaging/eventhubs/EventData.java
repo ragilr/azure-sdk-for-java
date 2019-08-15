@@ -153,12 +153,6 @@ public class EventData implements Comparable<EventData> {
      * to consumers who wish to deserialize the binary data.
      * </p>
      *
-     * <p>
-     * <strong>Adding serialization hint using {@code addProperty(String, Object)}</strong>
-     * </p>
-     *
-     * {@codesnippet com.azure.messaging.eventhubs.eventdata.addProperty#string-object}
-     *
      * @param key The key for this application property
      * @param value The value for this application property.
      * @return The updated EventData object.
@@ -180,12 +174,6 @@ public class EventData implements Comparable<EventData> {
      * A common use case for {@code properties()} is to associate serialization hints for the {@link #body()} as an aid
      * to consumers who wish to deserialize the binary data.
      * </p>
-     *
-     * <p>
-     * <strong>Adding serialization hint using {@link #addProperty(String, Object)}</strong>
-     * </p>
-     *
-     * {@codesnippet com.azure.messaging.eventhubs.eventdata.addProperty#string-object}
      *
      * @return Application properties associated with this {@link EventData}.
      */
