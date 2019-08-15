@@ -231,7 +231,7 @@ public class EventProcessor {
 
         consumer.receive().subscribeOn(Schedulers.newElastic("PartitionPump"))
             .subscribe(eventData -> partitionProcessor.processEvent(eventData).subscribe(unused -> {
-                }, partitionProcessor::processError),
+            }, partitionProcessor::processError),
                 partitionProcessor::processError,
                 // Currently, there is no way to distinguish if the receiver was closed because
                 // another receiver with higher/same owner level(epoch) connected or because
