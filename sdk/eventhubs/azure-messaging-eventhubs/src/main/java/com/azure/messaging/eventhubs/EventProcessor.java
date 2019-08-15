@@ -103,9 +103,6 @@ public class EventProcessor {
      * Subsequent calls to start will be ignored if this event processor is already running. Calling start after {@link
      * #stop()} is called will restart this event processor.
      * </p>
-     *
-     * <p><strong>Starting the processor to consume events from all partitions</strong></p>
-     * {@codesnippet com.azure.messaging.eventhubs.eventprocessor.startstop}
      */
     public synchronized void start() {
         if (!started.compareAndSet(false, true)) {
@@ -123,9 +120,6 @@ public class EventProcessor {
      * <p>
      * Subsequent calls to stop will be ignored if the event processor is not running.
      * </p>
-     *
-     * <p><strong>Stopping the processor</strong></p>
-     * {@codesnippet com.azure.messaging.eventhubs.eventprocessor.startstop}
      */
     public synchronized void stop() {
         if (!started.compareAndSet(true, false)) {
