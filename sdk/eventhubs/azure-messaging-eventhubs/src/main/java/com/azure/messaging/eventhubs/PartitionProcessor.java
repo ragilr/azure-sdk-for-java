@@ -5,8 +5,9 @@ package com.azure.messaging.eventhubs;
 
 import com.azure.core.util.logging.ClientLogger;
 import com.azure.messaging.eventhubs.models.PartitionContext;
-import java.util.Objects;
 import reactor.core.publisher.Mono;
+
+import java.util.Objects;
 
 /**
  * An abstract class for processing events from a partition an {@link EventProcessor} instance is responsible for.
@@ -27,6 +28,12 @@ public abstract class PartitionProcessor {
     private final CheckpointManager checkpointManager;
     private final PartitionContext partitionContext;
 
+    /**
+     * Creates an instance with the partition context and checkpoint manager set.
+     *
+     * @param partitionContext Information related to the partition this PartitionProcessor is processing.
+     * @param checkpointManager A manager that creates checkpoints for the associated partition.
+     */
     protected PartitionProcessor(PartitionContext partitionContext, CheckpointManager checkpointManager) {
         this.partitionContext = Objects.requireNonNull(partitionContext);
         this.checkpointManager = Objects.requireNonNull(checkpointManager);
