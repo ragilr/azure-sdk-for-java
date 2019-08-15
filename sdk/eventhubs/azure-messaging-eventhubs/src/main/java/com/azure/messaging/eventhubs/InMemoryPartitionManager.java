@@ -13,7 +13,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
- * A simple in-memory implementation of a {@link PartitionManager}.
+ * A simple in-memory implementation of a {@link PartitionManager}. This implementation keeps track of partition
+ * ownership details including checkpointing information in-memory. Using this implementation will only facilitate
+ * checkpointing and load balancing of Event Processors running within this process.
  */
 public class InMemoryPartitionManager implements PartitionManager {
 
