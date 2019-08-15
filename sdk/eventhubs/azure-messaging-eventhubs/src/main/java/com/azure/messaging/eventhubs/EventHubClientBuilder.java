@@ -18,7 +18,6 @@ import com.azure.messaging.eventhubs.implementation.ConnectionOptions;
 import com.azure.messaging.eventhubs.implementation.ConnectionStringProperties;
 import com.azure.messaging.eventhubs.implementation.ReactorHandlerProvider;
 import com.azure.messaging.eventhubs.implementation.ReactorProvider;
-import com.azure.messaging.eventhubs.models.EventPosition;
 import com.azure.messaging.eventhubs.models.ProxyAuthenticationType;
 import com.azure.messaging.eventhubs.models.ProxyConfiguration;
 import reactor.core.scheduler.Scheduler;
@@ -76,10 +75,6 @@ public class EventHubClientBuilder {
     private TransportType transport;
     private String host;
     private String eventHubName;
-    private EventPosition initialEventPosition;
-    private PartitionProcessorFactory partitionProcessorFactory;
-    private String consumerGroupName;
-    private PartitionManager partitionManager;
 
     /**
      * Creates a new instance with the default transport {@link TransportType#AMQP}.
