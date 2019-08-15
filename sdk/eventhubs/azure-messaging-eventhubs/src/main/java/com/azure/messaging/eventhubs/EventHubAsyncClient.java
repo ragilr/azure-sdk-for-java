@@ -57,7 +57,7 @@ import static com.azure.core.amqp.MessageConstant.SEQUENCE_NUMBER_ANNOTATION_NAM
  * {@codesnippet com.azure.messaging.eventhubs.eventhubasyncclient.instantiation#string}
  *
  * @see EventHubClientBuilder
- * @see EventHubClient See EventHubClient to communicate with an Event Hub using an asynchronous client.
+ * @see EventHubClient See EventHubClient to communicate with an Event Hub using a synchronous client.
  * @see <a href="https://docs.microsoft.com/Azure/event-hubs/event-hubs-about">About Azure Event Hubs</a>
  */
 @ServiceClient(builder = EventHubClientBuilder.class, isAsync = true)
