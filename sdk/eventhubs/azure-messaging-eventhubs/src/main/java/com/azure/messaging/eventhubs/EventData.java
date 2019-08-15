@@ -26,6 +26,7 @@ import static com.azure.core.amqp.MessageConstant.OFFSET_ANNOTATION_NAME;
 import static com.azure.core.amqp.MessageConstant.PARTITION_KEY_ANNOTATION_NAME;
 import static com.azure.core.amqp.MessageConstant.PUBLISHER_ANNOTATION_NAME;
 import static com.azure.core.amqp.MessageConstant.SEQUENCE_NUMBER_ANNOTATION_NAME;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * The data structure encapsulating the event being sent-to and received-from Event Hubs. Each Event Hub partition can
@@ -71,7 +72,16 @@ public class EventData implements Comparable<EventData> {
     }
 
     /**
-     * Creates an event containing the {@code data}.
+     * Creates an event by encoding the {@code body} using UTF-8 charset.
+     *
+     * @param body The string that will be UTF-8 encoded to create an event.
+     */
+    public EventData(String body) {
+        this(body.getBytes(UTF_8));
+    }
+
+    /**
+     * Creates an event containing the {@code body}.
      *
      * @param body The data to set for this event.
      */
@@ -96,6 +106,7 @@ public class EventData implements Comparable<EventData> {
     /*
      * Creates an event from a message
      */
+
     EventData(Message message) {
         if (message == null) {
             throw new IllegalArgumentException("'message' cannot be null");
@@ -143,7 +154,6 @@ public class EventData implements Comparable<EventData> {
 
         message.clear();
     }
-
     /**
      * Adds a piece of metadata to the event, allowing publishers to offer additional information to event consumers. If
      * the {@code key} exists in the map, its existing value is overwritten.
@@ -205,6 +215,15 @@ public class EventData implements Comparable<EventData> {
      */
     public ByteBuffer body() {
         return body.duplicate();
+    }
+
+    /**
+     * Returns event data as UTF-8 decoded string.
+     *
+     * @return UTF-8 decoded string representation of the event data.
+     */
+    public String bodyAsString() {
+        return UTF_8.decode(body.duplicate()).toString();
     }
 
     /**
