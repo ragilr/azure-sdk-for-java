@@ -47,6 +47,7 @@ import java.util.Objects;
  * </ul>
  *
  * @see EventHubAsyncClient
+ * @see EventHubClient
  */
 @ServiceClientBuilder(serviceClients = {EventHubAsyncClient.class, EventHubClient.class})
 public class EventHubClientBuilder {
