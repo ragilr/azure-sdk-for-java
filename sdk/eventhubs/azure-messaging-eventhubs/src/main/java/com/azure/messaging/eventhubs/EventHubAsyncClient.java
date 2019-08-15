@@ -45,8 +45,9 @@ import static com.azure.core.amqp.MessageConstant.OFFSET_ANNOTATION_NAME;
 import static com.azure.core.amqp.MessageConstant.SEQUENCE_NUMBER_ANNOTATION_NAME;
 
 /**
- * The main point of interaction with Azure Event Hubs. This <strong>asynchronous</strong> client offers a connection to
- * a specific Event Hub and operations for sending event data, receiving data, and inspecting metadata in the Event Hub.
+ * An <strong>asynchronous</strong> client that is the main point of interaction with Azure Event Hubs. It connects to a
+ * specific Event Hub and allows operations for sending event data, receiving data, and inspecting the Event Hub's
+ * metadata.
  *
  * <p><strong>Creating an {@link EventHubAsyncClient} using an Event Hubs namespace connection string</strong></p>
  *

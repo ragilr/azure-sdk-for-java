@@ -16,8 +16,9 @@ import java.time.Duration;
 import java.util.Objects;
 
 /**
- * The main point of interaction with Azure Event Hubs. This <strong>synchronous</strong> client offers a connection to
- * a specific Event Hub and operations for sending event data and inspecting metadata in the Event Hub.
+ * A <strong>synchronous</strong> client that is the main point of interaction with Azure Event Hubs. It connects to a
+ * specific Event Hub and allows operations for sending event data, receiving data, and inspecting the Event Hub's
+ * metadata.
  *
  * <p>
  * <strong>Creating a synchronous {@link EventHubClient} using an Event Hub instance connection string</strong>
