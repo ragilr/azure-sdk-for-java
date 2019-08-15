@@ -5,6 +5,7 @@ package com.azure.messaging.eventhubs;
 
 import com.azure.core.implementation.annotation.Immutable;
 import com.azure.messaging.eventhubs.models.BatchOptions;
+import com.azure.messaging.eventhubs.models.EventHubProducerOptions;
 import com.azure.messaging.eventhubs.models.SendOptions;
 
 import java.io.Closeable;
@@ -35,6 +36,7 @@ import java.util.Objects;
  * </p>
  *
  * @see EventHubClient#createProducer()
+ * @see EventHubClient#createProducer(EventHubProducerOptions)
  * @see EventHubAsyncProducer To asynchronously generate events to an Event Hub, see EventHubAsyncProducer.
  */
 @Immutable

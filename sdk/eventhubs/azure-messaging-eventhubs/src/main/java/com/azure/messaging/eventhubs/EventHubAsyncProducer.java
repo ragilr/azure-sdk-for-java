@@ -56,6 +56,7 @@ import java.util.stream.Collector;
  * </p>
  *
  * @see EventHubAsyncClient#createProducer()
+ * @see EventHubAsyncClient#createProducer(EventHubProducerOptions)
  */
 @Immutable
 public class EventHubAsyncProducer implements Closeable {
