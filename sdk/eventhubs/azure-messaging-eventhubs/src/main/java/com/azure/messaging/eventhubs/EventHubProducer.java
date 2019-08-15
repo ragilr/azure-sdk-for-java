@@ -14,9 +14,9 @@ import java.time.Duration;
 import java.util.Objects;
 
 /**
- * A producer responsible for transmitting {@link EventData} to a specific Event Hub, grouped together in batches.
- * Depending on the options specified at creation, the producer may be created to allow event data to be automatically
- * routed to an available partition or specific to a partition.
+ * A producer responsible for transmitting {@link EventData} to a specific Event Hub. Depending on the options specified
+ * at creation, the producer may be created to allow event data to be automatically routed to an available partition or
+ * to a specific partition.
  *
  * <p>
  * Allowing automatic routing of partitions is recommended when:
