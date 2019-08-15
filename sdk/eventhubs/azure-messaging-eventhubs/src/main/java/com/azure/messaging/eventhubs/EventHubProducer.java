@@ -14,9 +14,13 @@ import java.time.Duration;
 import java.util.Objects;
 
 /**
- * A producer responsible for transmitting {@link EventData} to a specific Event Hub. Depending on the options specified
- * at creation, the producer may be created to allow event data to be automatically routed to an available partition or
- * to a specific partition.
+ * A producer responsible for transmitting {@link EventData} to a specific Event Hub.
+ *
+ * <p>
+ * To specify options at creation, use {@link EventHubClient#createProducer(EventHubProducerOptions)}. Depending on the
+ * options specified, the producer may be created to allow event data to be automatically routed to an available
+ * partition or to a specific partition. See {@link EventHubProducerOptions} for an explanation of each option.
+ * </p>
  *
  * <p>
  * Allowing automatic routing of partitions is recommended when:
@@ -27,7 +31,8 @@ import java.util.Objects;
  * </p>
  *
  * <p>
- * If no partition is specified, the following rules are used for automatically selecting one:
+ * If no {@link EventHubProducerOptions#partitionId() partitionId} is specified, the following rules are used for
+ * automatically selecting one:
  * <ol>
  * <li>Distribute the events equally amongst all available partitions using a round-robin approach.</li>
  * <li>If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the
