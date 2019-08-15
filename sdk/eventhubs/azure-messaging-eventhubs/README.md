@@ -216,14 +216,19 @@ logic needed to provide value while the processor holds responsibility for manag
 
 In our example, we will focus on building the [`EventProcessor`][source_eventprocessor], use the built-in
 [`InMemoryPartitionManager`][source_inmemorypartitionmanager], and a `PartitionProcessor` implementation that logs
-events received and errors to console.
+events received to console.
 
 ```java
 class Program {
     public static void main(String[] args) {
-        EventProcessor eventProcessor = new EventHubClientBuilder()
-            .connectionString("<< CONNECTION STRING FOR THE EVENT HUB INSTANCE >>")
-            .consumerGroupName("<< CONSUMER GROUP NAME>>")
+        
+        EventHubAsyncClient eventHubAsyncClient = new EventHubClientBuilder()
+            .connectionString("<< EVENT HUB CONNECTION STRING >>")
+            .buildAsyncClient();
+        
+        EventProcessor eventProcessor = new EventProcessorBuilder()
+            .consumerGroupName("<< CONSUMER GROUP NAME >>")
+            .eventHubAsyncClient(eventHubAsyncClient)
             .partitionProcessorFactory(SimplePartitionProcessor::new)
             .partitionManager(new InMemoryPartitionManager())
             .buildEventProcessor();
@@ -236,28 +241,14 @@ class Program {
     }
 }
 
-class SimplePartitionProcessor implements PartitionProcessor {
+class SimplePartitionProcessor extends PartitionProcessor {
     SimplePartitionProcessor(PartitionContext partitionContext, CheckpointManager checkpointManager) {
-    }
-
-    @Override
-    Mono<Void> initialize() {
-        return Mono.empty();
+        super(partitionContext, checkpointManager);
     }
 
     @Override
     Mono<Void> processEvent(EventData eventData) {
         System.out.printf("Event received. Sequence number: %s%n.", eventData.sequenceNumber());
-        return Mono.empty();
-    }
-
-    @Override
-    void processError(Throwable throwable) {
-        System.err.println("Error received." + throwable.toString());
-    }
-
-    @Override
-    Mono<Void> close(CloseReason closeReason) {
         return Mono.empty();
     }
 }

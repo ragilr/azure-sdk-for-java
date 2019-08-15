@@ -41,8 +41,6 @@ public class EventProcessorBuilder {
     }
 
     /**
-     * This property must be set for building an {@link EventProcessor}.
-     *
      * Sets the consumer group name from which the {@link EventProcessor} should consume events from.
      *
      * @param consumerGroupName The consumer group name this {@link EventProcessor} should consume events from.
