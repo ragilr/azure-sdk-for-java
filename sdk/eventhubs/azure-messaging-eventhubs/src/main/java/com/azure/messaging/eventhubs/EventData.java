@@ -46,6 +46,7 @@ import static com.azure.core.amqp.MessageConstant.SEQUENCE_NUMBER_ANNOTATION_NAM
  * </p>
  *
  * @see EventHubAsyncProducer
+ * @see EventHubProducer
  */
 public class EventData implements Comparable<EventData> {
     /*
