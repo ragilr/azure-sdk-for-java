@@ -48,6 +48,11 @@ page at http://checkstyle.sourceforge.net/config.html -->
   <!-- All Java AST specific tests live under TreeWalker module. -->
   <module name="TreeWalker">
 
+    <!-- Enforce line length to 120 char -->
+    <module name="LineLength">
+      <property name="max" value="120"/>
+    </module>
+
     <!-- IMPORT CHECKS -->
     <!-- See http://checkstyle.sf.net/config_import.html -->
     <module name="AvoidStarImport"/>
@@ -322,7 +327,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
     <!-- CUSTOM CHECKS -->
     <!-- Verify the whenever a field is assigned just once in constructor to be final -->
     <module name="com.azure.tools.checkstyle.checks.EnforceFinalFieldsCheck"/>
-    
+
     <!-- Javadoc format: 'param / return / throws' descriptions text should only have one space character after the
      parameter name or return -->
     <module name="com.azure.tools.checkstyle.checks.JavaDocFormatting"/>
