@@ -35,9 +35,9 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * Custom serializer for serializing types with wrapped properties.
- * For example, a property with annotation @JsonProperty(value = "properties.name")
- * will be mapped from a top level "name" property in the POJO model to
+ * Custom serializer for serializing types with wrapped properties. For example, a property with annotation
+ *
+ * @JsonProperty(value = "properties.name") will be mapped from a top level "name" property in the POJO model to
  * {'properties' : { 'name' : 'my_name' }} in the serialized payload.
  */
 class FlatteningSerializer extends StdSerializer<Object> implements ResolvableSerializer {
@@ -53,6 +53,7 @@ class FlatteningSerializer extends StdSerializer<Object> implements ResolvableSe
 
     /**
      * Creates an instance of FlatteningSerializer.
+     *
      * @param vc handled type
      * @param defaultSerializer the default JSON serializer
      * @param mapper the object mapper for default serializations
@@ -64,17 +65,18 @@ class FlatteningSerializer extends StdSerializer<Object> implements ResolvableSe
     }
 
     /**
-     * Gets a module wrapping this serializer as an adapter for the Jackson
-     * ObjectMapper.
+     * Gets a module wrapping this serializer as an adapter for the Jackson ObjectMapper.
      *
      * @param mapper the object mapper for default serializations
+     *
      * @return a simple module to be plugged onto Jackson ObjectMapper.
      */
     public static SimpleModule getModule(final ObjectMapper mapper) {
         SimpleModule module = new SimpleModule();
         module.setSerializerModifier(new BeanSerializerModifier() {
             @Override
-            public JsonSerializer<?> modifySerializer(SerializationConfig config, BeanDescription beanDesc, JsonSerializer<?> serializer) {
+            public JsonSerializer<?> modifySerializer(SerializationConfig config, BeanDescription beanDesc,
+                                                      JsonSerializer<?> serializer) {
                 if (beanDesc.getBeanClass().getAnnotation(JsonFlatten.class) != null) {
                     return new FlatteningSerializer(beanDesc.getBeanClass(), serializer, mapper);
                 }
@@ -105,10 +107,10 @@ class FlatteningSerializer extends StdSerializer<Object> implements ResolvableSe
         }
 
         if (value.getClass().isPrimitive()
-                || value.getClass().isEnum()
-                || value instanceof OffsetDateTime
-                || value instanceof Duration
-                || value instanceof String) {
+            || value.getClass().isEnum()
+            || value instanceof OffsetDateTime
+            || value instanceof Duration
+            || value instanceof String) {
             return;
         }
 
@@ -203,8 +205,8 @@ class FlatteningSerializer extends StdSerializer<Object> implements ResolvableSe
                     source.add((ObjectNode) field.getValue());
                     target.add((ObjectNode) outNode);
                 } else if (field.getValue() instanceof ArrayNode
-                        && (field.getValue()).size() > 0
-                        && (field.getValue()).get(0) instanceof ObjectNode) {
+                    && (field.getValue()).size() > 0
+                    && (field.getValue()).get(0) instanceof ObjectNode) {
                     Iterator<JsonNode> sourceIt = field.getValue().elements();
                     Iterator<JsonNode> targetIt = outNode.elements();
                     while (sourceIt.hasNext()) {
@@ -223,7 +225,8 @@ class FlatteningSerializer extends StdSerializer<Object> implements ResolvableSe
     }
 
     @Override
-    public void serializeWithType(Object value, JsonGenerator gen, SerializerProvider provider, TypeSerializer typeSerializer) throws IOException {
+    public void serializeWithType(Object value, JsonGenerator gen, SerializerProvider provider,
+                                  TypeSerializer typeSerializer) throws IOException {
         serialize(value, gen, provider);
     }
 }

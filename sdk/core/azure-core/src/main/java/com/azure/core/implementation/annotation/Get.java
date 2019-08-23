@@ -17,8 +17,10 @@ import java.lang.annotation.Target;
  * <p><strong>Example 1: Relative path segments</strong></p>
  *
  * <pre>
- * {@literal @}Get("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}")
- *  VirtualMachine getByResourceGroup(@PathParam("resourceGroupName") String rgName, @PathParam("vmName") String vmName, @PathParam("subscriptionId") String subscriptionId);</pre>
+ * {@literal @}Get("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft
+ * .Compute/virtualMachines/{vmName}")
+ *  VirtualMachine getByResourceGroup(@PathParam("resourceGroupName") String rgName, @PathParam("vmName") String
+ *  vmName, @PathParam("subscriptionId") String subscriptionId);</pre>
  *
  * <p><strong>Example 2: Absolute path segment</strong></p>
  *
@@ -31,6 +33,7 @@ import java.lang.annotation.Target;
 public @interface Get {
     /**
      * Get the relative path of the annotated method's GET URL.
+     *
      * @return The relative path of the annotated method's GET URL.
      */
     String value();

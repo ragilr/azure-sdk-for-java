@@ -19,7 +19,8 @@ public interface Tracer {
     String OPENTELEMETRY_SPAN_KEY = "opentelemetry-span";
 
     /**
-     * Key for {@link Context} which indicates that the context contains the name for the OpenTelemetry spans that are created.
+     * Key for {@link Context} which indicates that the context contains the name for the OpenTelemetry spans that are
+     * created.
      *
      * If no span name is listed when the span is created it will default to using the calling method's name.
      */
@@ -34,6 +35,7 @@ public interface Tracer {
      *
      * @param methodName Name of the method triggering the span creation.
      * @param context Additional metadata that is passed through the call stack.
+     *
      * @return An updated context object.
      */
     Context start(String methodName, Context context);
@@ -92,6 +94,7 @@ public interface Tracer {
      *
      * @param spanName Name to give the next span.
      * @param context Additional metadata that is passed through the call stack.
+     *
      * @return An updated context object.
      */
     Context setSpanName(String spanName, Context context);

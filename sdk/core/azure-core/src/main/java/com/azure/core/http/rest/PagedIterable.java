@@ -8,7 +8,8 @@ import com.azure.core.util.IterableStream;
 import java.util.stream.Stream;
 
 /**
- *  This class provides utility to iterate over {@link PagedResponse} using {@link Stream} and {@link Iterable} interfaces.
+ * This class provides utility to iterate over {@link PagedResponse} using {@link Stream} and {@link Iterable}
+ * interfaces.
  *
  * <p><strong>Code sample using {@link Stream} by page</strong></p>
  *
@@ -22,7 +23,8 @@ import java.util.stream.Stream;
  *
  * {@codesnippet com.azure.core.http.rest.pagedIterable.iterableByPage.while}
  *
- * @param  <T> The type of value contained in this {@link IterableStream}.
+ * @param <T> The type of value contained in this {@link IterableStream}.
+ *
  * @see PagedResponse
  * @see IterableStream
  */
@@ -31,6 +33,7 @@ public class PagedIterable<T> extends IterableStream<T> {
 
     /**
      * Creates instance given {@link PagedFlux}.
+     *
      * @param pagedFlux to use as iterable
      */
     public PagedIterable(PagedFlux<T> pagedFlux) {
@@ -39,8 +42,9 @@ public class PagedIterable<T> extends IterableStream<T> {
     }
 
     /**
-     * Retrieve the {@link Stream}, one page at a time.
-     * It will provide same {@link Stream} of T values from starting if called multiple times.
+     * Retrieve the {@link Stream}, one page at a time. It will provide same {@link Stream} of T values from starting if
+     * called multiple times.
+     *
      * @return {@link Stream} of {@link PagedResponse}
      */
     public Stream<PagedResponse<T>> streamByPage() {
@@ -48,8 +52,9 @@ public class PagedIterable<T> extends IterableStream<T> {
     }
 
     /**
-     * Provides {@link Iterable} API for{ @link PagedResponse}
-     * It will provide same collection of T values from starting if called multiple times.
+     * Provides {@link Iterable} API for{ @link PagedResponse} It will provide same collection of T values from starting
+     * if called multiple times.
+     *
      * @return {@link Iterable} interface
      */
     public Iterable<PagedResponse<T>> iterableByPage() {

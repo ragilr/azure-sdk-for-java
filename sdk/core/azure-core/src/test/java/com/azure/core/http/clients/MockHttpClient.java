@@ -33,12 +33,12 @@ import java.util.Map;
  */
 public class MockHttpClient extends NoOpHttpClient {
     private static final HttpHeaders RESPONSE_HEADERS = new HttpHeaders()
-            .put("Date", "Fri, 13 Oct 2017 20:33:09 GMT")
-            .put("Via", "1.1 vegur")
-            .put("Connection", "keep-alive")
-            .put("X-Processed-Time", "1.0")
-            .put("Access-Control-Allow-Credentials", "true")
-            .put("Content-Type", "application/json");
+        .put("Date", "Fri, 13 Oct 2017 20:33:09 GMT")
+        .put("Via", "1.1 vegur")
+        .put("Connection", "keep-alive")
+        .put("X-Processed-Time", "1.0")
+        .put("Access-Control-Allow-Credentials", "true")
+        .put("Content-Type", "application/json");
 
     @Override
     public Mono<HttpResponse> send(HttpRequest request) {
@@ -57,8 +57,8 @@ public class MockHttpClient extends NoOpHttpClient {
                     } else {
                         final HttpBinJSON json = new HttpBinJSON();
                         json.url(request.url().toString()
-                                // This is just to mimic the behavior we've seen with httpbin.org.
-                                .replace("%20", " "));
+                            // This is just to mimic the behavior we've seen with httpbin.org.
+                            .replace("%20", " "));
                         json.headers(toMap(request.headers()));
                         response = new MockHttpResponse(request, 200, json);
                     }
@@ -66,9 +66,10 @@ public class MockHttpClient extends NoOpHttpClient {
                     final String byteCountString = requestPath.substring("/bytes/".length());
                     final int byteCount = Integer.parseInt(byteCountString);
                     HttpHeaders newHeaders = new HttpHeaders(RESPONSE_HEADERS)
-                            .put("Content-Type", "application/octet-stream")
-                            .put("Content-Length", Integer.toString(byteCount));
-                    response = new MockHttpResponse(request, 200, newHeaders, byteCount == 0 ? null : new byte[byteCount]);
+                        .put("Content-Type", "application/octet-stream")
+                        .put("Content-Length", Integer.toString(byteCount));
+                    response = new MockHttpResponse(request, 200,
+                        newHeaders, byteCount == 0 ? null : new byte[byteCount]);
                 } else if (requestPathLower.startsWith("/base64urlbytes/")) {
                     final String byteCountString = requestPath.substring("/base64urlbytes/".length());
                     final int byteCount = Integer.parseInt(byteCountString);
@@ -123,7 +124,8 @@ public class MockHttpClient extends NoOpHttpClient {
                     }
                     response = new MockHttpResponse(request, 200, RESPONSE_HEADERS, result);
                 } else if (requestPathLower.equals("/datetimerfc1123")) {
-                    final DateTimeRfc1123 now = new DateTimeRfc1123(OffsetDateTime.ofInstant(Instant.ofEpochSecond(0), ZoneOffset.UTC));
+                    final DateTimeRfc1123 now = new DateTimeRfc1123(OffsetDateTime.ofInstant(Instant.ofEpochSecond(0),
+                        ZoneOffset.UTC));
                     final String result = now.toString();
                     response = new MockHttpResponse(request, 200, RESPONSE_HEADERS, result);
                 } else if (requestPathLower.equals("/unixtime")) {
@@ -201,7 +203,7 @@ public class MockHttpClient extends NoOpHttpClient {
         String body = "";
         if (request.body() != null) {
             Mono<String> asyncString = FluxUtil.collectBytesInByteBufferStream(request.body())
-                    .map(bytes -> new String(bytes, StandardCharsets.UTF_8));
+                .map(bytes -> new String(bytes, StandardCharsets.UTF_8));
             body = asyncString.block();
         }
         return body;

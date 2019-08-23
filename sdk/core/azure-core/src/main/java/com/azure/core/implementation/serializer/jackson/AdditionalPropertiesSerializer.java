@@ -26,9 +26,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- * Custom serializer for serializing complex types with additional properties.
- * If a complex type has a property named "additionalProperties" with serialized
- * name empty ("") of type Map&lt;String, Object&gt;, all items in this map will
+ * Custom serializer for serializing complex types with additional properties. If a complex type has a property named
+ * "additionalProperties" with serialized name empty ("") of type Map&lt;String, Object&gt;, all items in this map will
  * become top level properties for this complex type.
  */
 final class AdditionalPropertiesSerializer extends StdSerializer<Object> implements ResolvableSerializer {
@@ -44,6 +43,7 @@ final class AdditionalPropertiesSerializer extends StdSerializer<Object> impleme
 
     /**
      * Creates an instance of FlatteningSerializer.
+     *
      * @param vc handled type
      * @param defaultSerializer the default JSON serializer
      * @param mapper the object mapper for default serializations
@@ -55,17 +55,18 @@ final class AdditionalPropertiesSerializer extends StdSerializer<Object> impleme
     }
 
     /**
-     * Gets a module wrapping this serializer as an adapter for the Jackson
-     * ObjectMapper.
+     * Gets a module wrapping this serializer as an adapter for the Jackson ObjectMapper.
      *
      * @param mapper the object mapper for default serializations
+     *
      * @return a simple module to be plugged onto Jackson ObjectMapper.
      */
     public static SimpleModule getModule(final ObjectMapper mapper) {
         SimpleModule module = new SimpleModule();
         module.setSerializerModifier(new BeanSerializerModifier() {
             @Override
-            public JsonSerializer<?> modifySerializer(SerializationConfig config, BeanDescription beanDesc, JsonSerializer<?> serializer) {
+            public JsonSerializer<?> modifySerializer(SerializationConfig config, BeanDescription beanDesc,
+                                                      JsonSerializer<?> serializer) {
                 for (Class<?> c : TypeUtil.getAllClasses(beanDesc.getBeanClass())) {
                     if (c.isAssignableFrom(Object.class)) {
                         continue;
@@ -120,7 +121,8 @@ final class AdditionalPropertiesSerializer extends StdSerializer<Object> impleme
     }
 
     @Override
-    public void serializeWithType(Object value, JsonGenerator gen, SerializerProvider provider, TypeSerializer typeSerializer) throws IOException {
+    public void serializeWithType(Object value, JsonGenerator gen, SerializerProvider provider,
+                                  TypeSerializer typeSerializer) throws IOException {
         serialize(value, gen, provider);
     }
 }

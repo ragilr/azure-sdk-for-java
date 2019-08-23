@@ -25,9 +25,9 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 /**
- * Custom serializer for deserializing complex types with wrapped properties.
- * For example, a property with annotation @JsonProperty(value = "properties.name")
- * will be mapped to a top level "name" property in the POJO model.
+ * Custom serializer for deserializing complex types with wrapped properties. For example, a property with annotation
+ *
+ * @JsonProperty(value = "properties.name") will be mapped to a top level "name" property in the POJO model.
  */
 final class FlatteningDeserializer extends StdDeserializer<Object> implements ResolvableDeserializer {
     /**
@@ -42,6 +42,7 @@ final class FlatteningDeserializer extends StdDeserializer<Object> implements Re
 
     /**
      * Creates an instance of FlatteningDeserializer.
+     *
      * @param vc handled type
      * @param defaultDeserializer the default JSON mapperAdapter
      * @param mapper the object mapper for default deserializations
@@ -53,17 +54,18 @@ final class FlatteningDeserializer extends StdDeserializer<Object> implements Re
     }
 
     /**
-     * Gets a module wrapping this serializer as an adapter for the Jackson
-     * ObjectMapper.
+     * Gets a module wrapping this serializer as an adapter for the Jackson ObjectMapper.
      *
      * @param mapper the object mapper for default deserializations
+     *
      * @return a simple module to be plugged onto Jackson ObjectMapper.
      */
     public static SimpleModule getModule(final ObjectMapper mapper) {
         SimpleModule module = new SimpleModule();
         module.setDeserializerModifier(new BeanDeserializerModifier() {
             @Override
-            public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
+            public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc,
+                                                          JsonDeserializer<?> deserializer) {
                 if (beanDesc.getBeanClass().getAnnotation(JsonFlatten.class) != null) {
                     return new FlatteningDeserializer(beanDesc.getBeanClass(), deserializer, mapper);
                 }

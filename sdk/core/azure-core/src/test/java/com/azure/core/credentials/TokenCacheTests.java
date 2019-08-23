@@ -38,14 +38,16 @@ public class TokenCacheTests {
                             maxMillis.set(millis);
                         }
 //                        System.out.format("Thread: %s\tDuration: %smillis%n",
-//                            Thread.currentThread().getName(), Duration.between(start, OffsetDateTime.now()).toMillis());
+//                            Thread.currentThread().getName(), Duration.between(start, OffsetDateTime.now())
+//                            .toMillis());
                     })))
             .doOnComplete(latch::countDown)
             .subscribe();
 
         latch.await();
         Assert.assertTrue(maxMillis.get() > 1000);
-        Assert.assertTrue(maxMillis.get() < 2000); // Big enough for any latency, small enough to make sure no get token is called twice
+        Assert.assertTrue(maxMillis.get() < 2000); // Big enough for any latency, small enough to make sure no get
+        // token is called twice
     }
 
     @Test
@@ -69,7 +71,8 @@ public class TokenCacheTests {
                     .map(t -> Duration.between(start, OffsetDateTime.now()).toMillis())
                     .doOnNext(millis -> {
 //                        System.out.format("Thread: %s\tDuration: %smillis%n",
-//                            Thread.currentThread().getName(), Duration.between(start, OffsetDateTime.now()).toMillis());
+//                            Thread.currentThread().getName(), Duration.between(start, OffsetDateTime.now())
+//                            .toMillis());
                     })))
             .doOnComplete(latch::countDown)
             .subscribe();

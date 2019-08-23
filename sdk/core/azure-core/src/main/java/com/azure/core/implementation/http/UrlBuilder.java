@@ -26,7 +26,9 @@ public final class UrlBuilder {
 
     /**
      * Set the scheme/protocol that will be used to build the final URL.
+     *
      * @param scheme The scheme/protocol that will be used to build the final URL.
+     *
      * @return This UrlBuilder so that multiple setters can be chained together.
      */
     public UrlBuilder scheme(String scheme) {
@@ -40,6 +42,7 @@ public final class UrlBuilder {
 
     /**
      * Get the scheme/protocol that has been assigned to this UrlBuilder.
+     *
      * @return the scheme/protocol that has been assigned to this UrlBuilder.
      */
     public String scheme() {
@@ -48,7 +51,9 @@ public final class UrlBuilder {
 
     /**
      * Set the host that will be used to build the final URL.
+     *
      * @param host The host that will be used to build the final URL.
+     *
      * @return This UrlBuilder so that multiple setters can be chained together.
      */
     public UrlBuilder host(String host) {
@@ -62,6 +67,7 @@ public final class UrlBuilder {
 
     /**
      * Get the host that has been assigned to this UrlBuilder.
+     *
      * @return the host that has been assigned to this UrlBuilder.
      */
     public String host() {
@@ -70,7 +76,9 @@ public final class UrlBuilder {
 
     /**
      * Set the port that will be used to build the final URL.
+     *
      * @param port The port that will be used to build the final URL.
+     *
      * @return This UrlBuilder so that multiple setters can be chained together.
      */
     public UrlBuilder port(String port) {
@@ -84,7 +92,9 @@ public final class UrlBuilder {
 
     /**
      * Set the port that will be used to build the final URL.
+     *
      * @param port The port that will be used to build the final URL.
+     *
      * @return This UrlBuilder so that multiple setters can be chained together.
      */
     public UrlBuilder port(int port) {
@@ -93,6 +103,7 @@ public final class UrlBuilder {
 
     /**
      * Get the port that has been assigned to this UrlBuilder.
+     *
      * @return the port that has been assigned to this UrlBuilder.
      */
     public Integer port() {
@@ -101,7 +112,9 @@ public final class UrlBuilder {
 
     /**
      * Set the path that will be used to build the final URL.
+     *
      * @param path The path that will be used to build the final URL.
+     *
      * @return This UrlBuilder so that multiple setters can be chained together.
      */
     public UrlBuilder path(String path) {
@@ -115,6 +128,7 @@ public final class UrlBuilder {
 
     /**
      * Get the path that has been assigned to this UrlBuilder.
+     *
      * @return the path that has been assigned to this UrlBuilder.
      */
     public String path() {
@@ -123,10 +137,11 @@ public final class UrlBuilder {
 
     /**
      * Set the provided query parameter name and encoded value to query string for the final URL.
+     *
      * @param queryParameterName The name of the query parameter.
      * @param queryParameterEncodedValue The encoded value of the query parameter.
-     * @return The provided query parameter name and encoded value to query string for the final
-     * URL.
+     *
+     * @return The provided query parameter name and encoded value to query string for the final URL.
      */
     public UrlBuilder setQueryParameter(String queryParameterName, String queryParameterEncodedValue) {
         query.put(queryParameterName, queryParameterEncodedValue);
@@ -135,7 +150,9 @@ public final class UrlBuilder {
 
     /**
      * Set the query that will be used to build the final URL.
+     *
      * @param query The query that will be used to build the final URL.
+     *
      * @return This UrlBuilder so that multiple setters can be chained together.
      */
     public UrlBuilder query(String query) {
@@ -149,6 +166,7 @@ public final class UrlBuilder {
 
     /**
      * Get the query that has been assigned to this UrlBuilder.
+     *
      * @return the query that has been assigned to this UrlBuilder.
      */
     public Map<String, String> query() {
@@ -194,7 +212,8 @@ public final class UrlBuilder {
                             if (nameValue.length == 2) {
                                 setQueryParameter(nameValue[0], nameValue[1]);
                             } else {
-                                throw logger.logExceptionAsError(new IllegalArgumentException("Malformed query entry: " + entry));
+                                throw logger.logExceptionAsError(new IllegalArgumentException("Malformed query entry: "
+                                    + entry));
                             }
                         }
                     }
@@ -210,7 +229,9 @@ public final class UrlBuilder {
 
     /**
      * Get the URL that is being built.
+     *
      * @return The URL that is being built.
+     *
      * @throws MalformedURLException if the URL is not fully formed.
      */
     public URL toURL() throws MalformedURLException {
@@ -219,6 +240,7 @@ public final class UrlBuilder {
 
     /**
      * Get the string representation of the URL that is being built.
+     *
      * @return The string representation of the URL that is being built.
      */
     public String toString() {
@@ -270,7 +292,9 @@ public final class UrlBuilder {
 
     /**
      * Parse a UrlBuilder from the provided URL string.
+     *
      * @param url The string to parse.
+     *
      * @return The UrlBuilder that was parsed from the string.
      */
     public static UrlBuilder parse(String url) {
@@ -281,7 +305,9 @@ public final class UrlBuilder {
 
     /**
      * Parse a UrlBuilder from the provided URL object.
+     *
      * @param url The URL object to parse.
+     *
      * @return The UrlBuilder that was parsed from the URL object.
      */
     public static UrlBuilder parse(URL url) {

@@ -26,16 +26,18 @@ final class HttpResponseHeaderDecoder {
     /**
      * Decode headers of the http response.
      *
-     * The decoding happens when caller subscribed to the returned {@code Mono<Object>},
-     * if the response header is not decodable then {@code Mono.empty()} will be returned.
+     * The decoding happens when caller subscribed to the returned {@code Mono<Object>}, if the response header is not
+     * decodable then {@code Mono.empty()} will be returned.
      *
      * @param httpResponse the response containing the headers to be decoded
      * @param serializer the adapter to use for decoding
      * @param decodeData the necessary data required to decode a Http response
-     * @return publisher that emits decoded response header upon subscription if header is decodable,
-     * no emission if the header is not-decodable
+     *
+     * @return publisher that emits decoded response header upon subscription if header is decodable, no emission if the
+     * header is not-decodable
      */
-    static Mono<Object> decode(HttpResponse httpResponse, SerializerAdapter serializer, HttpResponseDecodeData decodeData) {
+    static Mono<Object> decode(HttpResponse httpResponse, SerializerAdapter serializer,
+                               HttpResponseDecodeData decodeData) {
         Type headerType = decodeData.headersType();
         if (headerType == null) {
             return Mono.empty();
@@ -44,46 +46,44 @@ final class HttpResponseHeaderDecoder {
                 try {
                     return Mono.justOrEmpty(deserializeHeaders(httpResponse.headers(), serializer, decodeData));
                 } catch (IOException e) {
-                    return Mono.error(new HttpResponseException("HTTP response has malformed headers", httpResponse, e));
+                    return Mono.error(new HttpResponseException("HTTP response has malformed headers", httpResponse,
+                        e));
                 }
             });
         }
     }
 
     /**
-     * Deserialize the provided headers returned from a REST API to an entity instance declared as
-     * the model to hold 'Matching' headers.
+     * Deserialize the provided headers returned from a REST API to an entity instance declared as the model to hold
+     * 'Matching' headers.
      *
-     * 'Matching' headers are the REST API returned headers those with:
-     *      1. header names same as name of a properties in the entity.
-     *      2. header names start with value of {@link HeaderCollection} annotation applied to the properties in the entity.
+     * 'Matching' headers are the REST API returned headers those with: 1. header names same as name of a properties in
+     * the entity. 2. header names start with value of {@link HeaderCollection} annotation applied to the properties in
+     * the entity.
      *
-     * When needed, the 'header entity' types must be declared as first generic argument of {@link ResponseBase} returned
-     * by java proxy method corresponding to the REST API.
-     * e.g.
-     * {@code Mono<RestResponseBase<FooMetadataHeaders, Void>> getMetadata(args);}
-     * {@code
-     *      class FooMetadataHeaders {
-     *          String name;
-     *          @HeaderCollection("header-collection-prefix-")
-     *          Map<String,String> headerCollection;
-     *      }
-     * }
-     *
-     * in the case of above example, this method produces an instance of FooMetadataHeaders from provided {@headers}.
+     * When needed, the 'header entity' types must be declared as first generic argument of {@link ResponseBase}
+     * returned by java proxy method corresponding to the REST API. e.g. {@code Mono<RestResponseBase
+     * <FooMetadataHeaders, Void>> getMetadata(args);} {@code class FooMetadataHeaders { String name;
      *
      * @param headers the REST API returned headers
-     * @return instance of header entity type created based on provided {@headers}, if header entity model does
-     * not exists then return null
+     *
+     * @return instance of header entity type created based on provided {@headers}, if header entity model does not
+     * exists then return null
+     *
      * @throws IOException If an I/O error occurs
+     * @HeaderCollection("header-collection-prefix-") Map<String, String> headerCollection; } }
+     *
+     * in the case of above example, this method produces an instance of FooMetadataHeaders from provided {@headers}.
      */
-    private static Object deserializeHeaders(HttpHeaders headers, SerializerAdapter serializer, HttpResponseDecodeData decodeData) throws IOException {
+    private static Object deserializeHeaders(HttpHeaders headers, SerializerAdapter serializer,
+                                             HttpResponseDecodeData decodeData) throws IOException {
         final Type deserializedHeadersType = decodeData.headersType();
         if (deserializedHeadersType == null) {
             return null;
         } else {
             final String headersJsonString = serializer.serialize(headers, SerializerEncoding.JSON);
-            Object deserializedHeaders = serializer.deserialize(headersJsonString, deserializedHeadersType, SerializerEncoding.JSON);
+            Object deserializedHeaders = serializer.deserialize(headersJsonString, deserializedHeadersType,
+                SerializerEncoding.JSON);
 
             final Class<?> deserializedHeadersClass = TypeUtil.getRawClass(deserializedHeadersType);
             final Field[] declaredFields = deserializedHeadersClass.getDeclaredFields();
@@ -92,16 +92,21 @@ final class HttpResponseHeaderDecoder {
                     final Type declaredFieldType = declaredField.getGenericType();
                     if (TypeUtil.isTypeOrSubTypeOf(declaredField.getType(), Map.class)) {
                         final Type[] mapTypeArguments = TypeUtil.getTypeArguments(declaredFieldType);
-                        if (mapTypeArguments.length == 2 && mapTypeArguments[0] == String.class && mapTypeArguments[1] == String.class) {
-                            final HeaderCollection headerCollectionAnnotation = declaredField.getAnnotation(HeaderCollection.class);
-                            final String headerCollectionPrefix = headerCollectionAnnotation.value().toLowerCase(Locale.ROOT);
+                        if (mapTypeArguments.length == 2
+                            && mapTypeArguments[0] == String.class
+                            && mapTypeArguments[1] == String.class) {
+                            final HeaderCollection headerCollectionAnnotation =
+                                declaredField.getAnnotation(HeaderCollection.class);
+                            final String headerCollectionPrefix =
+                                headerCollectionAnnotation.value().toLowerCase(Locale.ROOT);
                             final int headerCollectionPrefixLength = headerCollectionPrefix.length();
                             if (headerCollectionPrefixLength > 0) {
                                 final Map<String, String> headerCollection = new HashMap<>();
                                 for (final HttpHeader header : headers) {
                                     final String headerName = header.name();
                                     if (headerName.toLowerCase(Locale.ROOT).startsWith(headerCollectionPrefix)) {
-                                        headerCollection.put(headerName.substring(headerCollectionPrefixLength), header.value());
+                                        headerCollection.put(headerName.substring(headerCollectionPrefixLength),
+                                            header.value());
                                     }
                                 }
 

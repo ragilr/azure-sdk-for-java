@@ -14,14 +14,18 @@ public final class ScopeUtil {
 
     /**
      * Convert a list of scopes to a resource for Azure Active Directory.
+     *
      * @param scopes the list of scopes to authenticate to
+     *
      * @return the resource to authenticate with Azure Active Directory.
+     *
      * @throws IllegalArgumentException if scopes is empty or has more than 1 items
      */
     public static String scopesToResource(String[] scopes) {
         Objects.requireNonNull(scopes);
         if (scopes.length != 1) {
-            throw new IllegalArgumentException("To convert to a resource string the specified array must be exactly length 1");
+            throw new IllegalArgumentException("To convert to a resource string the specified array must be exactly "
+                + "length 1");
         }
 
         if (!scopes[0].endsWith(DEFAULT_SUFFIX)) {
@@ -33,12 +37,14 @@ public final class ScopeUtil {
 
     /**
      * Convert a resource to a list of scopes.
+     *
      * @param resource the resource for Azure Active Directory
+     *
      * @return the list of scopes
      */
     public static String[] resourceToScopes(String resource) {
         Objects.requireNonNull(resource);
-        return new String[] { resource + DEFAULT_SUFFIX };
+        return new String[]{resource + DEFAULT_SUFFIX};
     }
 
     private ScopeUtil() {

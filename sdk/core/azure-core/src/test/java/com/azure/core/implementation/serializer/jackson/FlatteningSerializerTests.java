@@ -33,7 +33,9 @@ public class FlatteningSerializerTests {
 
         // serialization
         String serialized = adapter.serialize(foo, SerializerEncoding.JSON);
-        Assert.assertEquals("{\"$type\":\"foo\",\"properties\":{\"bar\":\"hello.world\",\"props\":{\"baz\":[\"hello\",\"hello.world\"],\"q\":{\"qux\":{\"hello\":\"world\",\"a.b\":\"c.d\",\"bar.b\":\"uuzz\",\"bar.a\":\"ttyy\"}}},\"more.props\":\"hello\"}}", serialized);
+        Assert.assertEquals("{\"$type\":\"foo\",\"properties\":{\"bar\":\"hello.world\","
+            + "\"props\":{\"baz\":[\"hello\",\"hello.world\"],\"q\":{\"qux\":{\"hello\":\"world\",\"a.b\":\"c.d\","
+            + "\"bar.b\":\"uuzz\",\"bar.a\":\"ttyy\"}}},\"more.props\":\"hello\"}}", serialized);
 
         // deserialization
         Foo deserialized = adapter.deserialize(serialized, Foo.class, SerializerEncoding.JSON);
@@ -50,7 +52,8 @@ public class FlatteningSerializerTests {
     @Test
     public void canSerializeMapKeysWithDotAndSlash() throws Exception {
         String serialized = new JacksonAdapter().serialize(prepareSchoolModel(), SerializerEncoding.JSON);
-        Assert.assertEquals("{\"teacher\":{\"students\":{\"af.B/D\":{},\"af.B/C\":{}}},\"tags\":{\"foo.aa\":\"bar\",\"x.y\":\"zz\"},\"properties\":{\"name\":\"school1\"}}", serialized);
+        Assert.assertEquals("{\"teacher\":{\"students\":{\"af.B/D\":{},\"af.B/C\":{}}},\"tags\":{\"foo.aa\":\"bar\","
+            + "\"x.y\":\"zz\"},\"properties\":{\"name\":\"school1\"}}", serialized);
     }
 
     @JsonFlatten

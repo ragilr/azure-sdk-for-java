@@ -28,14 +28,15 @@ public class ProxyAuthenticationPolicyTests {
             .httpClient(new NoOpHttpClient())
             .policies(new ProxyAuthenticationPolicy(username, password),
                 (context, next) -> {
-                    assertEquals("Basic dGVzdHVzZXI6dGVzdHBhc3M=", context.httpRequest().headers().value("Proxy-Authentication"));
+                    assertEquals("Basic dGVzdHVzZXI6dGVzdHBhc3M=", context.httpRequest().headers().value("Proxy"
+                        + "-Authentication"));
                     auditorVisited.set(true);
                     return next.process();
                 })
             .build();
 
         pipeline.send(new HttpRequest(HttpMethod.GET, new URL("http://localhost")))
-                .block();
+            .block();
 
         if (!auditorVisited.get()) {
             fail();

@@ -16,8 +16,7 @@ import java.time.Duration;
  */
 final class DurationSerializer extends JsonSerializer<Duration> {
     /**
-     * Gets a module wrapping this serializer as an adapter for the Jackson
-     * ObjectMapper.
+     * Gets a module wrapping this serializer as an adapter for the Jackson ObjectMapper.
      *
      * @return a simple module to be plugged onto Jackson ObjectMapper.
      */
@@ -28,13 +27,16 @@ final class DurationSerializer extends JsonSerializer<Duration> {
     }
 
     @Override
-    public void serialize(Duration duration, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(Duration duration, JsonGenerator jsonGenerator,
+                          SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeString(DurationSerializer.toString(duration));
     }
 
     /**
      * Convert to provided Duration to an ISO 8601 String with a days component.
+     *
      * @param duration The Duration to convert.
+     *
      * @return The String representation of the provided Duration.
      */
     public static String toString(Duration duration) {

@@ -63,7 +63,8 @@ public class ConfigurationTests {
      */
     @Test
     public void foundConfigurationPreferredOverDefault() {
-        String configurationValue = ConfigurationManager.getConfiguration().get(environmentConfigurationName, defaultConfiguration);
+        String configurationValue = ConfigurationManager.getConfiguration().get(environmentConfigurationName,
+            defaultConfiguration);
         assertEquals(environmentConfiguration, configurationValue);
     }
 
@@ -72,7 +73,8 @@ public class ConfigurationTests {
      */
     @Test
     public void fallbackToDefaultConfiguration() {
-        String configurationValue = ConfigurationManager.getConfiguration().get("invalidConfiguration", defaultConfiguration);
+        String configurationValue = ConfigurationManager.getConfiguration().get("invalidConfiguration",
+            defaultConfiguration);
         assertEquals(defaultConfiguration, configurationValue);
     }
 
@@ -81,7 +83,8 @@ public class ConfigurationTests {
      */
     @Test
     public void foundConfigurationIsConverted() {
-        String configurationValue = ConfigurationManager.getConfiguration().get(runtimeConfigurationName, String::toUpperCase);
+        String configurationValue = ConfigurationManager.getConfiguration().get(runtimeConfigurationName,
+            String::toUpperCase);
         assertEquals(runtimeConfiguration.toUpperCase(), configurationValue);
     }
 
@@ -97,7 +100,8 @@ public class ConfigurationTests {
     public void logLevelUpdatesInstantly() {
         String initialLogLevel = ConfigurationManager.getConfiguration().get(BaseConfigurations.AZURE_LOG_LEVEL);
         System.setProperty(BaseConfigurations.AZURE_LOG_LEVEL, "123456789");
-        assertNotEquals(initialLogLevel, ConfigurationManager.getConfiguration().get(BaseConfigurations.AZURE_LOG_LEVEL));
+        assertNotEquals(initialLogLevel,
+            ConfigurationManager.getConfiguration().get(BaseConfigurations.AZURE_LOG_LEVEL));
 
         // Cleanup the test
         if (initialLogLevel != null) {
@@ -107,9 +111,11 @@ public class ConfigurationTests {
 
     @Test
     public void tracingDisabledUpdatesInstantly() {
-        boolean initialTracingDisabled = Boolean.parseBoolean(ConfigurationManager.getConfiguration().get(BaseConfigurations.AZURE_TRACING_DISABLED));
+        boolean initialTracingDisabled = Boolean
+            .parseBoolean(ConfigurationManager.getConfiguration().get(BaseConfigurations.AZURE_TRACING_DISABLED));
         System.setProperty(BaseConfigurations.AZURE_TRACING_DISABLED, Boolean.toString(!initialTracingDisabled));
-        assertNotEquals(initialTracingDisabled, ConfigurationManager.getConfiguration().get(BaseConfigurations.AZURE_TRACING_DISABLED));
+        assertNotEquals(initialTracingDisabled,
+            ConfigurationManager.getConfiguration().get(BaseConfigurations.AZURE_TRACING_DISABLED));
 
         // Cleanup the test
         System.setProperty(BaseConfigurations.AZURE_TRACING_DISABLED, Boolean.toString(initialTracingDisabled));

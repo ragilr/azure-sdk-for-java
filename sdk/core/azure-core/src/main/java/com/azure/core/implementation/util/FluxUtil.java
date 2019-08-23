@@ -33,6 +33,7 @@ public final class FluxUtil {
      * Checks if a type is Flux&lt;ByteBuffer&gt;.
      *
      * @param entityType the type to check
+     *
      * @return whether the type represents a Flux that emits ByteBuffer
      */
     public static boolean isFluxByteBuffer(Type entityType) {
@@ -49,6 +50,7 @@ public final class FluxUtil {
      * Collects ByteBuffer emitted by a Flux into a byte array.
      *
      * @param stream A stream which emits ByteBuffer instances.
+     *
      * @return A Mono which emits the concatenation of all the ByteBuffer instances given by the source Flux.
      */
     public static Mono<byte[]> collectBytesInByteBufferStream(Flux<ByteBuffer> stream) {
@@ -70,6 +72,7 @@ public final class FluxUtil {
      * ByteBuffer can have optionally backing array.
      *
      * @param byteBuffer the byte buffer
+     *
      * @return the byte array
      */
     public static byte[] byteBufferToArray(ByteBuffer byteBuffer) {
@@ -92,6 +95,7 @@ public final class FluxUtil {
      *
      * @param serviceCall The lambda function that makes the service call into which azure context will be passed
      * @param <T> The type of response returned from the service call
+     *
      * @return The response from service call
      */
     public static <T> Mono<T> withContext(Function<Context, Mono<T>> serviceCall) {
@@ -104,6 +108,7 @@ public final class FluxUtil {
      * Converts the incoming content to Mono.
      *
      * @param response whose {@link Response#value() value} is to be converted
+     *
      * @return The converted {@link Mono}
      */
     public static <T> Mono<T> toMono(Response<T> response) {
@@ -123,6 +128,7 @@ public final class FluxUtil {
      *
      * @param serviceCall The lambda function that makes the service call into which the context will be passed
      * @param <T> The type of response returned from the service call
+     *
      * @return The response from service call
      */
     public static <T> Flux<T> fluxContext(Function<Context, Flux<T>> serviceCall) {
@@ -136,6 +142,7 @@ public final class FluxUtil {
      * Context#NONE} will be returned.
      *
      * @param context The reactor context
+     *
      * @return The azure context
      */
     private static Context toAzureContext(reactor.util.context.Context context) {
@@ -151,6 +158,7 @@ public final class FluxUtil {
      *
      * @param content the Flux content
      * @param outFile the file channel
+     *
      * @return a Mono which performs the write operation when subscribed
      */
     public static Mono<Void> writeFile(Flux<ByteBuffer> content, AsynchronousFileChannel outFile) {
@@ -163,6 +171,7 @@ public final class FluxUtil {
      * @param content the Flux content
      * @param outFile the file channel
      * @param position the position in the file to begin writing
+     *
      * @return a Mono which performs the write operation when subscribed
      */
     public static Mono<Void> writeFile(Flux<ByteBuffer> content, AsynchronousFileChannel outFile, long position) {
@@ -231,9 +240,11 @@ public final class FluxUtil {
      * @param chunkSize the size of file chunks to read.
      * @param offset The offset in the file to begin reading.
      * @param length The number of bytes to read from the file.
+     *
      * @return the Flux.
      */
-    public static Flux<ByteBuffer> readFile(AsynchronousFileChannel fileChannel, int chunkSize, long offset, long length) {
+    public static Flux<ByteBuffer> readFile(AsynchronousFileChannel fileChannel, int chunkSize, long offset,
+                                            long length) {
         return new FileReadFlux(fileChannel, chunkSize, offset, length);
     }
 
@@ -243,6 +254,7 @@ public final class FluxUtil {
      * @param fileChannel The file channel.
      * @param offset The offset in the file to begin reading.
      * @param length The number of bytes to read from the file.
+     *
      * @return the Flux.
      */
     public static Flux<ByteBuffer> readFile(AsynchronousFileChannel fileChannel, long offset, long length) {
@@ -253,6 +265,7 @@ public final class FluxUtil {
      * Creates a {@link Flux} from an {@link AsynchronousFileChannel} which reads the entire file.
      *
      * @param fileChannel The file channel.
+     *
      * @return The AsyncInputStream.
      */
     public static Flux<ByteBuffer> readFile(AsynchronousFileChannel fileChannel) {
@@ -281,7 +294,8 @@ public final class FluxUtil {
 
         @Override
         public void subscribe(CoreSubscriber<? super ByteBuffer> actual) {
-            FileReadSubscription subscription = new FileReadSubscription(actual, fileChannel, chunkSize, offset, length);
+            FileReadSubscription subscription = new FileReadSubscription(actual, fileChannel, chunkSize, offset,
+                length);
             actual.onSubscribe(subscription);
         }
 
@@ -304,13 +318,16 @@ public final class FluxUtil {
             //
             volatile int wip;
             @SuppressWarnings("rawtypes")
-            static final AtomicIntegerFieldUpdater<FileReadSubscription> WIP = AtomicIntegerFieldUpdater.newUpdater(FileReadSubscription.class, "wip");
+            static final AtomicIntegerFieldUpdater<FileReadSubscription> WIP =
+                AtomicIntegerFieldUpdater.newUpdater(FileReadSubscription.class, "wip");
             volatile long requested;
             @SuppressWarnings("rawtypes")
-            static final AtomicLongFieldUpdater<FileReadSubscription> REQUESTED = AtomicLongFieldUpdater.newUpdater(FileReadSubscription.class, "requested");
+            static final AtomicLongFieldUpdater<FileReadSubscription> REQUESTED =
+                AtomicLongFieldUpdater.newUpdater(FileReadSubscription.class, "requested");
             //
 
-            FileReadSubscription(Subscriber<? super ByteBuffer> subscriber, AsynchronousFileChannel fileChannel, int chunkSize, long offset, long length) {
+            FileReadSubscription(Subscriber<? super ByteBuffer> subscriber, AsynchronousFileChannel fileChannel,
+                                 int chunkSize, long offset, long length) {
                 this.subscriber = subscriber;
                 //
                 this.fileChannel = fileChannel;
@@ -386,7 +403,7 @@ public final class FluxUtil {
                     doRead();
                 }
                 int missed = 1;
-                for (;;) {
+                for (; ;) {
                     if (cancelled) {
                         return;
                     }

@@ -30,7 +30,8 @@ public final class HttpClientProviders {
     public static HttpClient createInstance() {
         if (defaultProvider == null) {
             throw new IllegalStateException(
-                "Cannot find any HttpClient provider on the classpath - unable to create a default HttpClient instance");
+                "Cannot find any HttpClient provider on the classpath - unable to create a default HttpClient "
+                    + "instance");
         }
 
         return defaultProvider.createInstance();

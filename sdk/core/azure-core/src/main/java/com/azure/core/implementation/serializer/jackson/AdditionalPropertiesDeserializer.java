@@ -23,9 +23,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 /**
- * Custom serializer for deserializing complex types with additional properties.
- * If a complex type has a property named "additionalProperties" with serialized
- * name empty ("") of type Map&lt;String, Object&gt;, all extra properties on the
+ * Custom serializer for deserializing complex types with additional properties. If a complex type has a property named
+ * "additionalProperties" with serialized name empty ("") of type Map&lt;String, Object&gt;, all extra properties on the
  * payload will be stored in this map.
  */
 final class AdditionalPropertiesDeserializer extends StdDeserializer<Object> implements ResolvableDeserializer {
@@ -41,35 +40,39 @@ final class AdditionalPropertiesDeserializer extends StdDeserializer<Object> imp
 
     /**
      * Creates FlatteningDeserializer.
+     *
      * @param vc handled type
      * @param defaultDeserializer the default JSON mapperAdapter
      * @param mapper the object mapper for default deserializations
      */
-    protected AdditionalPropertiesDeserializer(Class<?> vc, JsonDeserializer<?> defaultDeserializer, ObjectMapper mapper) {
+    protected AdditionalPropertiesDeserializer(Class<?> vc, JsonDeserializer<?> defaultDeserializer,
+                                               ObjectMapper mapper) {
         super(vc);
         this.defaultDeserializer = defaultDeserializer;
         this.mapper = mapper;
     }
 
     /**
-     * Gets a module wrapping this serializer as an adapter for the Jackson
-     * ObjectMapper.
+     * Gets a module wrapping this serializer as an adapter for the Jackson ObjectMapper.
      *
      * @param mapper the object mapper for default deserializations
+     *
      * @return a simple module to be plugged onto Jackson ObjectMapper.
      */
     public static SimpleModule getModule(final ObjectMapper mapper) {
         SimpleModule module = new SimpleModule();
         module.setDeserializerModifier(new BeanDeserializerModifier() {
             @Override
-            public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
+            public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc,
+                                                          JsonDeserializer<?> deserializer) {
                 for (Class<?> c : TypeUtil.getAllClasses(beanDesc.getBeanClass())) {
                     Field[] fields = c.getDeclaredFields();
                     for (Field field : fields) {
                         if ("additionalProperties".equalsIgnoreCase(field.getName())) {
                             JsonProperty property = field.getAnnotation(JsonProperty.class);
                             if (property != null && property.value().isEmpty()) {
-                                return new AdditionalPropertiesDeserializer(beanDesc.getBeanClass(), deserializer, mapper);
+                                return new AdditionalPropertiesDeserializer(beanDesc.getBeanClass(), deserializer,
+                                    mapper);
                             }
                         }
                     }

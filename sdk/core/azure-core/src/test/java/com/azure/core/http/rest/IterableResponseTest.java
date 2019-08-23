@@ -28,20 +28,23 @@ public class IterableResponseTest {
         System.out.println("-------------- Running " + testName.getMethodName() + " -----------------------------");
     }
 
-    /*Ensure that if we call stream multiple times, it always returns same values and they are same as original list of values.*/
+    /*Ensure that if we call stream multiple times, it always returns same values and they are same as original list
+    of values.*/
     @Test
-    public void testIterableResponseStreamFromStart()  {
+    public void testIterableResponseStreamFromStart() {
         IterableStream<Integer> iterableResponse = getIntegerIterableResponse(2, 5);
-        Assert.assertEquals(iterableResponse.stream().collect(Collectors.toList()).size(), iterableResponse.stream().collect(Collectors.toList()).size());
+        Assert.assertEquals(iterableResponse.stream().collect(Collectors.toList()).size(),
+            iterableResponse.stream().collect(Collectors.toList()).size());
 
         // ensure original list of values are same after calling iterator()
-        List<Integer> originalIntegerList =  Arrays.asList(2, 3, 4, 5, 6);
+        List<Integer> originalIntegerList = Arrays.asList(2, 3, 4, 5, 6);
         iterableResponse.stream().forEach(number -> Assert.assertTrue(originalIntegerList.contains(number)));
     }
 
-    /*Ensure that if we call iterator multiple times, it always returns same values and they are same as original list of values.*/
+    /*Ensure that if we call iterator multiple times, it always returns same values and they are same as original
+    list of values.*/
     @Test
-    public void testIterableResponseIteratorFromStart()  {
+    public void testIterableResponseIteratorFromStart() {
         IterableStream<Integer> iterableResponse = getIntegerIterableResponse(2, 5);
         List<Integer> actualNumberValues1 = new ArrayList<>();
         List<Integer> actualNumberValues2 = new ArrayList<>();
@@ -50,7 +53,7 @@ public class IterableResponseTest {
         Assert.assertArrayEquals(actualNumberValues1.toArray(), actualNumberValues2.toArray());
 
         // ensure original list of values are same after calling iterator()
-        List<Integer> originalIntegerList =  Arrays.asList(2, 3, 4, 5, 6);
+        List<Integer> originalIntegerList = Arrays.asList(2, 3, 4, 5, 6);
         iterableResponse.iterator().forEachRemaining(number -> Assert.assertTrue(originalIntegerList.contains(number)));
     }
 

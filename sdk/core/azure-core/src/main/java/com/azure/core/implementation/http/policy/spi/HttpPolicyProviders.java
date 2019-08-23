@@ -16,7 +16,8 @@ import java.util.function.Supplier;
  */
 public final class HttpPolicyProviders {
 
-    private static Map<Class<? extends PolicyProvider>, ServiceLoader<? extends PolicyProvider>> serviceLoaders = new HashMap<>();
+    private static Map<Class<? extends PolicyProvider>, ServiceLoader<? extends PolicyProvider>> serviceLoaders =
+        new HashMap<>();
 
     private HttpPolicyProviders() {
         // no-op
@@ -24,6 +25,7 @@ public final class HttpPolicyProviders {
 
     /**
      * Adds SPI policies that implement {@link BeforeRetryPolicyProvider}.
+     *
      * @param policies Policy list to append the policies.
      */
     public static void addBeforeRetryPolicies(List<HttpPipelinePolicy> policies) {
@@ -32,26 +34,31 @@ public final class HttpPolicyProviders {
 
     /**
      * Adds SPI policies that implement {@link AfterRetryPolicyProvider}.
+     *
      * @param policies Policy list to append the policies.
      */
     public static void addAfterRetryPolicies(List<HttpPipelinePolicy> policies) {
         addRetryPolicies(policies, () -> getPolicyProviders(false, AfterRetryPolicyProvider.class));
     }
 
-    private static void addRetryPolicies(List<HttpPipelinePolicy> policies, Supplier<Iterator<? extends PolicyProvider>> policySupplier) {
+    private static void addRetryPolicies(List<HttpPipelinePolicy> policies, Supplier<Iterator<?
+        extends PolicyProvider>> policySupplier) {
         Iterator<? extends PolicyProvider> it = policySupplier.get();
         while (it.hasNext()) {
             PolicyProvider policyProvider = it.next();
             HttpPipelinePolicy policy = policyProvider.create();
             if (policy == null) {
-                throw new NullPointerException("HttpPipelinePolicy created with " + policyProvider.getClass() + " resulted in a null policy");
+                throw new NullPointerException("HttpPipelinePolicy created with " + policyProvider.getClass() + " "
+                    + "resulted in a null policy");
             }
             policies.add(policy);
         }
     }
 
-    private static Iterator<? extends PolicyProvider> getPolicyProviders(boolean reload, Class<? extends PolicyProvider> cls) {
-        ServiceLoader<? extends PolicyProvider> serviceLoader = serviceLoaders.computeIfAbsent(cls, ServiceLoader::load);
+    private static Iterator<? extends PolicyProvider> getPolicyProviders(boolean reload, Class<?
+        extends PolicyProvider> cls) {
+        ServiceLoader<? extends PolicyProvider> serviceLoader = serviceLoaders.computeIfAbsent(cls,
+            ServiceLoader::load);
 
         if (reload) {
             serviceLoader.reload();
