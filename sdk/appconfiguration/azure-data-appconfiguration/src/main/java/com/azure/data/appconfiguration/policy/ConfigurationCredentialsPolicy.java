@@ -15,8 +15,8 @@ import reactor.core.publisher.Mono;
 import java.nio.ByteBuffer;
 
 /**
- * A policy that authenticates requests with Azure App Configuration service. The content added by this policy
- * is leveraged in {@link ConfigurationClientCredentials} to generate the correct "Authorization" header value.
+ * A policy that authenticates requests with Azure App Configuration service. The content added by this policy is
+ * leveraged in {@link ConfigurationClientCredentials} to generate the correct "Authorization" header value.
  *
  * @see ConfigurationClientCredentials
  * @see ConfigurationAsyncClient
@@ -29,11 +29,12 @@ public final class ConfigurationCredentialsPolicy implements HttpPipelinePolicy 
     private final ConfigurationClientCredentials credentials;
 
     /**
-     * Creates an instance that is able to apply a {@link ConfigurationClientCredentials} credential to a request in the pipeline.
+     * Creates an instance that is able to apply a {@link ConfigurationClientCredentials} credential to a request in the
+     * pipeline.
      *
      * @param credentials the credential information to authenticate to Azure App Configuration service
      */
-    public ConfigurationCredentialsPolicy(ConfigurationClientCredentials credentials)  {
+    public ConfigurationCredentialsPolicy(ConfigurationClientCredentials credentials) {
         this.credentials = credentials;
     }
 
@@ -42,15 +43,17 @@ public final class ConfigurationCredentialsPolicy implements HttpPipelinePolicy 
      *
      * @param context The request context
      * @param next The next HTTP pipeline policy to process the {@code context's} request after this policy completes.
+     *
      * @return A {@link Mono} representing the HTTP response that will arrive asynchronously.
      */
     @Override
     public Mono<HttpResponse> process(HttpPipelineCallContext context, HttpPipelineNextPolicy next) {
         final Flux<ByteBuffer> contents = context.httpRequest().body() == null
-                ? Flux.just(getEmptyBuffer())
-                : context.httpRequest().body();
+            ? Flux.just(getEmptyBuffer())
+            : context.httpRequest().body();
 
-        return credentials.getAuthorizationHeadersAsync(context.httpRequest().url(), context.httpRequest().httpMethod().toString(), contents.defaultIfEmpty(getEmptyBuffer()))
+        return credentials.getAuthorizationHeadersAsync(context.httpRequest().url(),
+            context.httpRequest().httpMethod().toString(), contents.defaultIfEmpty(getEmptyBuffer()))
             .flatMapMany(headers -> Flux.fromIterable(headers.entrySet()))
             .map(header -> context.httpRequest().header(header.getKey(), header.getValue()))
             .last()

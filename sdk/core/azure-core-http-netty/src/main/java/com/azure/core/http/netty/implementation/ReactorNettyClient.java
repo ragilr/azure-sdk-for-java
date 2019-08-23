@@ -54,12 +54,14 @@ class ReactorNettyClient implements HttpClient {
     }
 
     /**
-     *  Creates ReactorNettyClient with provided http client with configuration applied.
+     * Creates ReactorNettyClient with provided http client with configuration applied.
      *
      * @param httpClient the reactor http client
      * @param config the configuration to apply on the http client
      */
-    private ReactorNettyClient(reactor.netty.http.client.HttpClient httpClient, Function<reactor.netty.http.client.HttpClient, reactor.netty.http.client.HttpClient> config) {
+    private ReactorNettyClient(
+        reactor.netty.http.client.HttpClient httpClient,
+        Function<reactor.netty.http.client.HttpClient, reactor.netty.http.client.HttpClient> config) {
         this.httpClient = config.apply(httpClient);
     }
 
@@ -81,9 +83,11 @@ class ReactorNettyClient implements HttpClient {
      * Delegate to send the request content.
      *
      * @param restRequest the Rest request contains the body to be sent
+     *
      * @return a delegate upon invocation sets the request body in reactor-netty outbound object
      */
-    private static BiFunction<HttpClientRequest, NettyOutbound, Publisher<Void>> bodySendDelegate(final HttpRequest restRequest) {
+    private static BiFunction<HttpClientRequest,
+        NettyOutbound, Publisher<Void>> bodySendDelegate(final HttpRequest restRequest) {
         return (reactorNettyRequest, reactorNettyOutbound) -> {
             for (HttpHeader header : restRequest.headers()) {
                 if (header.value() != null) {
@@ -103,9 +107,11 @@ class ReactorNettyClient implements HttpClient {
      * Delegate to receive response.
      *
      * @param restRequest the Rest request whose response this delegate handles
+     *
      * @return a delegate upon invocation setup Rest response object
      */
-    private static BiFunction<HttpClientResponse, Connection, Publisher<HttpResponse>> responseDelegate(final HttpRequest restRequest) {
+    private static BiFunction<HttpClientResponse,
+        Connection, Publisher<HttpResponse>> responseDelegate(final HttpRequest restRequest) {
         return (reactorNettyResponse, reactorNettyConnection) ->
             Mono.just(new ReactorNettyHttpResponse(reactorNettyResponse, reactorNettyConnection).request(restRequest));
     }
@@ -116,11 +122,18 @@ class ReactorNettyClient implements HttpClient {
             ProxyOptions options = proxyOptionsSupplier.get();
             ProxyProvider.Proxy nettyProxy;
             switch (options.type()) {
-                case HTTP: nettyProxy = ProxyProvider.Proxy.HTTP; break;
-                case SOCKS4: nettyProxy = ProxyProvider.Proxy.SOCKS4; break;
-                case SOCKS5: nettyProxy = ProxyProvider.Proxy.SOCKS5; break;
+                case HTTP:
+                    nettyProxy = ProxyProvider.Proxy.HTTP;
+                    break;
+                case SOCKS4:
+                    nettyProxy = ProxyProvider.Proxy.SOCKS4;
+                    break;
+                case SOCKS5:
+                    nettyProxy = ProxyProvider.Proxy.SOCKS5;
+                    break;
                 default:
-                    throw logger.logExceptionAsWarning(new IllegalStateException("Unknown Proxy type '" + options.type() + "' in use. Not configuring Netty proxy."));
+                    throw logger.logExceptionAsWarning(new IllegalStateException("Unknown Proxy type '"
+                        + options.type() + "' in use. Not configuring Netty proxy."));
             }
             return c.proxy(ts -> ts.type(nettyProxy).address(options.address()));
         }));

@@ -31,8 +31,8 @@ public final class PlaybackClient implements HttpClient {
     private final RecordedData recordedData;
 
     /**
-     * Creates a PlaybackClient that replays network calls from {@code recordedData} and replaces
-     * {@link NetworkCallRecord#response() response text} for any rules specified in {@code textReplacementRules}.
+     * Creates a PlaybackClient that replays network calls from {@code recordedData} and replaces {@link
+     * NetworkCallRecord#response() response text} for any rules specified in {@code textReplacementRules}.
      *
      * @param recordedData The data to playback.
      * @param textReplacementRules A set of rules to replace text in network call responses.
@@ -93,7 +93,8 @@ public final class PlaybackClient implements HttpClient {
                 logger.warn("Records requested: {}.", count);
             }
 
-            return Mono.error(new IllegalStateException("==> Unexpected request: " + incomingMethod + " " + incomingUrl));
+            return Mono.error(new IllegalStateException("==> Unexpected request: " + incomingMethod
+                + " " + incomingUrl));
         }
 
         int recordStatusCode = Integer.parseInt(networkCallRecord.response().get("StatusCode"));

@@ -22,8 +22,8 @@ import java.util.Objects;
 
 /**
  * A class that keeps track of network calls by either reading the data from an existing test session record or
- * recording the network calls in memory. Test session records are saved or read from:
- * "<i>session-records/{@code testName}.json</i>"
+ * recording the network calls in memory. Test session records are saved or read from: "<i>session-records/{@code
+ * testName}.json</i>"
  *
  * <ul>
  *     <li>If the {@code testMode} is {@link TestMode#PLAYBACK}, the manager tries to find an existing test session
@@ -61,6 +61,7 @@ public class InterceptorManager implements AutoCloseable {
      *
      * @param testName Name of the test session record.
      * @param testMode The {@link TestMode} for this interceptor.
+     *
      * @throws IOException If {@code testMode} is {@link TestMode#PLAYBACK} and an existing test session record could
      * not be located or the data could not be deserialized into an instance of {@link RecordedData}.
      * @throws NullPointerException If {@code testName} is {@code null}.
@@ -78,15 +79,16 @@ public class InterceptorManager implements AutoCloseable {
     }
 
     /**
-     * Creates a new InterceptorManager that replays test session records. It takes a set of
-     * {@code textReplacementRules}, that can be used by {@link PlaybackClient} to replace values in a
-     * {@link NetworkCallRecord#response()}.
+     * Creates a new InterceptorManager that replays test session records. It takes a set of {@code
+     * textReplacementRules}, that can be used by {@link PlaybackClient} to replace values in a {@link
+     * NetworkCallRecord#response()}.
      *
      * The test session records are read from: "<i>session-records/{@code testName}.json</i>"
      *
      * @param testName Name of the test session record.
      * @param textReplacementRules A set of rules to replace text in {@link NetworkCallRecord#response()} when playing
      * back network calls.
+     *
      * @throws IOException An existing test session record could not be located or the data could not be deserialized
      * into an instance of {@link RecordedData}.
      * @throws NullPointerException If {@code testName} or {@code textReplacementRules} is {@code null}.
@@ -121,7 +123,8 @@ public class InterceptorManager implements AutoCloseable {
     }
 
     /**
-     * Gets a new HTTP pipeline policy that records network calls and its data is managed by {@link InterceptorManager}.
+     * Gets a new HTTP pipeline policy that records network calls and its data is managed by {@link
+     * InterceptorManager}.
      *
      * @return HttpPipelinePolicy to record network calls.
      */
@@ -200,7 +203,8 @@ public class InterceptorManager implements AutoCloseable {
     }
 
     /**
-     * Add text replacement rule (regex as key, the replacement text as value) into {@link InterceptorManager#textReplacementRules}
+     * Add text replacement rule (regex as key, the replacement text as value) into {@link
+     * InterceptorManager#textReplacementRules}
      *
      * @param regex the pattern to locate the position of replacement
      * @param replacement the replacement text

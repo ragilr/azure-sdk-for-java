@@ -38,8 +38,8 @@ public abstract class TestBase {
     }
 
     /**
-     * Sets-up the {@link TestBase#testResourceNamer} and {@link TestBase#interceptorManager} before each test case is run.
-     * Then calls its implementing class to perform any other set-up commands.
+     * Sets-up the {@link TestBase#testResourceNamer} and {@link TestBase#interceptorManager} before each test case is
+     * run. Then calls its implementing class to perform any other set-up commands.
      */
     @Before
     public void setupTest() {

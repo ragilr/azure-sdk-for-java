@@ -24,6 +24,7 @@ public class NettyFluxTestUtils {
      *
      * @param whole the ByteBuffer to split
      * @param chunkSize the maximum size of each ByteBuf chunk
+     *
      * @return A stream that emits chunks of the original whole ByteBuf
      */
     public static Flux<ByteBuf> split(final ByteBuf whole, final int chunkSize) {
@@ -48,26 +49,28 @@ public class NettyFluxTestUtils {
     }
 
     /**
-     * Creates a {@link Flux} from an {@link AsynchronousFileChannel}
-     * which reads part of a file into chunks of the given size.
+     * Creates a {@link Flux} from an {@link AsynchronousFileChannel} which reads part of a file into chunks of the
+     * given size.
      *
      * @param fileChannel The file channel.
      * @param chunkSize the size of file chunks to read.
      * @param offset The offset in the file to begin reading.
      * @param length The number of bytes to read from the file.
+     *
      * @return the Flowable.
      */
-    public static Flux<ByteBuf> byteBufStreamFromFile(AsynchronousFileChannel fileChannel, int chunkSize, long offset, long length) {
+    public static Flux<ByteBuf> byteBufStreamFromFile(AsynchronousFileChannel fileChannel, int chunkSize, long offset,
+                                                      long length) {
         return new ByteBufStreamFromFile(fileChannel, chunkSize, offset, length);
     }
 
     /**
-     * Creates a {@link Flux} from an {@link AsynchronousFileChannel}
-     * which reads part of a file.
+     * Creates a {@link Flux} from an {@link AsynchronousFileChannel} which reads part of a file.
      *
      * @param fileChannel The file channel.
      * @param offset The offset in the file to begin reading.
      * @param length The number of bytes to read from the file.
+     *
      * @return the Flowable.
      */
     public static Flux<ByteBuf> byteBufStreamFromFile(AsynchronousFileChannel fileChannel, long offset, long length) {
@@ -92,7 +95,8 @@ public class NettyFluxTestUtils {
 
         @Override
         public void subscribe(CoreSubscriber<? super ByteBuf> actual) {
-            FileReadSubscription subscription = new FileReadSubscription(actual, fileChannel, alloc, chunkSize, offset, length);
+            FileReadSubscription subscription = new FileReadSubscription(actual, fileChannel, alloc, chunkSize,
+                offset, length);
             actual.onSubscribe(subscription);
         }
 
@@ -116,13 +120,16 @@ public class NettyFluxTestUtils {
             //
             volatile int wip;
             @SuppressWarnings("rawtypes")
-            static final AtomicIntegerFieldUpdater<FileReadSubscription> WIP = AtomicIntegerFieldUpdater.newUpdater(FileReadSubscription.class, "wip");
+            static final AtomicIntegerFieldUpdater<FileReadSubscription> WIP =
+                AtomicIntegerFieldUpdater.newUpdater(FileReadSubscription.class, "wip");
             volatile long requested;
             @SuppressWarnings("rawtypes")
-            static final AtomicLongFieldUpdater<FileReadSubscription> REQUESTED = AtomicLongFieldUpdater.newUpdater(FileReadSubscription.class, "requested");
+            static final AtomicLongFieldUpdater<FileReadSubscription> REQUESTED =
+                AtomicLongFieldUpdater.newUpdater(FileReadSubscription.class, "requested");
             //
 
-            FileReadSubscription(Subscriber<? super ByteBuf> subscriber, AsynchronousFileChannel fileChannel, ByteBufAllocator alloc, int chunkSize, long offset, long length) {
+            FileReadSubscription(Subscriber<? super ByteBuf> subscriber, AsynchronousFileChannel fileChannel,
+                                 ByteBufAllocator alloc, int chunkSize, long offset, long length) {
                 this.subscriber = subscriber;
                 //
                 this.fileChannel = fileChannel;
@@ -199,7 +206,7 @@ public class NettyFluxTestUtils {
                     doRead();
                 }
                 int missed = 1;
-                for (;;) {
+                for (; ;) {
                     if (cancelled) {
                         return;
                     }

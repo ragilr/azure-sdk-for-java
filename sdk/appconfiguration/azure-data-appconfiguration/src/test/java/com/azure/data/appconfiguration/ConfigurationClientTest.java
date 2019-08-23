@@ -55,7 +55,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     protected void afterTest() {
         logger.info("Cleaning up created key values.");
         client.listSettings(new SettingSelector().keys(keyPrefix + "*")).forEach(configurationSetting -> {
-            logger.info("Deleting key:label [{}:{}]. isLocked? {}", configurationSetting.key(), configurationSetting.label(), configurationSetting.isLocked());
+            logger.info("Deleting key:label [{}:{}]. isLocked? {}", configurationSetting.key(),
+                configurationSetting.label(), configurationSetting.isLocked());
             client.deleteSetting(configurationSetting);
         });
 
@@ -63,7 +64,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     }
 
     /**
-     * Tests that a configuration is able to be added, these are differentiate from each other using a key or key-label identifier.
+     * Tests that a configuration is able to be added, these are differentiate from each other using a key or key-label
+     * identifier.
      */
     public void addSetting() {
         addSettingRunner((expected) -> assertConfigurationEquals(expected, client.addSetting(expected)));
@@ -100,13 +102,14 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     public void addExistingSetting() {
         addExistingSettingRunner((expected) -> {
             client.addSetting(expected);
-            assertRestException(() -> client.addSetting(expected), ResourceModifiedException.class, HttpURLConnection.HTTP_PRECON_FAILED);
+            assertRestException(() -> client.addSetting(expected), ResourceModifiedException.class,
+                HttpURLConnection.HTTP_PRECON_FAILED);
         });
     }
 
     /**
-     * Tests that a configuration is able to be added or updated with set.
-     * When the configuration is locked updates cannot happen, this will result in a 409.
+     * Tests that a configuration is able to be added or updated with set. When the configuration is locked updates
+     * cannot happen, this will result in a 409.
      */
     public void setSetting() {
         setSettingRunner((expected, update) -> assertConfigurationEquals(expected, client.setSetting(expected)));
@@ -120,12 +123,14 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     public void setSettingIfEtag() {
         setSettingIfEtagRunner((initial, update) -> {
             // This etag is not the correct format. It is not the correct hash that the service is expecting.
-            assertRestException(() -> client.setSetting(initial.etag("badEtag")), ResourceNotFoundException.class, HttpURLConnection.HTTP_PRECON_FAILED);
+            assertRestException(() -> client.setSetting(initial.etag("badEtag")), ResourceNotFoundException.class,
+                HttpURLConnection.HTTP_PRECON_FAILED);
 
             final String etag = client.addSetting(initial).etag();
 
             assertConfigurationEquals(update, client.setSetting(update.etag(etag)));
-            assertRestException(() -> client.setSetting(initial), ResourceNotFoundException.class, HttpURLConnection.HTTP_PRECON_FAILED);
+            assertRestException(() -> client.setSetting(initial), ResourceNotFoundException.class,
+                HttpURLConnection.HTTP_PRECON_FAILED);
             assertConfigurationEquals(update, client.getSetting(update));
         });
     }
@@ -138,8 +143,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     }
 
     /**
-     * Tests that we can set configuration settings when value is not null or an empty string.
-     * Value is not a required property.
+     * Tests that we can set configuration settings when value is not null or an empty string. Value is not a required
+     * property.
      */
     public void setSettingEmptyValue() {
         setSettingEmptyValueRunner((setting) -> {
@@ -157,26 +162,27 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     }
 
     /**
-     * Tests that update cannot be done to a non-existent configuration, this will result in a 412.
-     * Unlike set update isn't able to create the configuration.
+     * Tests that update cannot be done to a non-existent configuration, this will result in a 412. Unlike set update
+     * isn't able to create the configuration.
      */
     public void updateNoExistingSetting() {
         updateNoExistingSettingRunner((expected) ->
-            assertRestException(() -> client.updateSetting(expected), ResourceNotFoundException.class, HttpURLConnection.HTTP_PRECON_FAILED)
+            assertRestException(() -> client.updateSetting(expected), ResourceNotFoundException.class,
+                HttpURLConnection.HTTP_PRECON_FAILED)
         );
     }
 
     /**
-     * Tests that a configuration is able to be updated when it exists.
-     * When the configuration is locked updates cannot happen, this will result in a 409.
+     * Tests that a configuration is able to be updated when it exists. When the configuration is locked updates cannot
+     * happen, this will result in a 409.
      */
     public void updateSetting() {
         updateSettingRunner((initial, update) -> assertConfigurationEquals(initial, client.addSetting(initial)));
     }
 
     /**
-     * Tests that a configuration is able to be updated when it exists with the convenience overload.
-     * When the configuration is locked updates cannot happen, this will result in a 409.
+     * Tests that a configuration is able to be updated when it exists with the convenience overload. When the
+     * configuration is locked updates cannot happen, this will result in a 409.
      */
     public void updateSettingOverload() {
         updateSettingOverloadRunner((original, updated) -> {
@@ -186,8 +192,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     }
 
     /**
-     * Tests that when an etag is passed to update it will only update if the current representation of the setting has the etag.
-     * If the update etag doesn't match anything the update won't happen, this will result in a 412.
+     * Tests that when an etag is passed to update it will only update if the current representation of the setting has
+     * the etag. If the update etag doesn't match anything the update won't happen, this will result in a 412.
      */
     public void updateSettingIfEtag() {
         updateSettingIfEtagRunner(settings -> {
@@ -199,15 +205,24 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
             final String updateEtag = client.updateSetting(update).etag();
 
             // The setting does not exist in the service yet, so we cannot update it.
-            assertRestException(() -> client.updateSetting(new ConfigurationSetting().key(last.key()).label(last.label()).value(last.value()).etag(initialEtag)),
+            assertRestException(
+                () -> client.updateSetting(new ConfigurationSetting()
+                    .key(last.key())
+                    .label(last.label())
+                    .value(last.value())
+                    .etag(initialEtag)
+                ),
                 ResourceNotFoundException.class,
                 HttpURLConnection.HTTP_PRECON_FAILED);
 
             assertConfigurationEquals(update, client.getSetting(update));
-            assertConfigurationEquals(last, client.updateSetting(new ConfigurationSetting().key(last.key()).label(last.label()).value(last.value()).etag(updateEtag)));
+            assertConfigurationEquals(last,
+                client.updateSetting(new ConfigurationSetting()
+                    .key(last.key()).label(last.label()).value(last.value()).etag(updateEtag)));
             assertConfigurationEquals(last, client.getSetting(last));
 
-            assertRestException(() -> client.updateSetting(new ConfigurationSetting().key(initial.key()).label(initial.label()).value(initial.value()).etag(updateEtag)),
+            assertRestException(() -> client.updateSetting(new ConfigurationSetting()
+                    .key(initial.key()).label(initial.label()).value(initial.value()).etag(updateEtag)),
                 ResourceNotFoundException.class,
                 HttpURLConnection.HTTP_PRECON_FAILED);
         });
@@ -236,19 +251,21 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
      */
     public void getSettingNotFound() {
         final String key = getKey();
-        final ConfigurationSetting neverRetrievedConfiguration = new ConfigurationSetting().key(key).value("myNeverRetreivedValue");
+        final ConfigurationSetting neverRetrievedConfiguration = new ConfigurationSetting().key(key).value(
+            "myNeverRetreivedValue");
         final ConfigurationSetting nonExistentLabel = new ConfigurationSetting().key(key).label("myNonExistentLabel");
 
         assertConfigurationEquals(neverRetrievedConfiguration, client.addSetting(neverRetrievedConfiguration));
 
-        assertRestException(() -> client.getSetting("myNonExistentKey"), ResourceNotFoundException.class, HttpURLConnection.HTTP_NOT_FOUND);
-        assertRestException(() -> client.getSetting(nonExistentLabel), ResourceNotFoundException.class, HttpURLConnection.HTTP_NOT_FOUND);
+        assertRestException(() -> client.getSetting("myNonExistentKey"), ResourceNotFoundException.class,
+            HttpURLConnection.HTTP_NOT_FOUND);
+        assertRestException(() -> client.getSetting(nonExistentLabel), ResourceNotFoundException.class,
+            HttpURLConnection.HTTP_NOT_FOUND);
     }
 
     /**
-     * Tests that configurations are able to be deleted when they exist.
-     * After the configuration has been deleted attempting to get it will result in a 404, the same as if the
-     * configuration never existed.
+     * Tests that configurations are able to be deleted when they exist. After the configuration has been deleted
+     * attempting to get it will result in a 404, the same as if the configuration never existed.
      */
     public void deleteSetting() {
         deleteSettingRunner((expected) -> {
@@ -256,7 +273,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
             assertConfigurationEquals(expected, client.getSetting(expected));
 
             assertConfigurationEquals(expected, client.deleteSetting(expected));
-            assertRestException(() -> client.getSetting(expected), ResourceNotFoundException.class, HttpURLConnection.HTTP_NOT_FOUND);
+            assertRestException(() -> client.getSetting(expected), ResourceNotFoundException.class,
+                HttpURLConnection.HTTP_NOT_FOUND);
         });
     }
 
@@ -265,20 +283,22 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
      */
     public void deleteSettingNotFound() {
         final String key = getKey();
-        final ConfigurationSetting neverDeletedConfiguation = new ConfigurationSetting().key(key).value("myNeverDeletedValue");
+        final ConfigurationSetting neverDeletedConfiguation = new ConfigurationSetting().key(key).value(
+            "myNeverDeletedValue");
         final ConfigurationSetting notFoundDelete = new ConfigurationSetting().key(key).label("myNonExistentLabel");
 
         assertConfigurationEquals(neverDeletedConfiguation, client.addSetting(neverDeletedConfiguation));
 
         assertConfigurationEquals(null, client.deleteSetting("myNonExistentKey"));
-        assertConfigurationEquals(null, client.deleteSettingWithResponse(notFoundDelete, Context.NONE), HttpURLConnection.HTTP_NO_CONTENT);
+        assertConfigurationEquals(null, client.deleteSettingWithResponse(notFoundDelete, Context.NONE),
+            HttpURLConnection.HTTP_NO_CONTENT);
 
         assertConfigurationEquals(neverDeletedConfiguation, client.getSetting(neverDeletedConfiguation.key()));
     }
 
     /**
-     * Tests that when an etag is passed to delete it will only delete if the current representation of the setting has the etag.
-     * If the delete etag doesn't match anything the delete won't happen, this will result in a 412.
+     * Tests that when an etag is passed to delete it will only delete if the current representation of the setting has
+     * the etag. If the delete etag doesn't match anything the delete won't happen, this will result in a 412.
      */
     public void deleteSettingWithETag() {
         deleteSettingWithETagRunner((initial, update) -> {
@@ -286,18 +306,22 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
             final ConfigurationSetting updatedConfig = client.updateSetting(update);
 
             assertConfigurationEquals(update, client.getSetting(initial));
-            assertRestException(() -> client.deleteSetting(initiallyAddedConfig), ResourceNotFoundException.class, HttpURLConnection.HTTP_PRECON_FAILED);
+            assertRestException(() -> client.deleteSetting(initiallyAddedConfig), ResourceNotFoundException.class,
+                HttpURLConnection.HTTP_PRECON_FAILED);
             assertConfigurationEquals(update, client.deleteSetting(updatedConfig));
-            assertRestException(() -> client.getSetting(initial), ResourceNotFoundException.class, HttpURLConnection.HTTP_NOT_FOUND);
+            assertRestException(() -> client.getSetting(initial), ResourceNotFoundException.class,
+                HttpURLConnection.HTTP_NOT_FOUND);
         });
     }
 
     /**
-     * Test the API will not make a delete call without having a key passed, an IllegalArgumentException should be thrown.
+     * Test the API will not make a delete call without having a key passed, an IllegalArgumentException should be
+     * thrown.
      */
     public void deleteSettingNullKey() {
         assertRunnableThrowsException(() -> client.deleteSetting((String) null), IllegalArgumentException.class);
-        assertRunnableThrowsException(() -> client.deleteSetting((ConfigurationSetting) null), NullPointerException.class);
+        assertRunnableThrowsException(() -> client.deleteSetting((ConfigurationSetting) null),
+            NullPointerException.class);
     }
 
     /**
@@ -312,7 +336,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
         final ConfigurationSetting expected = new ConfigurationSetting().key(key).value(value).label(label);
 
         assertConfigurationEquals(expected, client.setSetting(expected));
-        assertConfigurationEquals(expected, client.listSettings(new SettingSelector().keys(key).labels(label)).iterator().next());
+        assertConfigurationEquals(expected,
+            client.listSettings(new SettingSelector().keys(key).labels(label)).iterator().next());
         assertConfigurationEquals(expected, client.listSettings(new SettingSelector().keys(key)).iterator().next());
     }
 
@@ -333,8 +358,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     }
 
     /**
-     * Verifies that ConfigurationSettings can be added with different labels and that we can fetch those ConfigurationSettings
-     * from the service when filtering by their labels.
+     * Verifies that ConfigurationSettings can be added with different labels and that we can fetch those
+     * ConfigurationSettings from the service when filtering by their labels.
      */
     public void listWithMultipleLabels() {
         String key = getKey();
@@ -380,7 +405,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
         }
 
         // Gets all versions of this value so we can get the one we want at that particular date.
-        List<ConfigurationSetting> revisions = client.listSettingRevisions(new SettingSelector().keys(keyName)).stream().collect(Collectors.toList());
+        List<ConfigurationSetting> revisions =
+            client.listSettingRevisions(new SettingSelector().keys(keyName)).stream().collect(Collectors.toList());
 
         assertNotNull(revisions);
         assertEquals(3, revisions.size());
@@ -406,13 +432,15 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
         assertConfigurationEquals(updated2, client.setSetting(updated2));
 
         // Get all revisions for a key, they are listed in descending order.
-        List<ConfigurationSetting> revisions = client.listSettingRevisions(new SettingSelector().keys(keyName)).stream().collect(Collectors.toList());
+        List<ConfigurationSetting> revisions =
+            client.listSettingRevisions(new SettingSelector().keys(keyName)).stream().collect(Collectors.toList());
         assertConfigurationEquals(updated2, revisions.get(0));
         assertConfigurationEquals(updated, revisions.get(1));
         assertConfigurationEquals(original, revisions.get(2));
 
         // Verifies that we can select specific fields.
-        revisions = client.listSettingRevisions(new SettingSelector().keys(keyName).fields(SettingFields.KEY, SettingFields.ETAG)).stream().collect(Collectors.toList());
+        revisions = client.listSettingRevisions(new SettingSelector().keys(keyName).fields(SettingFields.KEY,
+            SettingFields.ETAG)).stream().collect(Collectors.toList());
         validateListRevisions(updated2, revisions.get(0));
         validateListRevisions(updated, revisions.get(1));
         validateListRevisions(original, revisions.get(2));
@@ -466,7 +494,9 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
         assertConfigurationEquals(updated, client.updateSetting(updated));
         assertConfigurationEquals(updated2, client.updateSetting(updated2));
 
-        List<ConfigurationSetting> revisions = client.listSettingRevisions(new SettingSelector().keys(key).range(new Range(1, 2))).stream().collect(Collectors.toList());
+        List<ConfigurationSetting> revisions =
+            client.listSettingRevisions(new SettingSelector().keys(key)
+                .range(new Range(1, 2))).stream().collect(Collectors.toList());
         assertConfigurationEquals(updated, revisions.get(0));
         assertConfigurationEquals(original, revisions.get(1));
     }
@@ -505,7 +535,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
         }
 
         // Gets all versions of this value.
-        List<ConfigurationSetting> revisions = client.listSettingRevisions(new SettingSelector().keys(keyName)).stream().collect(Collectors.toList());
+        List<ConfigurationSetting> revisions =
+            client.listSettingRevisions(new SettingSelector().keys(keyName)).stream().collect(Collectors.toList());
 
         assertNotNull(revisions);
         assertEquals(3, revisions.size());
@@ -519,8 +550,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     }
 
     /**
-     * Verifies that, given a ton of revisions, we can list the revisions ConfigurationSettings using pagination
-     * (ie. where 'nextLink' has a URL pointing to the next page of results.)
+     * Verifies that, given a ton of revisions, we can list the revisions ConfigurationSettings using pagination (ie.
+     * where 'nextLink' has a URL pointing to the next page of results.)
      */
     public void listRevisionsWithPagination() {
         final int numberExpected = 50;
@@ -533,8 +564,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     }
 
     /**
-     * Verifies that, given a ton of revisions, we can process {@link java.util.stream.Stream} multiple time and get same result.
-     * (ie. where 'nextLink' has a URL pointing to the next page of results.)
+     * Verifies that, given a ton of revisions, we can process {@link java.util.stream.Stream} multiple time and get
+     * same result. (ie. where 'nextLink' has a URL pointing to the next page of results.)
      */
     public void listRevisionsWithPaginationAndRepeatStream() {
         final int numberExpected = 50;
@@ -550,8 +581,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     }
 
     /**
-     * Verifies that, given a ton of revisions, we can iterate over multiple time and get same result.
-     * (ie. where 'nextLink' has a URL pointing to the next page of results.)
+     * Verifies that, given a ton of revisions, we can iterate over multiple time and get same result. (ie. where
+     * 'nextLink' has a URL pointing to the next page of results.)
      */
     public void listRevisionsWithPaginationAndRepeatIterator() {
         final int numberExpected = 50;
@@ -565,23 +596,26 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
         List<ConfigurationSetting> configurationSettingList1 = new ArrayList<>();
         List<ConfigurationSetting> configurationSettingList2 = new ArrayList<>();
 
-        configurationSettingPagedIterable.iterator().forEachRemaining(configurationSetting -> configurationSettingList1.add(configurationSetting));
+        configurationSettingPagedIterable.iterator().forEachRemaining(
+            configurationSetting -> configurationSettingList1.add(configurationSetting));
         assertEquals(numberExpected, configurationSettingList1.size());
 
-        configurationSettingPagedIterable.iterator().forEachRemaining(configurationSetting -> configurationSettingList2.add(configurationSetting));
+        configurationSettingPagedIterable.iterator().forEachRemaining(
+            configurationSetting -> configurationSettingList2.add(configurationSetting));
         assertEquals(numberExpected, configurationSettingList2.size());
 
         assertArrayEquals(configurationSettingList1.toArray(), configurationSettingList2.toArray());
     }
 
     /**
-     * Verifies that, given a ton of existing settings, we can list the ConfigurationSettings using pagination
-     * (ie. where 'nextLink' has a URL pointing to the next page of results.)
+     * Verifies that, given a ton of existing settings, we can list the ConfigurationSettings using pagination (ie.
+     * where 'nextLink' has a URL pointing to the next page of results.)
      */
     public void listSettingsWithPagination() {
         final int numberExpected = 50;
         for (int value = 0; value < numberExpected; value++) {
-            client.setSetting(new ConfigurationSetting().key(keyPrefix + "-" + value).value("myValue").label(labelPrefix));
+            client.setSetting(new ConfigurationSetting()
+                .key(keyPrefix + "-" + value).value("myValue").label(labelPrefix));
         }
         SettingSelector filter = new SettingSelector().keys(keyPrefix + "-*").labels(labelPrefix);
 
@@ -606,7 +640,8 @@ public class ConfigurationClientTest extends ConfigurationClientTestBase {
     public void deleteAllSettings() {
 
         client.listSettings(new SettingSelector().keys("*")).forEach(configurationSetting -> {
-            logger.info("Deleting key:label [{}:{}]. isLocked? {}", configurationSetting.key(), configurationSetting.label(), configurationSetting.isLocked());
+            logger.info("Deleting key:label [{}:{}]. isLocked? {}", configurationSetting.key(),
+                configurationSetting.label(), configurationSetting.isLocked());
             client.deleteSetting(configurationSetting);
         });
     }

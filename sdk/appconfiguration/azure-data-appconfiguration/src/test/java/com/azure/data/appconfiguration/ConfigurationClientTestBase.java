@@ -186,7 +186,8 @@ public abstract class ConfigurationClientTestBase extends TestBase {
         testRunner.accept(setting2);
     }
 
-    @Test public abstract void setSettingNullKey();
+    @Test
+    public abstract void setSettingNullKey();
 
     @Test
     public abstract void updateNoExistingSetting();
@@ -251,7 +252,8 @@ public abstract class ConfigurationClientTestBase extends TestBase {
         final ConfigurationSetting finalConfiguration = new ConfigurationSetting().key(key).value("myFinalValue");
 
         testRunner.accept(Arrays.asList(newConfiguration, updateConfiguration, finalConfiguration));
-        testRunner.accept(Arrays.asList(newConfiguration.label(label), updateConfiguration.label(label), finalConfiguration.label(label)));
+        testRunner.accept(Arrays.asList(newConfiguration.label(label), updateConfiguration.label(label),
+            finalConfiguration.label(label)));
     }
 
     @Test
@@ -293,7 +295,8 @@ public abstract class ConfigurationClientTestBase extends TestBase {
         String label = getLabel();
 
         final ConfigurationSetting newConfiguration = new ConfigurationSetting().key(key).value("myNewValue");
-        final ConfigurationSetting updateConfiguration = new ConfigurationSetting().key(newConfiguration.key()).value("myUpdateValue");
+        final ConfigurationSetting updateConfiguration =
+            new ConfigurationSetting().key(newConfiguration.key()).value("myUpdateValue");
 
         testRunner.accept(newConfiguration, updateConfiguration);
         testRunner.accept(newConfiguration.label(label), updateConfiguration.label(label));
@@ -308,18 +311,24 @@ public abstract class ConfigurationClientTestBase extends TestBase {
     @Test
     public abstract void listWithMultipleKeys();
 
-    void listWithMultipleKeysRunner(String key, String key2, BiFunction<ConfigurationSetting, ConfigurationSetting, Iterable<ConfigurationSetting>> testRunner) {
+    void listWithMultipleKeysRunner(String key, String key2, BiFunction<ConfigurationSetting, ConfigurationSetting,
+        Iterable<ConfigurationSetting>> testRunner) {
         final ConfigurationSetting setting = new ConfigurationSetting().key(key).value("value");
         final ConfigurationSetting setting2 = new ConfigurationSetting().key(key2).value("value");
         final Set<ConfigurationSetting> expectedSelection = new HashSet<>(Arrays.asList(setting, setting2));
-        testRunner.apply(setting, setting2).forEach(actual -> expectedSelection.removeIf(expected -> expected.equals(cleanResponse(expected, actual))));
+        testRunner
+            .apply(setting, setting2)
+            .forEach(
+                actual -> expectedSelection.removeIf(expected -> expected.equals(cleanResponse(expected, actual)))
+            );
         assertTrue(expectedSelection.isEmpty());
     }
 
     @Test
     public abstract void listWithMultipleLabels();
 
-    void listWithMultipleLabelsRunner(String key, String label, String label2, BiFunction<ConfigurationSetting, ConfigurationSetting, Iterable<ConfigurationSetting>> testRunner) {
+    void listWithMultipleLabelsRunner(String key, String label, String label2, BiFunction<ConfigurationSetting,
+        ConfigurationSetting, Iterable<ConfigurationSetting>> testRunner) {
         final ConfigurationSetting setting = new ConfigurationSetting().key(key).value("value").label(label);
         final ConfigurationSetting setting2 = new ConfigurationSetting().key(key).value("value").label(label2);
         final Set<ConfigurationSetting> expectedSelection = new HashSet<>(Arrays.asList(setting, setting2));
@@ -334,7 +343,8 @@ public abstract class ConfigurationClientTestBase extends TestBase {
     @Test
     public abstract void listSettingsSelectFields();
 
-    void listSettingsSelectFieldsRunner(BiFunction<List<ConfigurationSetting>, SettingSelector, Iterable<ConfigurationSetting>> testRunner) {
+    void listSettingsSelectFieldsRunner(BiFunction<List<ConfigurationSetting>, SettingSelector,
+        Iterable<ConfigurationSetting>> testRunner) {
         final String label = "my-first-mylabel";
         final String label2 = "my-second-mylabel";
         final int numberToCreate = 8;
@@ -383,11 +393,13 @@ public abstract class ConfigurationClientTestBase extends TestBase {
     @Test
     public abstract void listRevisionsWithMultipleKeys();
 
-    void listRevisionsWithMultipleKeysRunner(String key, String key2, Function<List<ConfigurationSetting>, Iterable<ConfigurationSetting>> testRunner) {
+    void listRevisionsWithMultipleKeysRunner(String key, String key2, Function<List<ConfigurationSetting>,
+        Iterable<ConfigurationSetting>> testRunner) {
         final ConfigurationSetting setting = new ConfigurationSetting().key(key).value("value");
         final ConfigurationSetting settingUpdate = new ConfigurationSetting().key(setting.key()).value("updatedValue");
         final ConfigurationSetting setting2 = new ConfigurationSetting().key(key2).value("value");
-        final ConfigurationSetting setting2Update = new ConfigurationSetting().key(setting2.key()).value("updatedValue");
+        final ConfigurationSetting setting2Update = new ConfigurationSetting().key(setting2.key()).value(
+            "updatedValue");
         final List<ConfigurationSetting> testInput = Arrays.asList(setting, settingUpdate, setting2, setting2Update);
         final Set<ConfigurationSetting> expectedSelection = new HashSet<>(testInput);
 
@@ -401,11 +413,17 @@ public abstract class ConfigurationClientTestBase extends TestBase {
     @Test
     public abstract void listRevisionsWithMultipleLabels();
 
-    void listRevisionsWithMultipleLabelsRunner(String key, String label, String label2, Function<List<ConfigurationSetting>, Iterable<ConfigurationSetting>> testRunner) {
+    void listRevisionsWithMultipleLabelsRunner(
+        String key,
+        String label,
+        String label2,
+        Function<List<ConfigurationSetting>, Iterable<ConfigurationSetting>> testRunner) {
         final ConfigurationSetting setting = new ConfigurationSetting().key(key).value("value").label(label);
-        final ConfigurationSetting settingUpdate = new ConfigurationSetting().key(setting.key()).label(setting.label()).value("updatedValue");
+        final ConfigurationSetting settingUpdate =
+            new ConfigurationSetting().key(setting.key()).label(setting.label()).value("updatedValue");
         final ConfigurationSetting setting2 = new ConfigurationSetting().key(key).value("value").label(label2);
-        final ConfigurationSetting setting2Update = new ConfigurationSetting().key(setting2.key()).label(setting2.label()).value("updatedValue");
+        final ConfigurationSetting setting2Update =
+            new ConfigurationSetting().key(setting2.key()).label(setting2.label()).value("updatedValue");
         final List<ConfigurationSetting> testInput = Arrays.asList(setting, settingUpdate, setting2, setting2Update);
         final Set<ConfigurationSetting> expectedSelection = new HashSet<>(testInput);
 
@@ -447,7 +465,8 @@ public abstract class ConfigurationClientTestBase extends TestBase {
     public abstract void deleteAllSettings();
 
     /**
-     * Helper method to verify that the RestResponse matches what was expected. This method assumes a response status of 200.
+     * Helper method to verify that the RestResponse matches what was expected. This method assumes a response status of
+     * 200.
      *
      * @param expected ConfigurationSetting expected to be returned by the service
      * @param response RestResponse returned by the service, the body should contain a ConfigurationSetting
@@ -463,7 +482,8 @@ public abstract class ConfigurationClientTestBase extends TestBase {
      * @param response RestResponse returned from the service, the body should contain a ConfigurationSetting
      * @param expectedStatusCode Expected HTTP status code returned by the service
      */
-    static void assertConfigurationEquals(ConfigurationSetting expected, Response<ConfigurationSetting> response, final int expectedStatusCode) {
+    static void assertConfigurationEquals(ConfigurationSetting expected, Response<ConfigurationSetting> response,
+                                          final int expectedStatusCode) {
         assertNotNull(response);
         assertEquals(expectedStatusCode, response.statusCode());
 
@@ -485,8 +505,9 @@ public abstract class ConfigurationClientTestBase extends TestBase {
     }
 
     /**
-     * The ConfigurationSetting has some fields that are only manipulated by the service,
-     * this helper method cleans those fields on the setting returned by the service so tests are able to pass.
+     * The ConfigurationSetting has some fields that are only manipulated by the service, this helper method cleans
+     * those fields on the setting returned by the service so tests are able to pass.
+     *
      * @param expected ConfigurationSetting expected to be returned by the service.
      * @param actual ConfigurationSetting returned by the service.
      */
@@ -518,7 +539,9 @@ public abstract class ConfigurationClientTestBase extends TestBase {
         assertRestException(exceptionThrower, HttpResponseException.class, expectedStatusCode);
     }
 
-    static void assertRestException(Runnable exceptionThrower, Class<? extends HttpResponseException> expectedExceptionType, int expectedStatusCode) {
+    static void assertRestException(Runnable exceptionThrower,
+                                    Class<? extends HttpResponseException> expectedExceptionType,
+                                    int expectedStatusCode) {
         try {
             exceptionThrower.run();
             fail();
@@ -537,7 +560,8 @@ public abstract class ConfigurationClientTestBase extends TestBase {
         assertRestException(exception, HttpResponseException.class, expectedStatusCode);
     }
 
-    static void assertRestException(Throwable exception, Class<? extends HttpResponseException> expectedExceptionType, int expectedStatusCode) {
+    static void assertRestException(Throwable exception, Class<? extends HttpResponseException> expectedExceptionType,
+                                    int expectedStatusCode) {
         assertEquals(expectedExceptionType, exception.getClass());
         assertEquals(expectedStatusCode, ((HttpResponseException) exception).response().statusCode());
     }

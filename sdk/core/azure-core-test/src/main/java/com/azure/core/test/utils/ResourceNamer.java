@@ -22,7 +22,13 @@ public class ResourceNamer {
      * @param name The prefix for generated strings.
      */
     public ResourceNamer(String name) {
-        this.randName = name.toLowerCase(LOCALE) + UUID.randomUUID().toString().replace("-", "").substring(0, 3).toLowerCase(LOCALE);
+        this.randName =
+            name.toLowerCase(LOCALE) + UUID
+                .randomUUID()
+                .toString()
+                .replace("-", "")
+                .substring(0, 3)
+                .toLowerCase(LOCALE);
     }
 
     /**
@@ -30,6 +36,7 @@ public class ResourceNamer {
      *
      * @param prefix the prefix to be used if possible
      * @param maxLen the max length for the random generated name
+     *
      * @return the random name
      */
     public String randomName(String prefix, int maxLen) {
@@ -56,6 +63,7 @@ public class ResourceNamer {
 
     /**
      * Creates a random UUID.
+     *
      * @return the UUID string.
      */
     public String randomUuid() {
