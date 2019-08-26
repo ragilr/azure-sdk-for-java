@@ -284,12 +284,13 @@ public class PagedListTests {
                     if (list.hasNextPage()) {
                         list.loadNextPage();
                         loadNextPageCallCount++;
-                        return Flux.fromIterable(list.currentPage().items()).concatWith(Flux.defer(new Supplier<Flux<Integer>>() {
-                            @Override
-                            public Flux<Integer> get() {
-                                return nextFlux();
-                            }
-                        }));
+                        return Flux.fromIterable(list.currentPage().items()).concatWith(
+                            Flux.defer(new Supplier<Flux<Integer>>() {
+                                @Override
+                                public Flux<Integer> get() {
+                                    return nextFlux();
+                                }
+                            }));
                     } else {
                         return Flux.empty();
                     }
@@ -299,7 +300,7 @@ public class PagedListTests {
 
         FluxFromPagedList obpl = new FluxFromPagedList();
 
-        final Integer[] cnt = new Integer[] { 0 };
+        final Integer[] cnt = new Integer[]{0};
         obpl.toFlux().subscribe(integer -> {
             Assert.assertEquals(cnt[0], integer);
             cnt[0]++;

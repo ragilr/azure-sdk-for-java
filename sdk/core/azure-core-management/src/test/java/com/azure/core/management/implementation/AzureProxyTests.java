@@ -58,121 +58,216 @@ public class AzureProxyTests {
     @Host("https://mock.azure.com")
     @ServiceInterface(name = "MockResourceService")
     private interface MockResourceService {
-        @Get("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}")
+        @Get("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}")
         @ExpectedResponses({200})
-        MockResource get(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        MockResource get(@PathParam("subscriptionId") String subscriptionId,
+                         @PathParam("resourceGroupName") String resourceGroupName,
+                         @PathParam("mockResourceName") String mockResourceName);
 
-        @Get("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}")
+        @Get("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}")
         @ExpectedResponses({200})
-        Mono<MockResource> getAsync(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        Mono<MockResource> getAsync(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName"
+        ) String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}")
         @ExpectedResponses({200})
-        MockResource create(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        MockResource create(@PathParam("subscriptionId") String subscriptionId,
+                            @PathParam("resourceGroupName") String resourceGroupName,
+                            @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Location")
         @ExpectedResponses({200})
-        MockResource createWithLocation(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        MockResource createWithLocation(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        MockResource createWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsRemaining);
+        MockResource createWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName,
+                                                @PathParam("pollsRemaining") int pollsRemaining);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Azure-AsyncOperation")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Azure-AsyncOperation")
         @ExpectedResponses({200})
-        MockResource createWithAzureAsyncOperation(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        MockResource createWithAzureAsyncOperation(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Azure-AsyncOperation&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Azure-AsyncOperation&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        MockResource createWithAzureAsyncOperationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsRemaining);
+        MockResource createWithAzureAsyncOperationAndPolls(@PathParam("subscriptionId") String subscriptionId,
+                                                           @PathParam("resourceGroupName") String resourceGroupName,
+                                                           @PathParam("mockResourceName") String mockResourceName,
+                                                           @PathParam("pollsRemaining") int pollsRemaining);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=ProvisioningState")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=ProvisioningState")
         @ExpectedResponses({200})
-        MockResource createWithProvisioningState(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        MockResource createWithProvisioningState(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=ProvisioningState&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=ProvisioningState&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        MockResource createWithProvisioningStateAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsRemaining);
+        MockResource createWithProvisioningStateAndPolls(@PathParam("subscriptionId") String subscriptionId,
+                                                         @PathParam("resourceGroupName") String resourceGroupName,
+                                                         @PathParam("mockResourceName") String mockResourceName,
+                                                         @PathParam("pollsRemaining") int pollsRemaining);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}")
         @ExpectedResponses({200})
-        Mono<MockResource> createAsync(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        Mono<MockResource> createAsync(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Location")
         @ExpectedResponses({200})
-        Mono<MockResource> createAsyncWithLocation(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        Mono<MockResource> createAsyncWithLocation(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Mono<MockResource> createAsyncWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Mono<MockResource> createAsyncWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId,
+                                                           @PathParam("resourceGroupName") String resourceGroupName,
+                                                           @PathParam("mockResourceName") String mockResourceName,
+                                                           @PathParam("pollsRemaining") int pollsUntilResource);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Azure-AsyncOperation")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Azure-AsyncOperation")
         @ExpectedResponses({200})
-        Mono<MockResource> createAsyncWithAzureAsyncOperation(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        Mono<MockResource> createAsyncWithAzureAsyncOperation(@PathParam("subscriptionId") String subscriptionId,
+                                                              @PathParam("resourceGroupName") String resourceGroupName,
+                                                              @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Azure-AsyncOperation&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Azure-AsyncOperation&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Mono<MockResource> createAsyncWithAzureAsyncOperationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Mono<MockResource> createAsyncWithAzureAsyncOperationAndPolls(
+            @PathParam("subscriptionId") String subscriptionId,
+            @PathParam("resourceGroupName") String resourceGroupName,
+            @PathParam("mockResourceName") String mockResourceName,
+            @PathParam("pollsRemaining") int pollsUntilResource);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=ProvisioningState")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=ProvisioningState")
         @ExpectedResponses({200})
-        Mono<MockResource> createAsyncWithProvisioningState(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        Mono<MockResource> createAsyncWithProvisioningState(@PathParam("subscriptionId") String subscriptionId,
+                                                            @PathParam("resourceGroupName") String resourceGroupName,
+                                                            @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=ProvisioningState&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=ProvisioningState&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Mono<MockResource> createAsyncWithProvisioningStateAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Mono<MockResource> createAsyncWithProvisioningStateAndPolls(
+            @PathParam("subscriptionId") String subscriptionId,
+            @PathParam("resourceGroupName") String resourceGroupName,
+            @PathParam("mockResourceName") String mockResourceName,
+            @PathParam("pollsRemaining") int pollsUntilResource);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Flux<MockResource> beginCreateAsyncWithBadReturnType(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Flux<MockResource> beginCreateAsyncWithBadReturnType(@PathParam("subscriptionId") String subscriptionId,
+                                                             @PathParam("resourceGroupName") String resourceGroupName,
+                                                             @PathParam("mockResourceName") String mockResourceName,
+                                                             @PathParam("pollsRemaining") int pollsUntilResource);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location&PollsRemaining=1&InitialResponseStatusCode=294")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Location&PollsRemaining=1&InitialResponseStatusCode=294")
         @ExpectedResponses({200})
-        Flux<OperationStatus<MockResource>> beginCreateAsyncWithLocationAndPollsAndUnexpectedStatusCode(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        Flux<OperationStatus<MockResource>> beginCreateAsyncWithLocationAndPollsAndUnexpectedStatusCode(
+            @PathParam("subscriptionId") String subscriptionId,
+            @PathParam("resourceGroupName") String resourceGroupName,
+            @PathParam("mockResourceName") String mockResourceName);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Flux<OperationStatus<MockResource>> beginCreateAsyncWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Flux<OperationStatus<MockResource>> beginCreateAsyncWithLocationAndPolls(
+            @PathParam("subscriptionId") String subscriptionId,
+            @PathParam("resourceGroupName") String resourceGroupName,
+            @PathParam("mockResourceName") String mockResourceName,
+            @PathParam("pollsRemaining") int pollsUntilResource);
 
         @ExpectedResponses({200})
         @ResumeOperation
-        Flux<OperationStatus<MockResource>> resumeCreateAsyncWithLocationAndPolls(OperationDescription operationDescription);
+        Flux<OperationStatus<MockResource>> resumeCreateAsyncWithLocationAndPolls(
+            OperationDescription operationDescription);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Azure-AsyncOperation&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=Azure-AsyncOperation&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Flux<OperationStatus<MockResource>> beginCreateAsyncWithAzureAsyncOperationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Flux<OperationStatus<MockResource>> beginCreateAsyncWithAzureAsyncOperationAndPolls(
+            @PathParam("subscriptionId") String subscriptionId,
+            @PathParam("resourceGroupName") String resourceGroupName,
+            @PathParam("mockResourceName") String mockResourceName,
+            @PathParam("pollsRemaining") int pollsUntilResource);
 
-        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=ProvisioningState&PollsRemaining={pollsRemaining}")
+        @Put("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources"
+            + "/{mockResourceName}?PollType=ProvisioningState&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Flux<OperationStatus<MockResource>> beginCreateAsyncWithProvisioningStateAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Flux<OperationStatus<MockResource>> beginCreateAsyncWithProvisioningStateAndPolls(
+            @PathParam("subscriptionId") String subscriptionId,
+            @PathParam("resourceGroupName") String resourceGroupName,
+            @PathParam("mockResourceName") String mockResourceName,
+            @PathParam("pollsRemaining") int pollsUntilResource);
 
-        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}")
+        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider"
+            + "/mockresources/{mockResourceName}")
         @ExpectedResponses({200})
-        void delete(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        void delete(@PathParam("subscriptionId") String subscriptionId,
+                    @PathParam("resourceGroupName") String resourceGroupName,
+                    @PathParam("mockResourceName") String mockResourceName);
 
-        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location")
+        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider"
+            + "/mockresources/{mockResourceName}?PollType=Location")
         @ExpectedResponses({200})
-        void deleteWithLocation(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        void deleteWithLocation(@PathParam("subscriptionId") String subscriptionId,
+                                @PathParam("resourceGroupName") String resourceGroupName, @PathParam(
+            "mockResourceName") String mockResourceName);
 
-        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
+        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider"
+            + "/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        void deleteWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        void deleteWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName,
+                                        @PathParam("pollsRemaining") int pollsUntilResource);
 
-        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}")
+        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider"
+            + "/mockresources/{mockResourceName}")
         @ExpectedResponses({200})
-        Mono<Void> deleteAsync(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        Mono<Void> deleteAsync(@PathParam("subscriptionId") String subscriptionId,
+                               @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName"
+        ) String mockResourceName);
 
-        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location")
+        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider"
+            + "/mockresources/{mockResourceName}?PollType=Location")
         @ExpectedResponses({200})
-        Mono<Void> deleteAsyncWithLocation(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
+        Mono<Void> deleteAsyncWithLocation(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName);
 
-        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
+        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider"
+            + "/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Mono<Void> deleteAsyncWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Mono<Void> deleteAsyncWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam(
+            "resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName,
+                                                   @PathParam("pollsRemaining") int pollsUntilResource);
 
-        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
+        @Delete("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/mockprovider"
+            + "/mockresources/{mockResourceName}?PollType=Location&PollsRemaining={pollsRemaining}")
         @ExpectedResponses({200})
-        Flux<OperationStatus<Void>> beginDeleteAsyncWithLocationAndPolls(@PathParam("subscriptionId") String subscriptionId, @PathParam("resourceGroupName") String resourceGroupName, @PathParam("mockResourceName") String mockResourceName, @PathParam("pollsRemaining") int pollsUntilResource);
+        Flux<OperationStatus<Void>> beginDeleteAsyncWithLocationAndPolls(
+            @PathParam("subscriptionId") String subscriptionId,
+            @PathParam("resourceGroupName") String resourceGroupName,
+            @PathParam("mockResourceName") String mockResourceName,
+            @PathParam("pollsRemaining") int pollsUntilResource);
 
         @Delete("errors/403")
         @ExpectedResponses({200})
@@ -184,7 +279,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .get("1", "mine", "a");
+            .get("1", "mine", "a");
         assertNotNull(resource);
         assertEquals("a", resource.name());
 
@@ -199,8 +294,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .getAsync("1", "mine", "b")
-                .block();
+            .getAsync("1", "mine", "b")
+            .block();
         assertNotNull(resource);
         assertEquals("b", resource.name());
 
@@ -215,7 +310,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .create("1", "mine", "c");
+            .create("1", "mine", "c");
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -231,7 +326,7 @@ public class AzureProxyTests {
 
         final MockResourceService mockService = createMockService(MockResourceService.class, httpClient);
         final MockResource resource = mockService
-                .createWithLocation("1", "mine", "c");
+            .createWithLocation("1", "mine", "c");
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -246,7 +341,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createWithLocationAndPolls("1", "mine", "c", 2);
+            .createWithLocationAndPolls("1", "mine", "c", 2);
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -261,7 +356,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createWithAzureAsyncOperation("1", "mine", "c");
+            .createWithAzureAsyncOperation("1", "mine", "c");
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -276,7 +371,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createWithAzureAsyncOperationAndPolls("1", "mine", "c", 2);
+            .createWithAzureAsyncOperationAndPolls("1", "mine", "c", 2);
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -291,7 +386,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createWithProvisioningState("1", "mine", "c");
+            .createWithProvisioningState("1", "mine", "c");
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -306,7 +401,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createWithProvisioningStateAndPolls("1", "mine", "c", 3);
+            .createWithProvisioningStateAndPolls("1", "mine", "c", 3);
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -321,8 +416,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createAsync("1", "mine", "c")
-                .block();
+            .createAsync("1", "mine", "c")
+            .block();
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -337,8 +432,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createAsyncWithLocation("1", "mine", "c")
-                .block();
+            .createAsyncWithLocation("1", "mine", "c")
+            .block();
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -353,8 +448,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createAsyncWithLocationAndPolls("1", "mine", "c", 3)
-                .block();
+            .createAsyncWithLocationAndPolls("1", "mine", "c", 3)
+            .block();
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -369,8 +464,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createAsyncWithAzureAsyncOperation("1", "mine", "c")
-                .block();
+            .createAsyncWithAzureAsyncOperation("1", "mine", "c")
+            .block();
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -385,8 +480,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createAsyncWithAzureAsyncOperationAndPolls("1", "mine", "c", 3)
-                .block();
+            .createAsyncWithAzureAsyncOperationAndPolls("1", "mine", "c", 3)
+            .block();
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -405,8 +500,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
         final int pollsUntilResource = 3;
         createMockService(MockResourceService.class, httpClient)
-                .createAsyncWithAzureAsyncOperationAndPolls("1", "mine", "c", pollsUntilResource)
-                .subscribe();
+            .createAsyncWithAzureAsyncOperationAndPolls("1", "mine", "c", pollsUntilResource)
+            .subscribe();
 
         Thread.sleep((long) (delayInMilliseconds * 0.75));
 
@@ -430,8 +525,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createAsyncWithProvisioningState("1", "mine", "c")
-                .block();
+            .createAsyncWithProvisioningState("1", "mine", "c")
+            .block();
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -446,8 +541,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         final MockResource resource = createMockService(MockResourceService.class, httpClient)
-                .createAsyncWithProvisioningStateAndPolls("1", "mine", "c", 5)
-                .block();
+            .createAsyncWithProvisioningStateAndPolls("1", "mine", "c", 5)
+            .block();
         assertNotNull(resource);
         assertEquals("c", resource.name());
 
@@ -481,21 +576,21 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         createMockService(MockResourceService.class, httpClient)
-                .beginCreateAsyncWithLocationAndPollsAndUnexpectedStatusCode("1", "mine", "c")
-                .subscribe(
-                        new Consumer<OperationStatus<MockResource>>() {
-                            @Override
-                            public void accept(OperationStatus<MockResource> mockResourceOperationStatus) {
-                                fail();
-                            }
-                        },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) {
-                                assertEquals("Status code 294, (empty body)", throwable.getMessage());
-                                assertEquals(HttpResponseException.class, throwable.getClass());
-                            }
-                        });
+            .beginCreateAsyncWithLocationAndPollsAndUnexpectedStatusCode("1", "mine", "c")
+            .subscribe(
+                new Consumer<OperationStatus<MockResource>>() {
+                    @Override
+                    public void accept(OperationStatus<MockResource> mockResourceOperationStatus) {
+                        fail();
+                    }
+                },
+                new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        assertEquals("Status code 294, (empty body)", throwable.getMessage());
+                        assertEquals(HttpResponseException.class, throwable.getClass());
+                    }
+                });
 
         assertEquals(0, httpClient.getRequests());
         assertEquals(1, httpClient.createRequests());
@@ -511,17 +606,17 @@ public class AzureProxyTests {
         final Value<MockResource> resource = new Value<>();
 
         createMockService(MockResourceService.class, httpClient)
-                .beginCreateAsyncWithLocationAndPolls("1", "mine", "c", 3)
-                .subscribe(new Consumer<OperationStatus<MockResource>>() {
-                    @Override
-                    public void accept(OperationStatus<MockResource> operationStatus) {
-                        if (!operationStatus.isDone()) {
-                            inProgressCount.incrementAndGet();
-                        } else {
-                            resource.set(operationStatus.result());
-                        }
+            .beginCreateAsyncWithLocationAndPolls("1", "mine", "c", 3)
+            .subscribe(new Consumer<OperationStatus<MockResource>>() {
+                @Override
+                public void accept(OperationStatus<MockResource> operationStatus) {
+                    if (!operationStatus.isDone()) {
+                        inProgressCount.incrementAndGet();
+                    } else {
+                        resource.set(operationStatus.result());
                     }
-                });
+                }
+            });
 
         assertEquals(2, inProgressCount.get());
         assertNotNull(resource.get());
@@ -546,25 +641,25 @@ public class AzureProxyTests {
         mapper.enableDefaultTyping();
 
         createMockService(MockResourceService.class, httpClient)
-                .beginCreateAsyncWithLocationAndPolls("1", "mine", "c", 10)
-                .take(2)
-                .subscribe(new Consumer<OperationStatus<MockResource>>() {
-                    @Override
-                    public void accept(OperationStatus<MockResource> operationStatus) {
-                        if (!operationStatus.isDone()) {
-                            OperationDescription operationDescription = operationStatus.buildDescription();
-                            try {
-                                data.append(mapper.writeValueAsString(operationDescription));
-                            } catch (JsonProcessingException e) {
-                                fail("Error serializing OperationDescription object");
-                                e.printStackTrace();
-                            }
-                            inProgressCount.incrementAndGet();
-                        } else {
-                            resource.set(operationStatus.result());
+            .beginCreateAsyncWithLocationAndPolls("1", "mine", "c", 10)
+            .take(2)
+            .subscribe(new Consumer<OperationStatus<MockResource>>() {
+                @Override
+                public void accept(OperationStatus<MockResource> operationStatus) {
+                    if (!operationStatus.isDone()) {
+                        OperationDescription operationDescription = operationStatus.buildDescription();
+                        try {
+                            data.append(mapper.writeValueAsString(operationDescription));
+                        } catch (JsonProcessingException e) {
+                            fail("Error serializing OperationDescription object");
+                            e.printStackTrace();
                         }
+                        inProgressCount.incrementAndGet();
+                    } else {
+                        resource.set(operationStatus.result());
                     }
-                });
+                }
+            });
 
         OperationDescription operationDescription = null;
         PollStrategy.PollStrategyData pollData = null;
@@ -580,24 +675,24 @@ public class AzureProxyTests {
         assertNotNull(pollData);
 
         createMockService(MockResourceService.class, httpClient)
-                .resumeCreateAsyncWithLocationAndPolls(operationDescription)
-                .subscribe(new Consumer<OperationStatus<MockResource>>() {
-                    @Override
-                    public void accept(OperationStatus<MockResource> operationStatus) {
-                        if (!operationStatus.isDone()) {
-                            OperationDescription operationDescription = operationStatus.buildDescription();
-                            try {
-                                data.append(mapper.writeValueAsString(operationDescription));
-                            } catch (JsonProcessingException e) {
-                                fail("Error serializing OperationDescription object");
-                                e.printStackTrace();
-                            }
-                            inProgressCount.incrementAndGet();
-                        } else {
-                            resource.set(operationStatus.result());
+            .resumeCreateAsyncWithLocationAndPolls(operationDescription)
+            .subscribe(new Consumer<OperationStatus<MockResource>>() {
+                @Override
+                public void accept(OperationStatus<MockResource> operationStatus) {
+                    if (!operationStatus.isDone()) {
+                        OperationDescription operationDescription = operationStatus.buildDescription();
+                        try {
+                            data.append(mapper.writeValueAsString(operationDescription));
+                        } catch (JsonProcessingException e) {
+                            fail("Error serializing OperationDescription object");
+                            e.printStackTrace();
                         }
+                        inProgressCount.incrementAndGet();
+                    } else {
+                        resource.set(operationStatus.result());
                     }
-                });
+                }
+            });
 
     }
 
@@ -609,17 +704,17 @@ public class AzureProxyTests {
         final Value<MockResource> resource = new Value<>();
 
         createMockService(MockResourceService.class, httpClient)
-                .beginCreateAsyncWithAzureAsyncOperationAndPolls("1", "mine", "c", 3)
-                .subscribe(new Consumer<OperationStatus<MockResource>>() {
-                    @Override
-                    public void accept(OperationStatus<MockResource> operationStatus) {
-                        if (!operationStatus.isDone()) {
-                            inProgressCount.incrementAndGet();
-                        } else {
-                            resource.set(operationStatus.result());
-                        }
+            .beginCreateAsyncWithAzureAsyncOperationAndPolls("1", "mine", "c", 3)
+            .subscribe(new Consumer<OperationStatus<MockResource>>() {
+                @Override
+                public void accept(OperationStatus<MockResource> operationStatus) {
+                    if (!operationStatus.isDone()) {
+                        inProgressCount.incrementAndGet();
+                    } else {
+                        resource.set(operationStatus.result());
                     }
-                });
+                }
+            });
 
         assertEquals(3, inProgressCount.get());
         assertNotNull(resource.get());
@@ -639,17 +734,17 @@ public class AzureProxyTests {
         final Value<MockResource> resource = new Value<>();
 
         createMockService(MockResourceService.class, httpClient)
-                .beginCreateAsyncWithProvisioningStateAndPolls("1", "mine", "c", 4)
-                .subscribe(new Consumer<OperationStatus<MockResource>>() {
-                    @Override
-                    public void accept(OperationStatus<MockResource> operationStatus) {
-                        if (!operationStatus.isDone()) {
-                            inProgressCount.incrementAndGet();
-                        } else {
-                            resource.set(operationStatus.result());
-                        }
+            .beginCreateAsyncWithProvisioningStateAndPolls("1", "mine", "c", 4)
+            .subscribe(new Consumer<OperationStatus<MockResource>>() {
+                @Override
+                public void accept(OperationStatus<MockResource> operationStatus) {
+                    if (!operationStatus.isDone()) {
+                        inProgressCount.incrementAndGet();
+                    } else {
+                        resource.set(operationStatus.result());
                     }
-                });
+                }
+            });
 
         assertEquals(3, inProgressCount.get());
         assertNotNull(resource.get());
@@ -669,17 +764,17 @@ public class AzureProxyTests {
         final Value<MockResource> resource = new Value<>();
 
         createMockService(MockResourceService.class, httpClient)
-                .beginCreateAsyncWithLocationAndPolls("1", "mine", "c", 0)
-                .subscribe(new Consumer<OperationStatus<MockResource>>() {
-                    @Override
-                    public void accept(OperationStatus<MockResource> operationStatus) {
-                        if (!operationStatus.isDone()) {
-                            inProgressCount.incrementAndGet();
-                        } else {
-                            resource.set(operationStatus.result());
-                        }
+            .beginCreateAsyncWithLocationAndPolls("1", "mine", "c", 0)
+            .subscribe(new Consumer<OperationStatus<MockResource>>() {
+                @Override
+                public void accept(OperationStatus<MockResource> operationStatus) {
+                    if (!operationStatus.isDone()) {
+                        inProgressCount.incrementAndGet();
+                    } else {
+                        resource.set(operationStatus.result());
                     }
-                });
+                }
+            });
 
         assertEquals(0, inProgressCount.get());
         assertNotNull(resource.get());
@@ -696,7 +791,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         createMockService(MockResourceService.class, httpClient)
-                .delete("1", "mine", "c");
+            .delete("1", "mine", "c");
 
         assertEquals(0, httpClient.getRequests());
         assertEquals(0, httpClient.createRequests());
@@ -709,7 +804,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         createMockService(MockResourceService.class, httpClient)
-                .deleteWithLocation("1", "mine", "c");
+            .deleteWithLocation("1", "mine", "c");
 
         assertEquals(0, httpClient.getRequests());
         assertEquals(0, httpClient.createRequests());
@@ -722,7 +817,7 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         createMockService(MockResourceService.class, httpClient)
-                .deleteWithLocationAndPolls("1", "mine", "c", 4);
+            .deleteWithLocationAndPolls("1", "mine", "c", 4);
 
         assertEquals(0, httpClient.getRequests());
         assertEquals(0, httpClient.createRequests());
@@ -735,8 +830,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         createMockService(MockResourceService.class, httpClient)
-                .deleteAsync("1", "mine", "c")
-                .block();
+            .deleteAsync("1", "mine", "c")
+            .block();
 
         assertEquals(0, httpClient.getRequests());
         assertEquals(0, httpClient.createRequests());
@@ -749,8 +844,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         createMockService(MockResourceService.class, httpClient)
-                .deleteAsyncWithLocation("1", "mine", "c")
-                .block();
+            .deleteAsyncWithLocation("1", "mine", "c")
+            .block();
 
         assertEquals(0, httpClient.getRequests());
         assertEquals(0, httpClient.createRequests());
@@ -763,8 +858,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient();
 
         createMockService(MockResourceService.class, httpClient)
-                .deleteAsyncWithLocationAndPolls("1", "mine", "c", 10)
-                .block();
+            .deleteAsyncWithLocationAndPolls("1", "mine", "c", 10)
+            .block();
 
         assertEquals(0, httpClient.getRequests());
         assertEquals(0, httpClient.createRequests());
@@ -780,17 +875,17 @@ public class AzureProxyTests {
         final Value<Boolean> completed = new Value<>();
 
         createMockService(MockResourceService.class, httpClient)
-                .beginDeleteAsyncWithLocationAndPolls("1", "mine", "c", 3)
-                .subscribe(new Consumer<OperationStatus<Void>>() {
-                    @Override
-                    public void accept(OperationStatus<Void> operationStatus) {
-                        if (!operationStatus.isDone()) {
-                            inProgressCount.incrementAndGet();
-                        } else {
-                            completed.set(true);
-                        }
+            .beginDeleteAsyncWithLocationAndPolls("1", "mine", "c", 3)
+            .subscribe(new Consumer<OperationStatus<Void>>() {
+                @Override
+                public void accept(OperationStatus<Void> operationStatus) {
+                    if (!operationStatus.isDone()) {
+                        inProgressCount.incrementAndGet();
+                    } else {
+                        completed.set(true);
                     }
-                });
+                }
+            });
 
         assertEquals(2, inProgressCount.get());
         assertNotNull(completed.get());
@@ -810,17 +905,17 @@ public class AzureProxyTests {
         final Value<Boolean> completed = new Value<>();
 
         createMockService(MockResourceService.class, httpClient)
-                .beginDeleteAsyncWithLocationAndPolls("1", "mine", "c", 0)
-                .subscribe(new Consumer<OperationStatus<Void>>() {
-                    @Override
-                    public void accept(OperationStatus<Void> operationStatus) {
-                        if (!operationStatus.isDone()) {
-                            inProgressCount.incrementAndGet();
-                        } else {
-                            completed.set(true);
-                        }
+            .beginDeleteAsyncWithLocationAndPolls("1", "mine", "c", 0)
+            .subscribe(new Consumer<OperationStatus<Void>>() {
+                @Override
+                public void accept(OperationStatus<Void> operationStatus) {
+                    if (!operationStatus.isDone()) {
+                        inProgressCount.incrementAndGet();
+                    } else {
+                        completed.set(true);
                     }
-                });
+                }
+            });
 
         assertEquals(0, inProgressCount.get());
         assertNotNull(completed.get());
@@ -837,7 +932,8 @@ public class AzureProxyTests {
         final MockAzureHttpClient httpClient = new MockAzureHttpClient() {
             @Override
             public Mono<HttpResponse> send(HttpRequest request) {
-                return Mono.<HttpResponse>just(new MockHttpResponse(request, 403, MockAzureHttpClient.responseHeaders(), new byte[0]));
+                return Mono.<HttpResponse>just(new MockHttpResponse(request, 403,
+                    MockAzureHttpClient.responseHeaders(), new byte[0]));
             }
         };
 
@@ -860,7 +956,8 @@ public class AzureProxyTests {
     }
 
     private static void assertContains(String value, String expectedSubstring) {
-        assertTrue("Expected \"" + value + "\" to contain \"" + expectedSubstring + "\".", value.contains(expectedSubstring));
+        assertTrue("Expected \"" + value + "\" to contain \"" + expectedSubstring + "\".",
+            value.contains(expectedSubstring));
     }
 
 }

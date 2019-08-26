@@ -46,6 +46,7 @@ import static org.junit.Assert.fail;
 public abstract class AzureProxyToRestProxyTests {
     /**
      * Get the HTTP client that will be used for each test. This will be called once per test.
+     *
      * @return The HTTP client to use for each test.
      */
     protected abstract HttpClient createHttpClient();
@@ -68,7 +69,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncRequestWithByteArrayReturnType() {
         final byte[] result = createService(Service1.class)
-                .getByteArray();
+            .getByteArray();
         assertNotNull(result);
         assertEquals(result.length, 100);
     }
@@ -76,8 +77,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncRequestWithByteArrayReturnType() {
         final byte[] result = createService(Service1.class)
-                .getByteArrayAsync()
-                .block();
+            .getByteArrayAsync()
+            .block();
         assertNotNull(result);
         assertEquals(result.length, 100);
     }
@@ -85,8 +86,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void getByteArrayAsyncWithNoExpectedResponses() {
         final byte[] result = createService(Service1.class)
-                .getByteArrayAsyncWithNoExpectedResponses()
-                .block();
+            .getByteArrayAsyncWithNoExpectedResponses()
+            .block();
         assertNotNull(result);
         assertEquals(result.length, 100);
     }
@@ -100,13 +101,14 @@ public abstract class AzureProxyToRestProxyTests {
 
         @Get("bytes/{numberOfBytes}")
         @ExpectedResponses({200})
-        Mono<byte[]> getByteArrayAsync(@HostParam("hostName") String host, @PathParam("numberOfBytes") int numberOfBytes);
+        Mono<byte[]> getByteArrayAsync(@HostParam("hostName") String host,
+                                       @PathParam("numberOfBytes") int numberOfBytes);
     }
 
     @Test
     public void syncRequestWithByteArrayReturnTypeAndParameterizedHostAndPath() {
         final byte[] result = createService(Service2.class)
-                .getByteArray("httpbin", 50);
+            .getByteArray("httpbin", 50);
         assertNotNull(result);
         assertEquals(result.length, 50);
     }
@@ -114,8 +116,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncRequestWithByteArrayReturnTypeAndParameterizedHostAndPath() {
         final byte[] result = createService(Service2.class)
-                .getByteArrayAsync("httpbin", 50)
-                .block();
+            .getByteArrayAsync("httpbin", 50)
+            .block();
         assertNotNull(result);
         assertEquals(result.length, 50);
     }
@@ -140,8 +142,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncGetRequestWithNoReturn() {
         createService(Service3.class)
-                .getNothingAsync()
-                .block();
+            .getNothingAsync()
+            .block();
     }
 
     @Host("http://httpbin.org")
@@ -171,7 +173,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithAnything() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnything();
+            .getAnything();
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything", json.url());
     }
@@ -179,7 +181,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithAnythingWithPlus() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnythingWithPlus();
+            .getAnythingWithPlus();
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything/with+plus", json.url());
     }
@@ -187,7 +189,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithAnythingWithPathParam() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnythingWithPathParam("withpathparam");
+            .getAnythingWithPathParam("withpathparam");
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything/withpathparam", json.url());
     }
@@ -195,7 +197,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithAnythingWithPathParamWithSpace() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnythingWithPathParam("with path param");
+            .getAnythingWithPathParam("with path param");
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything/with path param", json.url());
     }
@@ -203,7 +205,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithAnythingWithPathParamWithPlus() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnythingWithPathParam("with+path+param");
+            .getAnythingWithPathParam("with+path+param");
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything/with+path+param", json.url());
     }
@@ -211,7 +213,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithAnythingWithEncodedPathParam() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnythingWithEncodedPathParam("withpathparam");
+            .getAnythingWithEncodedPathParam("withpathparam");
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything/withpathparam", json.url());
     }
@@ -219,7 +221,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithAnythingWithEncodedPathParamWithPercent20() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnythingWithEncodedPathParam("with%20path%20param");
+            .getAnythingWithEncodedPathParam("with%20path%20param");
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything/with path param", json.url());
     }
@@ -227,7 +229,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithAnythingWithEncodedPathParamWithPlus() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnythingWithEncodedPathParam("with+path+param");
+            .getAnythingWithEncodedPathParam("with+path+param");
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything/with+path+param", json.url());
     }
@@ -235,8 +237,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncGetRequestWithAnything() {
         final HttpBinJSON json = createService(Service5.class)
-                .getAnythingAsync()
-                .block();
+            .getAnythingAsync()
+            .block();
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything", json.url());
     }
@@ -260,7 +262,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithQueryParametersAndAnything() {
         final HttpBinJSON json = createService(Service6.class)
-                .getAnything("A", 15);
+            .getAnything("A", 15);
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything?a=A&b=15", json.url());
     }
@@ -268,7 +270,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithQueryParametersAndAnythingWithPercent20() {
         final HttpBinJSON json = createService(Service6.class)
-                .getAnything("A%20Z", 15);
+            .getAnything("A%20Z", 15);
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything?a=A%2520Z&b=15", json.url());
     }
@@ -276,7 +278,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithQueryParametersAndAnythingWithEncodedWithPercent20() {
         final HttpBinJSON json = createService(Service6.class)
-                .getAnythingWithEncoded("x%20y", 15);
+            .getAnythingWithEncoded("x%20y", 15);
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything?a=x y&b=15", json.url());
     }
@@ -284,8 +286,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncGetRequestWithQueryParametersAndAnything() {
         final HttpBinJSON json = createService(Service6.class)
-                .getAnythingAsync("A", 15)
-                .block();
+            .getAnythingAsync("A", 15)
+            .block();
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything?a=A&b=15", json.url());
     }
@@ -305,7 +307,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncGetRequestWithHeaderParametersAndAnythingReturn() {
         final HttpBinJSON json = createService(Service7.class)
-                .getAnything("A", 15);
+            .getAnything("A", 15);
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything", json.url());
         assertNotNull(json.headers());
@@ -319,8 +321,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncGetRequestWithHeaderParametersAndAnything() {
         final HttpBinJSON json = createService(Service7.class)
-                .getAnythingAsync("A", 15)
-                .block();
+            .getAnythingAsync("A", 15)
+            .block();
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything", json.url());
         assertNotNull(json.headers());
@@ -346,7 +348,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncPostRequestWithStringBody() {
         final HttpBinJSON json = createService(Service8.class)
-                .post("I'm a post body!");
+            .post("I'm a post body!");
         assertEquals(String.class, json.data().getClass());
         assertEquals("I'm a post body!", json.data());
     }
@@ -354,8 +356,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncPostRequestWithStringBody() {
         final HttpBinJSON json = createService(Service8.class)
-                .postAsync("I'm a post body!")
-                .block();
+            .postAsync("I'm a post body!")
+            .block();
         assertEquals(String.class, json.data().getClass());
         assertEquals("I'm a post body!", json.data());
     }
@@ -378,13 +380,14 @@ public abstract class AzureProxyToRestProxyTests {
         @Put("put")
         @ExpectedResponses({201})
         @UnexpectedResponseExceptionType(MyAzureException.class)
-        HttpBinJSON putWithUnexpectedResponseAndExceptionType(@BodyParam(ContentType.APPLICATION_OCTET_STREAM) String putBody);
+        HttpBinJSON putWithUnexpectedResponseAndExceptionType(
+            @BodyParam(ContentType.APPLICATION_OCTET_STREAM) String putBody);
     }
 
     @Test
     public void syncPutRequestWithIntBody() {
         final HttpBinJSON json = createService(Service9.class)
-                .put(42);
+            .put(42);
         assertEquals(String.class, json.data().getClass());
         assertEquals("42", json.data());
     }
@@ -392,8 +395,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncPutRequestWithIntBody() {
         final HttpBinJSON json = createService(Service9.class)
-                .putAsync(42)
-                .block();
+            .putAsync(42)
+            .block();
         assertEquals(String.class, json.data().getClass());
         assertEquals("42", json.data());
     }
@@ -402,14 +405,14 @@ public abstract class AzureProxyToRestProxyTests {
     public void syncPutRequestWithUnexpectedResponse() {
         try {
             createService(Service9.class)
-                    .putWithUnexpectedResponse("I'm the body!");
+                .putWithUnexpectedResponse("I'm the body!");
             fail("Expected RestException would be thrown.");
         } catch (HttpResponseException e) {
             assertNotNull(e.value());
             assertTrue(e.value() instanceof LinkedHashMap);
 
-            @SuppressWarnings("unchecked")
-            final LinkedHashMap<String, String> expectedBody = (LinkedHashMap<String, String>) e.value();
+            @SuppressWarnings("unchecked") final LinkedHashMap<String, String> expectedBody = (LinkedHashMap<String,
+                String>) e.value();
             assertEquals("I'm the body!", expectedBody.get("data"));
         }
     }
@@ -418,7 +421,7 @@ public abstract class AzureProxyToRestProxyTests {
     public void syncPutRequestWithUnexpectedResponseAndExceptionType() {
         try {
             createService(Service9.class)
-                    .putWithUnexpectedResponseAndExceptionType("I'm the body!");
+                .putWithUnexpectedResponseAndExceptionType("I'm the body!");
             fail("Expected RestException would be thrown.");
         } catch (MyAzureException e) {
             assertNotNull(e.value());
@@ -452,21 +455,21 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncRestResponseHeadRequest() {
         ResponseBase<?, ?> res = createService(Service10.class)
-                .restResponseHead();
+            .restResponseHead();
         assertNull(res.value());
     }
 
     @Test
     public void syncVoidHeadRequest() {
         createService(Service10.class)
-                .voidHead();
+            .voidHead();
     }
 
     @Test
     public void asyncRestResponseHeadRequest() {
         ResponseBase<?, ?> res = createService(Service10.class)
-                .restResponseHeadAsync()
-                .block();
+            .restResponseHeadAsync()
+            .block();
 
         assertNull(res.value());
     }
@@ -474,8 +477,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncCompletableHeadRequest() {
         createService(Service10.class)
-                .completableHeadAsync()
-                .block();
+            .completableHeadAsync()
+            .block();
     }
 
     @Host("http://httpbin.org")
@@ -493,7 +496,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncDeleteRequest() {
         final HttpBinJSON json = createService(Service11.class)
-                .delete(false);
+            .delete(false);
         assertEquals(String.class, json.data().getClass());
         assertEquals("false", json.data());
     }
@@ -501,8 +504,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncDeleteRequest() {
         final HttpBinJSON json = createService(Service11.class)
-                .deleteAsync(false)
-                .block();
+            .deleteAsync(false)
+            .block();
         assertEquals(String.class, json.data().getClass());
         assertEquals("false", json.data());
     }
@@ -522,7 +525,7 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void syncPatchRequest() {
         final HttpBinJSON json = createService(Service12.class)
-                .patch("body-contents");
+            .patch("body-contents");
         assertEquals(String.class, json.data().getClass());
         assertEquals("body-contents", json.data());
     }
@@ -530,8 +533,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncPatchRequest() {
         final HttpBinJSON json = createService(Service12.class)
-                .patchAsync("body-contents")
-                .block();
+            .patchAsync("body-contents")
+            .block();
         assertEquals(String.class, json.data().getClass());
         assertEquals("body-contents", json.data());
     }
@@ -541,19 +544,19 @@ public abstract class AzureProxyToRestProxyTests {
     private interface Service13 {
         @Get("anything")
         @ExpectedResponses({200})
-        @Headers({ "MyHeader:MyHeaderValue", "MyOtherHeader:My,Header,Value" })
+        @Headers({"MyHeader:MyHeaderValue", "MyOtherHeader:My,Header,Value"})
         HttpBinJSON get();
 
         @Get("anything")
         @ExpectedResponses({200})
-        @Headers({ "MyHeader:MyHeaderValue", "MyOtherHeader:My,Header,Value" })
+        @Headers({"MyHeader:MyHeaderValue", "MyOtherHeader:My,Header,Value"})
         Mono<HttpBinJSON> getAsync();
     }
 
     @Test
     public void syncHeadersRequest() {
         final HttpBinJSON json = createService(Service13.class)
-                .get();
+            .get();
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything", json.url());
         assertNotNull(json.headers());
@@ -567,8 +570,8 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void asyncHeadersRequest() {
         final HttpBinJSON json = createService(Service13.class)
-                .getAsync()
-                .block();
+            .getAsync()
+            .block();
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything", json.url());
         assertNotNull(json.headers());
@@ -582,20 +585,20 @@ public abstract class AzureProxyToRestProxyTests {
     private interface Service14 {
         @Get("anything")
         @ExpectedResponses({200})
-        @Headers({ "MyHeader:MyHeaderValue" })
+        @Headers({"MyHeader:MyHeaderValue"})
         HttpBinJSON get();
 
         @Get("anything")
         @ExpectedResponses({200})
-        @Headers({ "MyHeader:MyHeaderValue" })
+        @Headers({"MyHeader:MyHeaderValue"})
         Mono<HttpBinJSON> getAsync();
     }
 
     @Test
     public void asyncHttpsHeadersRequest() {
         final HttpBinJSON json = createService(Service14.class)
-                .getAsync()
-                .block();
+            .getAsync()
+            .block();
         assertNotNull(json);
         assertMatchWithHttpOrHttps("httpbin.org/anything", json.url());
         assertNotNull(json.headers());
@@ -638,22 +641,22 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void service16Put() {
         final Service16 service = createService(Service16.class);
-        final HttpBinJSON result = service.put(new byte[] { 0, 1, 2, 3, 4, 5 });
+        final HttpBinJSON result = service.put(new byte[]{0, 1, 2, 3, 4, 5});
         assertNotNull(result);
         assertMatchWithHttpOrHttps("httpbin.org/put", result.url());
         assertTrue(result.data() instanceof String);
-        assertArrayEquals(new byte[] { 0, 1, 2, 3, 4, 5 }, ((String) result.data()).getBytes());
+        assertArrayEquals(new byte[]{0, 1, 2, 3, 4, 5}, ((String) result.data()).getBytes());
     }
 
     @Test
     public void service16PutAsync() {
         final Service16 service = createService(Service16.class);
-        final HttpBinJSON result = service.putAsync(new byte[] { 0, 1, 2, 3, 4, 5 })
-                .block();
+        final HttpBinJSON result = service.putAsync(new byte[]{0, 1, 2, 3, 4, 5})
+            .block();
         assertNotNull(result);
         assertMatchWithHttpOrHttps("httpbin.org/put", result.url());
         assertTrue(result.data() instanceof String);
-        assertArrayEquals(new byte[] { 0, 1, 2, 3, 4, 5 }, ((String) result.data()).getBytes());
+        assertArrayEquals(new byte[]{0, 1, 2, 3, 4, 5}, ((String) result.data()).getBytes());
     }
 
     @Host("http://{hostPart1}{hostPart2}.org")
@@ -719,49 +722,49 @@ public abstract class AzureProxyToRestProxyTests {
     @Test
     public void service18GetStatus200() {
         createService(Service18.class)
-                .getStatus200();
+            .getStatus200();
     }
 
     @Test
     public void service18GetStatus200WithExpectedResponse200() {
         createService(Service18.class)
-                .getStatus200WithExpectedResponse200();
+            .getStatus200WithExpectedResponse200();
     }
 
     @Test
     public void service18GetStatus300() {
         createService(Service18.class)
-                .getStatus300();
+            .getStatus300();
     }
 
     @Test
     public void service18GetStatus300WithExpectedResponse300() {
         createService(Service18.class)
-                .getStatus300WithExpectedResponse300();
+            .getStatus300WithExpectedResponse300();
     }
 
     @Test(expected = HttpResponseException.class)
     public void service18GetStatus400() {
         createService(Service18.class)
-                .getStatus400();
+            .getStatus400();
     }
 
     @Test
     public void service18GetStatus400WithExpectedResponse400() {
         createService(Service18.class)
-                .getStatus400WithExpectedResponse400();
+            .getStatus400WithExpectedResponse400();
     }
 
     @Test(expected = HttpResponseException.class)
     public void service18GetStatus500() {
         createService(Service18.class)
-                .getStatus500();
+            .getStatus500();
     }
 
     @Test
     public void service18GetStatus500WithExpectedResponse500() {
         createService(Service18.class)
-                .getStatus500WithExpectedResponse500();
+            .getStatus500WithExpectedResponse500();
     }
 
     private <T> T createService(Class<T> serviceClass) {
@@ -773,7 +776,8 @@ public abstract class AzureProxyToRestProxyTests {
     }
 
     private static void assertContains(String value, String expectedSubstring) {
-        assertTrue("Expected \"" + value + "\" to contain \"" + expectedSubstring + "\".", value.contains(expectedSubstring));
+        assertTrue("Expected \"" + value + "\" to contain \"" + expectedSubstring + "\".",
+            value.contains(expectedSubstring));
     }
 
     private static void assertMatchWithHttpOrHttps(String url1, String url2) {

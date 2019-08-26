@@ -12,7 +12,8 @@ import java.util.Objects;
  *
  * @see <a href="https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-transport-v1.0-os.html#type-amqp-error">AMQP
  * 1.0: Transport Errors</a>
- * @see <a href="https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions">Azure Messaging Exceptions</a>
+ * @see <a href="https://docs.microsoft.com/azure/event-hubs/event-hubs-messaging-exceptions">Azure Messaging
+ * Exceptions</a>
  */
 public enum ErrorCondition {
     /**
@@ -125,7 +126,9 @@ public enum ErrorCondition {
      * Parses a serialized value to an ErrorCondition instance.
      *
      * @param errorCondition the serialized value to parse.
+     *
      * @return the parsed ErrorCondition object, or null if unable to parse.
+     *
      * @throws NullPointerException if {@code errorCondition} is {@code null}.
      */
     public static ErrorCondition fromString(String errorCondition) {

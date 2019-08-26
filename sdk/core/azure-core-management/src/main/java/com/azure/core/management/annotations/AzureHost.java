@@ -23,8 +23,12 @@ import static java.lang.annotation.ElementType.TYPE;
  *
  *   {@literal @}AzureHost(AzureEnvironment.Endpoint.RESOURCE_MANAGER)
  *   interface VirtualMachinesService {
- *     {@literal @}GET("subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}")
- *     VirtualMachine getByResourceGroup(@PathParam("resourceGroupName") String rgName, @PathParam("vmName") String vmName, @PathParam("subscriptionId") String subscriptionId);
+ *     {@literal @}
+ *     GET(
+ *     "subscriptions/{
+ *     subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}")
+ *     VirtualMachine getByResourceGroup(@PathParam("resourceGroupName")
+ *     String rgName, @PathParam("vmName") String vmName, @PathParam("subscriptionId") String subscriptionId);
  *   }
  *
  * Example 2: Azure Key Vault

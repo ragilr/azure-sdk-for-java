@@ -70,8 +70,8 @@ public class MockAzureHttpClient implements HttpClient {
                     } else {
                         final HttpBinJSON json = new HttpBinJSON();
                         json.url(request.url().toString()
-                                // This is just to mimic the behavior we've seen with httpbin.org.
-                                .replace("%20", " "));
+                            // This is just to mimic the behavior we've seen with httpbin.org.
+                            .replace("%20", " "));
                         json.headers(toMap(request.headers()));
                         response = new MockHttpResponse(request, 200, responseHeaders(), json);
                     }
@@ -118,7 +118,8 @@ public class MockAzureHttpClient implements HttpClient {
                         final MockResource resource = new MockResource();
                         resource.name(requestPath.substring(requestPath.lastIndexOf('/') + 1));
                         MockResource.Properties properties = new MockResource.Properties();
-                        properties.provisioningState(pollsRemaining <= 0 ? OperationState.SUCCEEDED : OperationState.IN_PROGRESS);
+                        properties.provisioningState(pollsRemaining <= 0 ? OperationState.SUCCEEDED
+                            : OperationState.IN_PROGRESS);
                         resource.properties(properties);
                         response = new MockHttpResponse(request, 200, responseHeaders(), resource);
                     } else if (requestPathLower.contains("/mockprovider/mockoperations/")) {
@@ -150,7 +151,7 @@ public class MockAzureHttpClient implements HttpClient {
                             } else {
                                 --pollsRemaining;
                                 response = new MockHttpResponse(request, 202, responseHeaders(), new byte[0])
-                                        .addHeader(LocationPollStrategy.HEADER_NAME, request.url().toString());
+                                    .addHeader(LocationPollStrategy.HEADER_NAME, request.url().toString());
                             }
                         }
                     }
@@ -180,7 +181,8 @@ public class MockAzureHttpClient implements HttpClient {
                         final MockResource resource = new MockResource();
                         resource.name("c");
                         resource.properties(new MockResource.Properties());
-                        resource.properties().provisioningState((pollsRemaining <= 0 ? OperationState.SUCCEEDED : OperationState.IN_PROGRESS));
+                        resource.properties().provisioningState((pollsRemaining <= 0 ? OperationState.SUCCEEDED
+                            : OperationState.IN_PROGRESS));
                         response = new MockHttpResponse(request, 200, responseHeaders(), resource);
                     } else {
                         if (pollsRemainingString == null) {
@@ -199,14 +201,18 @@ public class MockAzureHttpClient implements HttpClient {
                             initialResponseStatusCode = 201;
                         }
 
-                        response = new MockHttpResponse(request, initialResponseStatusCode, responseHeaders(), new byte[0]);
+                        response = new MockHttpResponse(request, initialResponseStatusCode, responseHeaders(),
+                            new byte[0]);
 
-                        final String pollUrl = "https://mock.azure.com/subscriptions/1/resourceGroups/mine/providers/mockprovider/mockoperations/1";
+                        final String pollUrl = "https://mock.azure.com/subscriptions/1/resourceGroups/mine/providers"
+                            + "/mockprovider/mockoperations/1";
                         if (pollType.contains(AzureAsyncOperationPollStrategy.HEADER_NAME)) {
-                            response.addHeader(AzureAsyncOperationPollStrategy.HEADER_NAME, pollUrl + "?PollType=" + AzureAsyncOperationPollStrategy.HEADER_NAME);
+                            response.addHeader(AzureAsyncOperationPollStrategy.HEADER_NAME,
+                                pollUrl + "?PollType=" + AzureAsyncOperationPollStrategy.HEADER_NAME);
                         }
                         if (pollType.contains(LocationPollStrategy.HEADER_NAME)) {
-                            response.addHeader(LocationPollStrategy.HEADER_NAME, pollUrl + "?PollType=" + LocationPollStrategy.HEADER_NAME);
+                            response.addHeader(LocationPollStrategy.HEADER_NAME,
+                                pollUrl + "?PollType=" + LocationPollStrategy.HEADER_NAME);
                         }
                     }
                 } else if (request.httpMethod() == HttpMethod.DELETE) {
@@ -236,14 +242,18 @@ public class MockAzureHttpClient implements HttpClient {
                             initialResponseStatusCode = 201;
                         }
 
-                        response = new MockHttpResponse(request, initialResponseStatusCode, responseHeaders(), new byte[0]);
+                        response = new MockHttpResponse(request, initialResponseStatusCode, responseHeaders(),
+                            new byte[0]);
 
-                        final String pollUrl = "https://mock.azure.com/subscriptions/1/resourceGroups/mine/providers/mockprovider/mockoperations/1";
+                        final String pollUrl = "https://mock.azure.com/subscriptions/1/resourceGroups/mine/providers"
+                            + "/mockprovider/mockoperations/1";
                         if (pollType.contains(AzureAsyncOperationPollStrategy.HEADER_NAME)) {
-                            response.addHeader(AzureAsyncOperationPollStrategy.HEADER_NAME, pollUrl + "?PollType=" + AzureAsyncOperationPollStrategy.HEADER_NAME);
+                            response.addHeader(AzureAsyncOperationPollStrategy.HEADER_NAME,
+                                pollUrl + "?PollType=" + AzureAsyncOperationPollStrategy.HEADER_NAME);
                         }
                         if (pollType.contains(LocationPollStrategy.HEADER_NAME)) {
-                            response.addHeader(LocationPollStrategy.HEADER_NAME, pollUrl + "?PollType=" + LocationPollStrategy.HEADER_NAME);
+                            response.addHeader(LocationPollStrategy.HEADER_NAME,
+                                pollUrl + "?PollType=" + LocationPollStrategy.HEADER_NAME);
                         }
                     }
                 }
@@ -289,7 +299,7 @@ public class MockAzureHttpClient implements HttpClient {
 
     private static String bodyToString(HttpRequest request) throws IOException {
         Mono<String> asyncString = FluxUtil.collectBytesInByteBufferStream(request.body())
-                .map(bytes -> new String(bytes, StandardCharsets.UTF_8));
+            .map(bytes -> new String(bytes, StandardCharsets.UTF_8));
         return asyncString.block();
     }
 
@@ -303,11 +313,11 @@ public class MockAzureHttpClient implements HttpClient {
 
     public static HttpHeaders responseHeaders() {
         return new HttpHeaders()
-                .put("Date", "Fri, 13 Oct 2017 20:33:09 GMT")
-                .put("Via", "1.1 vegur")
-                .put("Connection", "keep-alive")
-                .put("X-Processed-Time", "1.0")
-                .put("Access-Control-Allow-Credentials", "true")
-                .put("Content-Type", "application/json");
+            .put("Date", "Fri, 13 Oct 2017 20:33:09 GMT")
+            .put("Via", "1.1 vegur")
+            .put("Connection", "keep-alive")
+            .put("X-Processed-Time", "1.0")
+            .put("Access-Control-Allow-Credentials", "true")
+            .put("Content-Type", "application/json");
     }
 }
