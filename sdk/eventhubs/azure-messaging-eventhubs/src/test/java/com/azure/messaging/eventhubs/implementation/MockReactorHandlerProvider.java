@@ -17,7 +17,8 @@ class MockReactorHandlerProvider extends ReactorHandlerProvider {
     private final SendLinkHandler sendLinkHandler;
     private final ReceiveLinkHandler receiveLinkHandler;
 
-    MockReactorHandlerProvider(ReactorProvider provider, ConnectionHandler connectionHandler, SessionHandler sessionHandler,
+    MockReactorHandlerProvider(ReactorProvider provider, ConnectionHandler connectionHandler,
+                               SessionHandler sessionHandler,
                                SendLinkHandler sendLinkHandler, ReceiveLinkHandler receiveLinkHandler) {
         super(provider);
         this.connectionHandler = connectionHandler;
@@ -42,7 +43,8 @@ class MockReactorHandlerProvider extends ReactorHandlerProvider {
     }
 
     @Override
-    ReceiveLinkHandler createReceiveLinkHandler(String connectionId, String host, String receiverName, String entityPath) {
+    ReceiveLinkHandler createReceiveLinkHandler(String connectionId, String host, String receiverName,
+                                                String entityPath) {
         return receiveLinkHandler;
     }
 }

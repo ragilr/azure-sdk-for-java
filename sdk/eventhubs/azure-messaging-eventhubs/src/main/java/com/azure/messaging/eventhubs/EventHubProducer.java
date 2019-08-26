@@ -48,7 +48,8 @@ import java.util.Objects;
  * <p>
  * {@codesnippet com.azure.messaging.eventhubs.eventhubproducer.instantiation#partitionId}
  *
- * <p><strong>Publish events to the same partition, grouped together using {@link SendOptions#partitionKey(String)}.</strong></p>
+ * <p><strong>Publish events to the same partition, grouped together using {@link SendOptions#partitionKey(String)}
+ * .</strong></p>
  * <p>
  * If developers want to push similar events to end up at the same partition, but do not require them to go to a
  * specific partition, they can use {@link SendOptions#partitionKey(String)}.
@@ -102,6 +103,7 @@ public class EventHubProducer implements Closeable {
      * Creates an {@link EventDataBatch} that can fit as many events as the transport allows.
      *
      * @param options A set of options used to configure the {@link EventDataBatch}.
+     *
      * @return A new {@link EventDataBatch} that can fit as many events as the transport allows.
      */
     public EventDataBatch createBatch(BatchOptions options) {
@@ -180,6 +182,7 @@ public class EventHubProducer implements Closeable {
      * Sends the batch to the associated Event Hub.
      *
      * @param batch The batch to send to the service.
+     *
      * @throws NullPointerException if {@code batch} is {@code null}.
      * @see EventHubProducer#createBatch()
      * @see EventHubProducer#createBatch(BatchOptions)

@@ -62,7 +62,8 @@ public class InteropAmqpPropertiesTest extends ApiTestBase {
         final EventHubProducerOptions producerOptions = new EventHubProducerOptions().partitionId(PARTITION_ID)
             .retry(new RetryOptions().tryTimeout(Duration.ofSeconds(30)));
         producer = client.createProducer(producerOptions);
-        consumer = client.createConsumer(EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.latest());
+        consumer = client.createConsumer(EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            EventPosition.latest());
     }
 
     @Override
@@ -131,25 +132,31 @@ public class InteropAmqpPropertiesTest extends ApiTestBase {
     private void validateAmqpProperties(Message message, Map<Symbol, Object> messageAnnotations,
                                         Map<String, Object> applicationProperties, EventData actual) {
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.MESSAGE_ID.getValue()));
-        Assert.assertEquals(message.getMessageId(), actual.systemProperties().get(MessageConstant.MESSAGE_ID.getValue()));
+        Assert.assertEquals(message.getMessageId(),
+            actual.systemProperties().get(MessageConstant.MESSAGE_ID.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.USER_ID.getValue()));
-        Assert.assertEquals(new String(message.getUserId()), new String((byte[]) actual.systemProperties().get(MessageConstant.USER_ID.getValue())));
+        Assert.assertEquals(new String(message.getUserId()),
+            new String((byte[]) actual.systemProperties().get(MessageConstant.USER_ID.getValue())));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.TO.getValue()));
         Assert.assertEquals(message.getAddress(), actual.systemProperties().get(MessageConstant.TO.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.CONTENT_TYPE.getValue()));
-        Assert.assertEquals(message.getContentType(), actual.systemProperties().get(MessageConstant.CONTENT_TYPE.getValue()));
+        Assert.assertEquals(message.getContentType(),
+            actual.systemProperties().get(MessageConstant.CONTENT_TYPE.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.CONTENT_ENCODING.getValue()));
-        Assert.assertEquals(message.getContentEncoding(), actual.systemProperties().get(MessageConstant.CONTENT_ENCODING.getValue()));
+        Assert.assertEquals(message.getContentEncoding(),
+            actual.systemProperties().get(MessageConstant.CONTENT_ENCODING.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.CORRELATION_ID.getValue()));
-        Assert.assertEquals(message.getCorrelationId(), actual.systemProperties().get(MessageConstant.CORRELATION_ID.getValue()));
+        Assert.assertEquals(message.getCorrelationId(),
+            actual.systemProperties().get(MessageConstant.CORRELATION_ID.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.CREATION_TIME.getValue()));
-        Assert.assertEquals(message.getCreationTime(), actual.systemProperties().get(MessageConstant.CREATION_TIME.getValue()));
+        Assert.assertEquals(message.getCreationTime(),
+            actual.systemProperties().get(MessageConstant.CREATION_TIME.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.SUBJECT.getValue()));
         Assert.assertEquals(message.getSubject(), actual.systemProperties().get(MessageConstant.SUBJECT.getValue()));
@@ -158,13 +165,15 @@ public class InteropAmqpPropertiesTest extends ApiTestBase {
         Assert.assertEquals(message.getGroupId(), actual.systemProperties().get(MessageConstant.GROUP_ID.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.REPLY_TO_GROUP_ID.getValue()));
-        Assert.assertEquals(message.getReplyToGroupId(), actual.systemProperties().get(MessageConstant.REPLY_TO_GROUP_ID.getValue()));
+        Assert.assertEquals(message.getReplyToGroupId(),
+            actual.systemProperties().get(MessageConstant.REPLY_TO_GROUP_ID.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.REPLY_TO.getValue()));
         Assert.assertEquals(message.getReplyTo(), actual.systemProperties().get(MessageConstant.REPLY_TO.getValue()));
 
         Assert.assertTrue(actual.systemProperties().containsKey(MessageConstant.ABSOLUTE_EXPIRY_TIME.getValue()));
-        Assert.assertEquals(message.getExpiryTime(), actual.systemProperties().get(MessageConstant.ABSOLUTE_EXPIRY_TIME.getValue()));
+        Assert.assertEquals(message.getExpiryTime(),
+            actual.systemProperties().get(MessageConstant.ABSOLUTE_EXPIRY_TIME.getValue()));
 
         Assert.assertEquals(PAYLOAD, UTF_8.decode(actual.body()).toString());
 

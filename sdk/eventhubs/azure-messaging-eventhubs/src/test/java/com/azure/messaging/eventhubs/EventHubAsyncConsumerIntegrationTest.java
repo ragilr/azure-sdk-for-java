@@ -40,8 +40,8 @@ import static com.azure.core.amqp.exception.ErrorCondition.RESOURCE_LIMIT_EXCEED
 import static com.azure.messaging.eventhubs.EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME;
 
 /**
- * Integration tests with Azure Event Hubs service. There are other tests that also test {@link EventHubAsyncConsumer} in
- * other scenarios.
+ * Integration tests with Azure Event Hubs service. There are other tests that also test {@link EventHubAsyncConsumer}
+ * in other scenarios.
  *
  * @see SetPrefetchCountTest
  * @see EventPositionIntegrationTest
@@ -109,11 +109,14 @@ public class EventHubAsyncConsumerIntegrationTest extends ApiTestBase {
                     EventPosition.fromEnqueuedTime(Instant.now()));
                 consumers[i] = consumer;
 
-                final Disposable subscription = consumer.receive().take(numberOfEvents).subscribe(event -> {
-                    logger.info("Event[{}] received. partition: {}", event.sequenceNumber(), partitionId);
-                }, error -> {
+                final Disposable subscription = consumer.receive().take(numberOfEvents).subscribe(
+                    event -> {
+                        logger.info("Event[{}] received. partition: {}", event.sequenceNumber(), partitionId);
+                    },
+                    error -> {
                         Assert.fail("An error should not have occurred:" + error.toString());
-                    }, () -> {
+                    },
+                    () -> {
                         logger.info("Disposing of consumer now that the receive is complete.");
                         countDownLatch.countDown();
                     });
@@ -124,7 +127,8 @@ public class EventHubAsyncConsumerIntegrationTest extends ApiTestBase {
             }
 
             // Act
-            Flux.fromArray(producers).flatMap(producer -> producer.send(TestUtils.getEvents(numberOfEvents, MESSAGE_TRACKING_ID)))
+            Flux.fromArray(producers).flatMap(producer -> producer.send(TestUtils.getEvents(numberOfEvents,
+                MESSAGE_TRACKING_ID)))
                 .blockLast(TIMEOUT);
 
             // Assert
@@ -165,7 +169,8 @@ public class EventHubAsyncConsumerIntegrationTest extends ApiTestBase {
         try {
             for (int i = 0; i < MAX_NUMBER_OF_CONSUMERS; i++) {
                 final EventHubConsumerOptions options = new EventHubConsumerOptions().identifier(prefix + ":" + i);
-                final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.earliest(), options);
+                final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME,
+                    PARTITION_ID, EventPosition.earliest(), options);
                 consumers.add(consumer);
                 subscriptions.add(consumer.receive().take(TIMEOUT).subscribe(eventData -> {
                     // Received an event. We don't need to log it though.
@@ -173,7 +178,8 @@ public class EventHubAsyncConsumerIntegrationTest extends ApiTestBase {
             }
 
             // Act & Verify
-            exceededConsumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.earliest());
+            exceededConsumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+                EventPosition.earliest());
             StepVerifier.create(exceededConsumer.receive())
                 .expectErrorSatisfies(exception -> {
                     Assert.assertTrue(exception instanceof AmqpException);

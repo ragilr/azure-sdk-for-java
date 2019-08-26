@@ -47,10 +47,11 @@ public class EventHubSharedAccessKeyCredential implements TokenCredential {
      * @param keyName Name of the shared access key policy.
      * @param sharedAccessKey Value of the shared access key.
      * @param tokenValidity The duration for which the shared access signature is valid.
+     *
      * @throws IllegalArgumentException if {@code keyName}, {@code sharedAccessKey} is null or empty. Or the duration of
-     *         {@code tokenValidity} is zero or a negative value.
+     * {@code tokenValidity} is zero or a negative value.
      * @throws NoSuchAlgorithmException If the hashing algorithm cannot be instantiated, which is used to generate the
-     *         shared access signatures.
+     * shared access signatures.
      * @throws InvalidKeyException If the {@code sharedAccessKey} is an invalid value for the hashing algorithm.
      * @throws NullPointerException if {@code tokenValidity} is null.
      */
@@ -84,13 +85,16 @@ public class EventHubSharedAccessKeyCredential implements TokenCredential {
      * namespace or a specific Event Hub instance.
      *
      * @param scopes The name of the resource or token audience to obtain a token for.
+     *
      * @return A Mono that completes and returns the shared access signature.
+     *
      * @throws IllegalArgumentException if {@code scopes} does not contain a single value, which is the token audience.
      */
     @Override
     public Mono<AccessToken> getToken(String... scopes) {
         if (scopes.length != 1) {
-            throw logger.logExceptionAsError(new IllegalArgumentException("'scopes' should only contain a single argument that is the token audience or resource name."));
+            throw logger.logExceptionAsError(new IllegalArgumentException("'scopes' should only contain a single "
+                + "argument that is the token audience or resource name."));
         }
 
         return Mono.fromCallable(() -> generateSharedAccessSignature(scopes[0]));

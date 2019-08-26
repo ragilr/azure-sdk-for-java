@@ -127,14 +127,16 @@ public class EventHubClientMetadataIntegrationTest extends ApiTestBase {
     public void getPartitionPropertiesInvalidToken() throws InvalidKeyException, NoSuchAlgorithmException {
         // Arrange
         final ConnectionStringProperties original = getConnectionStringProperties();
-        final ConnectionStringProperties invalidCredentials = getCredentials(original.endpoint(), original.eventHubName(),
+        final ConnectionStringProperties invalidCredentials = getCredentials(original.endpoint(),
+            original.eventHubName(),
             original.sharedAccessKeyName(), "invalid-sas-key-value");
         final TokenCredential badTokenProvider = new EventHubSharedAccessKeyCredential(
             invalidCredentials.sharedAccessKeyName(), invalidCredentials.sharedAccessKey(), TIMEOUT);
         final ConnectionOptions connectionOptions = new ConnectionOptions(original.endpoint().getHost(),
             original.eventHubName(), badTokenProvider, getAuthorizationType(), TransportType.AMQP, RETRY_OPTIONS,
             ProxyConfiguration.SYSTEM_DEFAULTS, getConnectionOptions().scheduler());
-        final EventHubAsyncClient client = new EventHubAsyncClient(connectionOptions, getReactorProvider(), handlerProvider);
+        final EventHubAsyncClient client = new EventHubAsyncClient(connectionOptions, getReactorProvider(),
+            handlerProvider);
 
         // Act & Assert
         StepVerifier.create(client.getProperties())
@@ -159,7 +161,8 @@ public class EventHubClientMetadataIntegrationTest extends ApiTestBase {
         final ConnectionOptions connectionOptions = new ConnectionOptions(original.endpoint().getHost(),
             "invalid-event-hub", getTokenCredential(), getAuthorizationType(), TransportType.AMQP,
             RETRY_OPTIONS, ProxyConfiguration.SYSTEM_DEFAULTS, getConnectionOptions().scheduler());
-        final EventHubAsyncClient client = new EventHubAsyncClient(connectionOptions, getReactorProvider(), handlerProvider);
+        final EventHubAsyncClient client = new EventHubAsyncClient(connectionOptions, getReactorProvider(),
+            handlerProvider);
 
         // Act & Assert
         StepVerifier.create(client.getPartitionIds())

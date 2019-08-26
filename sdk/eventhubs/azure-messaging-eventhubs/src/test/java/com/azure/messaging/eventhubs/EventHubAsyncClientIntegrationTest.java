@@ -105,7 +105,8 @@ public class EventHubAsyncClientIntegrationTest extends ApiTestBase {
             EventPosition.fromEnqueuedTime(MESSAGES_PUSHED_INSTANT.get()), options);
 
         // Act & Assert
-        StepVerifier.create(consumer.receive().filter(x -> isMatchingEvent(x, MESSAGE_TRACKING_VALUE)).take(NUMBER_OF_EVENTS))
+        StepVerifier.create(
+            consumer.receive().filter(x -> isMatchingEvent(x, MESSAGE_TRACKING_VALUE)).take(NUMBER_OF_EVENTS))
             .expectNextCount(NUMBER_OF_EVENTS)
             .verifyComplete();
     }
@@ -132,25 +133,31 @@ public class EventHubAsyncClientIntegrationTest extends ApiTestBase {
         final CountDownLatch countDownLatch = new CountDownLatch(numberOfClients);
         final EventHubAsyncClient[] clients = new EventHubAsyncClient[numberOfClients];
         for (int i = 0; i < numberOfClients; i++) {
-            clients[i] = new EventHubAsyncClient(getConnectionOptions(), getReactorProvider(), new ReactorHandlerProvider(getReactorProvider()));
+            clients[i] = new EventHubAsyncClient(getConnectionOptions(), getReactorProvider(),
+                new ReactorHandlerProvider(getReactorProvider()));
         }
 
-        final EventHubAsyncProducer producer = clients[0].createProducer(new EventHubProducerOptions().partitionId(PARTITION_ID));
+        final EventHubAsyncProducer producer =
+            clients[0].createProducer(new EventHubProducerOptions().partitionId(PARTITION_ID));
         final List<EventHubAsyncConsumer> consumers = new ArrayList<>();
         final Disposable.Composite subscriptions = Disposables.composite();
 
         try {
             for (final EventHubAsyncClient hubClient : clients) {
-                final EventHubAsyncConsumer consumer = hubClient.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.latest());
+                final EventHubAsyncConsumer consumer = hubClient.createConsumer(DEFAULT_CONSUMER_GROUP_NAME,
+                    PARTITION_ID, EventPosition.latest());
                 consumers.add(consumer);
 
                 final Disposable subscription = consumer.receive().filter(event -> {
                     return event.properties() != null
                         && event.properties().containsKey(messageTrackingId)
                         && messageTrackingValue.equals(event.properties().get(messageTrackingId));
-                }).take(numberOfEvents).subscribe(event -> {
-                    logger.info("Event[{}] matched.", event.sequenceNumber());
-                }, error -> Assert.fail("An error should not have occurred:" + error.toString()), () -> {
+                }).take(numberOfEvents).subscribe(
+                    event -> {
+                        logger.info("Event[{}] matched.", event.sequenceNumber());
+                    },
+                    error -> Assert.fail("An error should not have occurred:" + error.toString()),
+                    () -> {
                         long count = countDownLatch.getCount();
                         logger.info("Finished consuming events. Counting down: {}", count);
                         countDownLatch.countDown();

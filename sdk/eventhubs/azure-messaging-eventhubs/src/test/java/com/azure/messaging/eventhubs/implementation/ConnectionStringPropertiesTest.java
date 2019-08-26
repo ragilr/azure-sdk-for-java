@@ -120,7 +120,8 @@ public class ConnectionStringPropertiesTest {
         Assert.assertEquals(EVENT_HUB, properties.eventHubName());
     }
 
-    private static String getConnectionString(String hostname, String eventHubName, String sasKeyName, String sasKeyValue) {
+    private static String getConnectionString(String hostname, String eventHubName, String sasKeyName,
+                                              String sasKeyValue) {
         final StringBuilder builder = new StringBuilder();
         if (hostname != null) {
             builder.append(String.format(Locale.US, "Endpoint=%s;", hostname));

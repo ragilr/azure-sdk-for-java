@@ -25,11 +25,12 @@ public class ProxyConfigurationTest {
     private static final String PROXY_USERNAME = "dummyUsername";
     private static final String PROXY_PASSWORD = "dummyPassword";
 
-    private static Proxy proxyAddress = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(PROXY_HOST, Integer.parseInt(PROXY_PORT)));
+    private static Proxy proxyAddress = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(PROXY_HOST,
+        Integer.parseInt(PROXY_PORT)));
 
     @DataPoints("Proxy Configuration Types")
     public static ProxyAuthenticationType[] proxyAuthenticationTypes() {
-        return new ProxyAuthenticationType[] {
+        return new ProxyAuthenticationType[]{
             ProxyAuthenticationType.BASIC, ProxyAuthenticationType.DIGEST, ProxyAuthenticationType.NONE
         };
     }
@@ -42,14 +43,18 @@ public class ProxyConfigurationTest {
     }
 
     @Theory
-    public void validateProxyConfiguration(@FromDataPoints("Proxy Configuration Types") ProxyAuthenticationType proxyAuthenticationType) {
-        ProxyConfiguration proxyConfiguration = new ProxyConfiguration(proxyAuthenticationType, proxyAddress, PROXY_USERNAME, PROXY_PASSWORD);
+    public void validateProxyConfiguration(
+        @FromDataPoints("Proxy Configuration Types") ProxyAuthenticationType proxyAuthenticationType) {
+        ProxyConfiguration proxyConfiguration = new ProxyConfiguration(proxyAuthenticationType, proxyAddress,
+            PROXY_USERNAME, PROXY_PASSWORD);
         validateProxyConfiguration(proxyConfiguration, proxyAuthenticationType);
     }
 
     @Theory
-    public void testIsProxyAddressConfigured(@FromDataPoints("Proxy Configuration Types") ProxyAuthenticationType proxyAuthenticationType) {
-        ProxyConfiguration proxyConfiguration = new ProxyConfiguration(proxyAuthenticationType, proxyAddress, PROXY_USERNAME, PROXY_PASSWORD);
+    public void testIsProxyAddressConfigured(
+        @FromDataPoints("Proxy Configuration Types") ProxyAuthenticationType proxyAuthenticationType) {
+        ProxyConfiguration proxyConfiguration = new ProxyConfiguration(proxyAuthenticationType, proxyAddress,
+            PROXY_USERNAME, PROXY_PASSWORD);
         Assert.assertTrue(proxyConfiguration.isProxyAddressConfigured());
 
         proxyConfiguration = new ProxyConfiguration(proxyAuthenticationType, proxyAddress, null, PROXY_PASSWORD);
@@ -75,8 +80,10 @@ public class ProxyConfigurationTest {
     }
 
     @Theory
-    public void testHasUserDefinedCredentials(@FromDataPoints("Proxy Configuration Types") ProxyAuthenticationType proxyAuthenticationType) {
-        ProxyConfiguration proxyConfiguration = new ProxyConfiguration(proxyAuthenticationType, proxyAddress, PROXY_USERNAME, PROXY_PASSWORD);
+    public void testHasUserDefinedCredentials(
+        @FromDataPoints("Proxy Configuration Types") ProxyAuthenticationType proxyAuthenticationType) {
+        ProxyConfiguration proxyConfiguration = new ProxyConfiguration(proxyAuthenticationType, proxyAddress,
+            PROXY_USERNAME, PROXY_PASSWORD);
         Assert.assertTrue(proxyConfiguration.hasUserDefinedCredentials());
 
         proxyConfiguration = new ProxyConfiguration(proxyAuthenticationType, proxyAddress, null, PROXY_PASSWORD);
@@ -101,7 +108,8 @@ public class ProxyConfigurationTest {
         Assert.assertFalse(proxyConfiguration.hasUserDefinedCredentials());
     }
 
-    private static void validateProxyConfiguration(ProxyConfiguration proxyConfiguration, ProxyAuthenticationType proxyAuthenticationType) {
+    private static void validateProxyConfiguration(ProxyConfiguration proxyConfiguration,
+                                                   ProxyAuthenticationType proxyAuthenticationType) {
         String proxyAddressStr = proxyConfiguration.proxyAddress().address().toString();
         ProxyAuthenticationType authentication = proxyConfiguration.authentication();
         Assert.assertEquals(HTTP_PROXY, proxyAddressStr);

@@ -74,7 +74,8 @@ public class EventDataBatchIntegrationTest extends ApiTestBase {
         skipIfNotRecordMode();
 
         // Arrange
-        final EventDataBatch batch = new EventDataBatch(EventHubAsyncProducer.MAX_MESSAGE_LENGTH_BYTES, null, contextProvider);
+        final EventDataBatch batch = new EventDataBatch(EventHubAsyncProducer.MAX_MESSAGE_LENGTH_BYTES, null,
+            contextProvider);
         int count = 0;
         while (batch.tryAdd(createData())) {
             // We only print every 100th item or it'll be really spammy.
@@ -91,14 +92,16 @@ public class EventDataBatchIntegrationTest extends ApiTestBase {
     }
 
     /**
-     * Test for sending a message batch that is {@link EventHubAsyncProducer#MAX_MESSAGE_LENGTH_BYTES} with partition key.
+     * Test for sending a message batch that is {@link EventHubAsyncProducer#MAX_MESSAGE_LENGTH_BYTES} with partition
+     * key.
      */
     @Test
     public void sendSmallEventsFullBatchPartitionKey() {
         skipIfNotRecordMode();
 
         // Arrange
-        final EventDataBatch batch = new EventDataBatch(EventHubAsyncProducer.MAX_MESSAGE_LENGTH_BYTES, PARTITION_KEY, contextProvider);
+        final EventDataBatch batch = new EventDataBatch(EventHubAsyncProducer.MAX_MESSAGE_LENGTH_BYTES, PARTITION_KEY,
+            contextProvider);
         int count = 0;
         while (batch.tryAdd(createData())) {
             // We only print every 100th item or it'll be really spammy.
@@ -125,7 +128,8 @@ public class EventDataBatchIntegrationTest extends ApiTestBase {
         final String messageValue = UUID.randomUUID().toString();
 
         final SendOptions sendOptions = new SendOptions().partitionKey(PARTITION_KEY);
-        final EventDataBatch batch = new EventDataBatch(EventHubAsyncProducer.MAX_MESSAGE_LENGTH_BYTES, PARTITION_KEY, contextProvider);
+        final EventDataBatch batch = new EventDataBatch(EventHubAsyncProducer.MAX_MESSAGE_LENGTH_BYTES, PARTITION_KEY,
+            contextProvider);
         int count = 0;
         while (count < 10) {
             final EventData data = createData();
@@ -145,24 +149,30 @@ public class EventDataBatchIntegrationTest extends ApiTestBase {
 
             // Creating consumers on all the partitions and subscribing to the receive event.
             consumers = client.getPartitionIds()
-                .map(id -> client.createConsumer(EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME, id, EventPosition.latest()));
+                .map(id -> client.createConsumer(EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME, id,
+                    EventPosition.latest()));
 
             final List<Disposable> consumerSubscriptions = consumers.map(consumer -> {
-                return consumer.receive().subscribe(event -> {
-                    if (event.partitionKey() == null || !PARTITION_KEY.equals(event.partitionKey())) {
-                        return;
-                    }
+                return consumer.receive().subscribe(
+                    event -> {
+                        if (event.partitionKey() == null || !PARTITION_KEY.equals(event.partitionKey())) {
+                            return;
+                        }
 
-                    if (isMatchingEvent(event, messageValue)) {
-                        logger.info("Event[{}] matched. Countdown: {}", event.sequenceNumber(), countDownLatch.getCount());
-                        countDownLatch.countDown();
-                    } else {
-                        logger.warning(String.format("Event[%s] matched partition key, but not GUID. Expected: %s. Actual: %s",
-                            event.sequenceNumber(), messageValue, event.properties().get(MESSAGE_TRACKING_ID)));
-                    }
-                }, error -> {
+                        if (isMatchingEvent(event, messageValue)) {
+                            logger.info("Event[{}] matched. Countdown: {}", event.sequenceNumber(),
+                                countDownLatch.getCount());
+                            countDownLatch.countDown();
+                        } else {
+                            logger.warning(String.format("Event[%s] matched partition key, but not GUID. Expected: %s. "
+                                    + "Actual: %s",
+                                event.sequenceNumber(), messageValue, event.properties().get(MESSAGE_TRACKING_ID)));
+                        }
+                    },
+                    error -> {
                         Assert.fail("An error should not have occurred:" + error.toString());
-                    }, () -> {
+                    },
+                    () -> {
                         logger.info("Disposing of consumer now that the receive is complete.");
                         dispose(consumer);
                     });

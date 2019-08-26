@@ -141,7 +141,8 @@ public class EventHubProducerTest {
         final EventData tooLargeEvent = new EventData(new byte[maxEventPayload + 1]);
 
         final EventHubProducerOptions producerOptions = new EventHubProducerOptions().retry(retryOptions);
-        final EventHubAsyncProducer hubAsyncProducer = new EventHubAsyncProducer(Mono.fromCallable(() -> link), producerOptions);
+        final EventHubAsyncProducer hubAsyncProducer = new EventHubAsyncProducer(Mono.fromCallable(() -> link),
+            producerOptions);
         final EventHubProducer hubProducer = new EventHubProducer(hubAsyncProducer, retryOptions.tryTimeout());
 
         // Act

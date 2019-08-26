@@ -82,8 +82,10 @@ public class EventPositionIntegrationTest extends ApiTestBase {
     @Test
     public void receiveEarliestMessages() {
         // Arrange
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.earliest());
-        final EventHubAsyncConsumer enqueuedTimeConsumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.fromEnqueuedTime(Instant.EPOCH));
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            EventPosition.earliest());
+        final EventHubAsyncConsumer enqueuedTimeConsumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME,
+            PARTITION_ID, EventPosition.fromEnqueuedTime(Instant.EPOCH));
 
         final List<EventData> earliestEvents;
         final List<EventData> enqueuedEvents;
@@ -124,7 +126,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
     @Test
     public void receiveLatestMessagesNoneAdded() {
         // Arrange
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.latest());
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            EventPosition.latest());
 
         // Act & Assert
         try {
@@ -144,7 +147,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
     public void receiveLatestMessages() throws InterruptedException {
         // Arrange
         final String messageValue = UUID.randomUUID().toString();
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.latest());
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            EventPosition.latest());
         final EventHubProducerOptions options = new EventHubProducerOptions().partitionId(PARTITION_ID);
         final EventHubAsyncProducer producer = client.createProducer(options);
         final Flux<EventData> events = Flux.range(0, NUMBER_OF_EVENTS).map(number -> {
@@ -179,7 +183,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
         final EventData[] events = EVENTS_PUSHED.get();
         final EventPosition position = EventPosition.fromEnqueuedTime(MESSAGES_PUSHED_INSTANT.get());
         final EventData expectedEvent = events[0];
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, position);
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            position);
 
         // Act & Assert
         try {
@@ -198,7 +203,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
     /**
      * Test for receiving messages with a previously received message.
      */
-    @Ignore("Investigate. We cannot use the enqueuedTime from an existing event. If we set Instant we created, like Instant.now() it works.")
+    @Ignore("Investigate. We cannot use the enqueuedTime from an existing event. If we set Instant we created, like "
+        + "Instant.now() it works.")
     @Test
     public void receiveMessageFromEnqueuedTimeReceivedMessage() {
         // Arrange
@@ -206,7 +212,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
         final EventData secondEvent = events[1];
         final EventPosition position = EventPosition.fromEnqueuedTime(secondEvent.enqueuedTime());
         final EventData expectedEvent = events[2];
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, position);
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            position);
 
         // Act & Assert
         try {
@@ -232,7 +239,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
         final EventData[] events = EVENTS_PUSHED.get();
         final EventData expectedEvent = events[4];
         final EventPosition position = EventPosition.fromOffset(expectedEvent.offset());
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, position);
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            position);
 
         // Act & Assert
         try {
@@ -258,7 +266,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
         final EventData[] events = EVENTS_PUSHED.get();
         final EventData expectedEvent = events[4];
         final EventPosition position = EventPosition.fromOffset(events[3].offset(), false);
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, position);
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            position);
 
         // Act & Assert
         try {
@@ -284,7 +293,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
         final EventData[] events = EVENTS_PUSHED.get();
         final EventData expectedEvent = events[3];
         final EventPosition position = EventPosition.fromSequenceNumber(expectedEvent.sequenceNumber(), true);
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, position);
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            position);
 
         // Act & Assert
         try {
@@ -310,7 +320,8 @@ public class EventPositionIntegrationTest extends ApiTestBase {
         final EventData[] events = EVENTS_PUSHED.get();
         final EventData expectedEvent = events[4];
         final EventPosition position = EventPosition.fromSequenceNumber(events[3].sequenceNumber());
-        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, position);
+        final EventHubAsyncConsumer consumer = client.createConsumer(DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            position);
 
         // Act & Assert
         try {

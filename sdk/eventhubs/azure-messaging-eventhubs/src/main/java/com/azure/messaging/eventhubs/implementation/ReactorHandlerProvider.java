@@ -38,6 +38,7 @@ public class ReactorHandlerProvider {
      * @param connectionId Identifier associated with this connection.
      * @param hostname Host for the connection handler.
      * @param transportType Transport type used for the connection.
+     *
      * @return A new {@link ConnectionHandler}.
      */
     ConnectionHandler createConnectionHandler(String connectionId, String hostname, TransportType transportType) {
@@ -47,7 +48,8 @@ public class ReactorHandlerProvider {
             case AMQP_WEB_SOCKETS:
                 return new WebSocketsConnectionHandler(connectionId, hostname);
             default:
-                throw logger.logExceptionAsWarning(new IllegalArgumentException(String.format(Locale.US, "This transport type '%s' is not supported.", transportType)));
+                throw logger.logExceptionAsWarning(new IllegalArgumentException(String.format(Locale.US, "This "
+                    + "transport type '%s' is not supported.", transportType)));
         }
     }
 
@@ -58,6 +60,7 @@ public class ReactorHandlerProvider {
      * @param host Host of the parent connection.
      * @param sessionName Name of the session.
      * @param openTimeout Duration to wait for the session to open.
+     *
      * @return A new {@link SessionHandler}.
      */
     SessionHandler createSessionHandler(String connectionId, String host, String sessionName, Duration openTimeout) {
@@ -70,6 +73,7 @@ public class ReactorHandlerProvider {
      * @param connectionId Identifier of the parent connection that created this session.
      * @param host Host of the parent connection.
      * @param senderName Name of the send link.
+     *
      * @return A new {@link SendLinkHandler}.
      */
     SendLinkHandler createSendLinkHandler(String connectionId, String host, String senderName, String entityPath) {
@@ -82,9 +86,11 @@ public class ReactorHandlerProvider {
      * @param connectionId Identifier of the parent connection that created this session.
      * @param host Host of the parent connection.
      * @param receiverName Name of the send link.
+     *
      * @return A new {@link ReceiveLinkHandler}.
      */
-    ReceiveLinkHandler createReceiveLinkHandler(String connectionId, String host, String receiverName, String entityPath) {
+    ReceiveLinkHandler createReceiveLinkHandler(String connectionId, String host, String receiverName,
+                                                String entityPath) {
         return new ReceiveLinkHandler(connectionId, host, receiverName, entityPath);
     }
 }

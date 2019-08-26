@@ -76,6 +76,7 @@ public class EventHubClient implements Closeable {
      * events in the partition event stream.
      *
      * @param partitionId The unique identifier of a partition associated with the Event Hub.
+     *
      * @return The information for the requested partition under the Event Hub this client is associated with.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
@@ -100,7 +101,9 @@ public class EventHubClient implements Closeable {
      * partition.
      *
      * @param options The set of options to apply when creating the producer.
+     *
      * @return A new {@link EventHubProducer}.
+     *
      * @throws NullPointerException if {@code options} is {@code null}.
      */
     public EventHubProducer createProducer(EventHubProducerOptions options) {
@@ -124,13 +127,15 @@ public class EventHubClient implements Closeable {
      * Consumers".
      *
      * @param consumerGroup The name of the consumer group this consumer is associated with. Events are read in the
-     *     context of this group. The name of the consumer group that is created by default is {@link
-     *     EventHubAsyncClient#DEFAULT_CONSUMER_GROUP_NAME "$Default"}.
+     * context of this group. The name of the consumer group that is created by default is {@link
+     * EventHubAsyncClient#DEFAULT_CONSUMER_GROUP_NAME "$Default"}.
      * @param partitionId The identifier of the Event Hub partition.
      * @param eventPosition The position within the partition where the consumer should begin reading events.
+     *
      * @return A new {@link EventHubConsumer} that receives events from the partition at the given position.
+     *
      * @throws NullPointerException If {@code eventPosition}, {@code consumerGroup}, {@code partitionId}, or {@code
-     *     options} is {@code null}.
+     * options} is {@code null}.
      * @throws IllegalArgumentException If {@code consumerGroup} or {@code partitionId} is an empty string.
      */
     public EventHubConsumer createConsumer(String consumerGroup, String partitionId, EventPosition eventPosition) {
@@ -157,20 +162,23 @@ public class EventHubClient implements Closeable {
      * </p>
      *
      * @param consumerGroup The name of the consumer group this consumer is associated with. Events are read in the
-     *     context of this group. The name of the consumer group that is created by default is {@link
-     *     EventHubAsyncClient#DEFAULT_CONSUMER_GROUP_NAME "$Default"}.
+     * context of this group. The name of the consumer group that is created by default is {@link
+     * EventHubAsyncClient#DEFAULT_CONSUMER_GROUP_NAME "$Default"}.
      * @param partitionId The identifier of the Event Hub partition from which events will be received.
      * @param eventPosition The position within the partition where the consumer should begin reading events.
      * @param options The set of options to apply when creating the consumer.
+     *
      * @return An new {@link EventHubConsumer} that receives events from the partition with all configured {@link
-     *     EventHubConsumerOptions}.
+     * EventHubConsumerOptions}.
+     *
      * @throws NullPointerException If {@code eventPosition}, {@code consumerGroup}, {@code partitionId}, or {@code
-     *     options} is {@code null}.
+     * options} is {@code null}.
      * @throws IllegalArgumentException If {@code consumerGroup} or {@code partitionId} is an empty string.
      */
     public EventHubConsumer createConsumer(String consumerGroup, String partitionId, EventPosition eventPosition,
                                            EventHubConsumerOptions options) {
-        final EventHubAsyncConsumer consumer = client.createConsumer(consumerGroup, partitionId, eventPosition, options);
+        final EventHubAsyncConsumer consumer = client.createConsumer(consumerGroup, partitionId, eventPosition,
+            options);
         return new EventHubConsumer(consumer, options);
     }
 

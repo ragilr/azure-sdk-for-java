@@ -49,7 +49,9 @@ public class ReactorConnectionTest {
     private static final String CONNECTION_ID = "test-connection-id";
     private static final String SESSION_NAME = "test-session-name";
     private static final Duration TEST_DURATION = Duration.ofSeconds(30);
-    private static final ConnectionStringProperties CREDENTIAL_INFO = new ConnectionStringProperties("Endpoint=sb://test-event-hub.servicebus.windows.net/;SharedAccessKeyName=dummySharedKeyName;SharedAccessKey=dummySharedKeyValue;EntityPath=eventhub1;");
+    private static final ConnectionStringProperties CREDENTIAL_INFO = new ConnectionStringProperties("Endpoint=sb"
+        + "://test-event-hub.servicebus.windows.net/;SharedAccessKeyName=dummySharedKeyName;"
+        + "SharedAccessKey=dummySharedKeyValue;EntityPath=eventhub1;");
     private static final String HOSTNAME = CREDENTIAL_INFO.endpoint().getHost();
     private static final Scheduler SCHEDULER = Schedulers.elastic();
 
@@ -86,13 +88,15 @@ public class ReactorConnectionTest {
         final ReactorDispatcher reactorDispatcher = new ReactorDispatcher(reactor);
         reactorProvider = new MockReactorProvider(reactor, reactorDispatcher);
         sessionHandler = new SessionHandler(CONNECTION_ID, HOSTNAME, SESSION_NAME, reactorDispatcher, TEST_DURATION);
-        reactorHandlerProvider = new MockReactorHandlerProvider(reactorProvider, connectionHandler, sessionHandler, null, null);
+        reactorHandlerProvider = new MockReactorHandlerProvider(reactorProvider, connectionHandler, sessionHandler,
+            null, null);
 
         final RetryOptions retryOptions = new RetryOptions().tryTimeout(TEST_DURATION);
         final ConnectionOptions connectionOptions = new ConnectionOptions(CREDENTIAL_INFO.endpoint().getHost(),
             CREDENTIAL_INFO.eventHubName(), tokenProvider, CBSAuthorizationType.SHARED_ACCESS_SIGNATURE,
             TransportType.AMQP, retryOptions, ProxyConfiguration.SYSTEM_DEFAULTS, SCHEDULER);
-        connection = new ReactorConnection(CONNECTION_ID, connectionOptions, reactorProvider, reactorHandlerProvider, responseMapper);
+        connection = new ReactorConnection(CONNECTION_ID, connectionOptions, reactorProvider, reactorHandlerProvider,
+            responseMapper);
     }
 
     @After
@@ -145,9 +149,11 @@ public class ReactorConnectionTest {
     @Test
     public void createSession() {
         // Arrange
-        // We want to ensure that the ReactorExecutor does not shutdown unexpectedly. There are still items to still process.
+        // We want to ensure that the ReactorExecutor does not shutdown unexpectedly. There are still items to still
+        // process.
         when(reactor.process()).thenReturn(true);
-        when(reactor.connectionToHost(connectionHandler.getHostname(), connectionHandler.getProtocolPort(), connectionHandler)).thenReturn(connectionProtonJ);
+        when(reactor.connectionToHost(connectionHandler.getHostname(), connectionHandler.getProtocolPort(),
+            connectionHandler)).thenReturn(connectionProtonJ);
         when(connectionProtonJ.session()).thenReturn(session);
         when(session.attachments()).thenReturn(record);
 
@@ -178,14 +184,18 @@ public class ReactorConnectionTest {
     @Test
     public void removeSessionThatExists() {
         // Arrange
-        // We want to ensure that the ReactorExecutor does not shutdown unexpectedly. There are still items to still process.
+        // We want to ensure that the ReactorExecutor does not shutdown unexpectedly. There are still items to still
+        // process.
         when(reactor.process()).thenReturn(true);
-        when(reactor.connectionToHost(connectionHandler.getHostname(), connectionHandler.getProtocolPort(), connectionHandler)).thenReturn(connectionProtonJ);
+        when(reactor.connectionToHost(connectionHandler.getHostname(), connectionHandler.getProtocolPort(),
+            connectionHandler)).thenReturn(connectionProtonJ);
         when(connectionProtonJ.session()).thenReturn(session);
         when(session.attachments()).thenReturn(record);
 
         // Act & Assert
-        StepVerifier.create(connection.createSession(SESSION_NAME).map(s -> connection.removeSession(s.getSessionName())))
+        StepVerifier.create(
+            connection
+                .createSession(SESSION_NAME).map(s -> connection.removeSession(s.getSessionName())))
             .expectNext(true)
             .verifyComplete();
 
@@ -198,9 +208,11 @@ public class ReactorConnectionTest {
     @Test
     public void removeSessionThatDoesNotExist() {
         // Arrange
-        // We want to ensure that the ReactorExecutor does not shutdown unexpectedly. There are still items to still process.
+        // We want to ensure that the ReactorExecutor does not shutdown unexpectedly. There are still items to still
+        // process.
         when(reactor.process()).thenReturn(true);
-        when(reactor.connectionToHost(connectionHandler.getHostname(), connectionHandler.getProtocolPort(), connectionHandler)).thenReturn(connectionProtonJ);
+        when(reactor.connectionToHost(connectionHandler.getHostname(), connectionHandler.getProtocolPort(),
+            connectionHandler)).thenReturn(connectionProtonJ);
         when(connectionProtonJ.session()).thenReturn(session);
         when(session.attachments()).thenReturn(record);
 
@@ -294,7 +306,8 @@ public class ReactorConnectionTest {
             TransportType.AMQP, retryOptions, ProxyConfiguration.SYSTEM_DEFAULTS, Schedulers.parallel());
 
         // Act and Assert
-        try (ReactorConnection connectionBad = new ReactorConnection(CONNECTION_ID, parameters, reactorProvider, reactorHandlerProvider, responseMapper)) {
+        try (ReactorConnection connectionBad = new ReactorConnection(CONNECTION_ID, parameters, reactorProvider,
+            reactorHandlerProvider, responseMapper)) {
             StepVerifier.create(connectionBad.getCBSNode())
                 .verifyError(TimeoutException.class);
         }

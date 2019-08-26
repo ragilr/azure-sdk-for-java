@@ -19,19 +19,19 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
- * {@link Reactor} is not thread-safe - all calls to {@link Proton} APIs should be on the Reactor Thread.
- * {@link Reactor} works out-of-box for all event driven API - ex: onReceive - which could raise upon onSocketRead.
- * {@link Reactor} doesn't support APIs like send() out-of-box - which could potentially run on different thread to that
- * of the Reactor thread.
+ * {@link Reactor} is not thread-safe - all calls to {@link Proton} APIs should be on the Reactor Thread. {@link
+ * Reactor} works out-of-box for all event driven API - ex: onReceive - which could raise upon onSocketRead. {@link
+ * Reactor} doesn't support APIs like send() out-of-box - which could potentially run on different thread to that of the
+ * Reactor thread.
  *
  * <p>
- * The following utility class is used to generate an Event to hook into {@link Reactor}'s event delegation pattern.
- * It uses a {@link Pipe} as the IO on which Reactor listens to.
+ * The following utility class is used to generate an Event to hook into {@link Reactor}'s event delegation pattern. It
+ * uses a {@link Pipe} as the IO on which Reactor listens to.
  * </p>
  *
  * <p>
- * Cardinality: Multiple {@link ReactorDispatcher}'s could be attached to 1 {@link Reactor}.
- * Each {@link ReactorDispatcher} should be initialized synchronously - as it calls API in {@link Reactor} which is not
+ * Cardinality: Multiple {@link ReactorDispatcher}'s could be attached to 1 {@link Reactor}. Each {@link
+ * ReactorDispatcher} should be initialized synchronously - as it calls API in {@link Reactor} which is not
  * thread-safe.
  * </p>
  */
@@ -83,7 +83,8 @@ public final class ReactorDispatcher {
         final RejectedExecutionException rejectedException = this.reactor.attachments()
             .get(RejectedExecutionException.class, RejectedExecutionException.class);
         if (rejectedException != null) {
-            throw logger.logExceptionAsError(new RejectedExecutionException(rejectedException.getMessage(), rejectedException));
+            throw logger.logExceptionAsError(new RejectedExecutionException(rejectedException.getMessage(),
+                rejectedException));
         }
 
         // throw when the pipe is in closed state - in which case,

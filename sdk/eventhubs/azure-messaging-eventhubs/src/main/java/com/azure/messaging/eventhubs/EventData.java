@@ -82,6 +82,7 @@ public class EventData implements Comparable<EventData> {
      * Creates an event containing the {@code body}.
      *
      * @param body The data to set for this event.
+     *
      * @throws NullPointerException if {@code body} is {@code null}.
      */
     public EventData(ByteBuffer body) {
@@ -160,7 +161,9 @@ public class EventData implements Comparable<EventData> {
      *
      * @param key The key for this application property
      * @param value The value for this application property.
+     *
      * @return The updated EventData object.
+     *
      * @throws NullPointerException if {@code key} or {@code value} is null.
      */
     public EventData addProperty(String key, Object value) {
@@ -197,7 +200,7 @@ public class EventData implements Comparable<EventData> {
      * <b>received</b> EventData.
      *
      * @return an encapsulation of all SystemProperties appended by EventHubs service into EventData. {@code null} if
-     *         the {@link EventData} is not received and is created by the public constructors.
+     * the {@link EventData} is not received and is created by the public constructors.
      */
     public Map<String, Object> systemProperties() {
         return systemProperties;
@@ -251,8 +254,9 @@ public class EventData implements Comparable<EventData> {
      * is unique for every message received in the Event Hub partition.
      *
      * @return Sequence number for this event.
-     * @throws IllegalStateException if {@link #systemProperties()} does not contain the sequence number in a
-     *         retrieved event.
+     *
+     * @throws IllegalStateException if {@link #systemProperties()} does not contain the sequence number in a retrieved
+     * event.
      */
     public long sequenceNumber() {
         return systemProperties.sequenceNumber();
@@ -345,14 +349,16 @@ public class EventData implements Comparable<EventData> {
          * Event Hub.
          *
          * @return Sequence number for this event.
-         * @throws IllegalStateException if {@link SystemProperties} does not contain the sequence number in a
-         *         retrieved event.
+         *
+         * @throws IllegalStateException if {@link SystemProperties} does not contain the sequence number in a retrieved
+         * event.
          */
         private long sequenceNumber() {
             final Long sequenceNumber = this.getSystemProperty(SEQUENCE_NUMBER_ANNOTATION_NAME.getValue());
 
             if (sequenceNumber == null) {
-                throw new IllegalStateException(String.format(Locale.US, "sequenceNumber: %s should always be in map.", SEQUENCE_NUMBER_ANNOTATION_NAME.getValue()));
+                throw new IllegalStateException(String.format(Locale.US, "sequenceNumber: %s should always be in map"
+                    + ".", SEQUENCE_NUMBER_ANNOTATION_NAME.getValue()));
             }
 
             return sequenceNumber;

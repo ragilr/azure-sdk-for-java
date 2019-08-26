@@ -53,7 +53,8 @@ public class CBSChannelTest extends ApiTestBase {
         MockitoAnnotations.initMocks(this);
 
         credentials = getConnectionStringProperties();
-        tokenResourceProvider = new TokenResourceProvider(CBSAuthorizationType.SHARED_ACCESS_SIGNATURE, credentials.endpoint().getHost());
+        tokenResourceProvider = new TokenResourceProvider(CBSAuthorizationType.SHARED_ACCESS_SIGNATURE,
+            credentials.endpoint().getHost());
 
         handlerProvider = new ReactorHandlerProvider(getReactorProvider());
         connection = new ReactorConnection(CONNECTION_ID, getConnectionOptions(), getReactorProvider(),
@@ -101,7 +102,8 @@ public class CBSChannelTest extends ApiTestBase {
 
         TokenCredential tokenProvider = null;
         try {
-            tokenProvider = new EventHubSharedAccessKeyCredential(credentials.sharedAccessKeyName(), "Invalid shared access key.", duration);
+            tokenProvider = new EventHubSharedAccessKeyCredential(credentials.sharedAccessKeyName(), "Invalid shared "
+                + "access key.", duration);
         } catch (Exception e) {
             Assert.fail("Could not create token provider: " + e.toString());
         }

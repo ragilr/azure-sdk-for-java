@@ -57,7 +57,8 @@ public class BackCompatTest extends ApiTestBase {
         final ReactorHandlerProvider handlerProvider = new ReactorHandlerProvider(getReactorProvider());
 
         client = new EventHubAsyncClient(getConnectionOptions(), getReactorProvider(), handlerProvider);
-        consumer = client.createConsumer(EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID, EventPosition.latest());
+        consumer = client.createConsumer(EventHubAsyncClient.DEFAULT_CONSUMER_GROUP_NAME, PARTITION_ID,
+            EventPosition.latest());
 
         final EventHubProducerOptions producerOptions = new EventHubProducerOptions()
             .partitionId(PARTITION_ID);
@@ -80,7 +81,8 @@ public class BackCompatTest extends ApiTestBase {
         final String messageTrackingValue = UUID.randomUUID().toString();
 
         // until version 0.10.0 - we used to have Properties as HashMap<String,String>
-        // This specific combination is intended to test the back compat - with the new Properties type as HashMap<String, Object>
+        // This specific combination is intended to test the back compat - with the new Properties type as
+        // HashMap<String, Object>
         final HashMap<String, Object> applicationProperties = new HashMap<>();
         applicationProperties.put("firstProperty", "value1");
         applicationProperties.put("intProperty", "3");
@@ -96,7 +98,11 @@ public class BackCompatTest extends ApiTestBase {
         final EventData eventData = new EventData(message);
 
         // Act & Assert
-        StepVerifier.create(consumer.receive().filter(received -> isMatchingEvent(received, messageTrackingValue)).take(1))
+        StepVerifier
+            .create(consumer
+                .receive()
+                .filter(received -> isMatchingEvent(received, messageTrackingValue))
+                .take(1))
             .then(() -> producer.send(eventData).block(TIMEOUT))
             .assertNext(event -> validateAmqpProperties(applicationProperties, event))
             .verifyComplete();

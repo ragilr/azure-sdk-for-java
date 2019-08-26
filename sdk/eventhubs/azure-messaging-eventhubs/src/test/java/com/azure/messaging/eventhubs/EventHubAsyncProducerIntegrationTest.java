@@ -74,8 +74,8 @@ public class EventHubAsyncProducerIntegrationTest extends ApiTestBase {
     }
 
     /**
-     * Verifies that we can create an {@link EventHubAsyncProducer} that does not care about partitions and lets the service
-     * distribute the events.
+     * Verifies that we can create an {@link EventHubAsyncProducer} that does not care about partitions and lets the
+     * service distribute the events.
      */
     @Test
     public void sendMessage() throws IOException {

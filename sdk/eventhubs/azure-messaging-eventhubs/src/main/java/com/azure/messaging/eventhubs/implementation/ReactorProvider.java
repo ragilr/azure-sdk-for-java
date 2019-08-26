@@ -37,7 +37,9 @@ public class ReactorProvider {
      * Creates a reactor and replaces the existing instance of it.
      *
      * @param connectionId Identifier for Reactor.
+     *
      * @return The newly created reactor instance.
+     *
      * @throws IOException If the service could not create a Reactor instance.
      */
     Reactor createReactor(String connectionId, int maxFrameSize) throws IOException {
@@ -52,9 +54,11 @@ public class ReactorProvider {
      *
      * @param globalHandler The global handler for reactor instance. Useful for logging events that were missed.
      * @param baseHandlers Handler for reactor instance. Usually: {@link ReactorHandler}
+     *
      * @return A new reactor instance.
      */
-    private Reactor createReactor(final int maxFrameSize, final Handler globalHandler, final BaseHandler... baseHandlers) throws IOException {
+    private Reactor createReactor(final int maxFrameSize, final Handler globalHandler,
+                                  final BaseHandler... baseHandlers) throws IOException {
         Objects.requireNonNull(baseHandlers);
         Objects.requireNonNull(globalHandler);
 
