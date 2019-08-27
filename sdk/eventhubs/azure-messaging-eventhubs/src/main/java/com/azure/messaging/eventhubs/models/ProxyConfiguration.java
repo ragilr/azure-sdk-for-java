@@ -3,8 +3,9 @@
 
 package com.azure.messaging.eventhubs.models;
 
-import com.azure.core.util.logging.ClientLogger;
 import com.azure.core.implementation.annotation.Immutable;
+import com.azure.core.util.logging.ClientLogger;
+import com.azure.messaging.eventhubs.EventHubClientBuilder;
 
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
@@ -13,6 +14,8 @@ import java.util.Objects;
 
 /**
  * Properties for configuring proxies with Event Hubs.
+ *
+ * @see EventHubClientBuilder#proxyConfiguration(ProxyConfiguration)
  */
 @Immutable
 public class ProxyConfiguration implements AutoCloseable {
@@ -56,10 +59,8 @@ public class ProxyConfiguration implements AutoCloseable {
      * @throws IllegalArgumentException if {@code authentication} is {@link ProxyAuthenticationType#BASIC} or {@link
      * ProxyAuthenticationType#DIGEST} and {@code username} or {@code password} are {@code null}.
      */
-    public ProxyConfiguration(ProxyAuthenticationType authentication, Proxy proxyAddress, String username,
-                              String password) {
-        Objects.requireNonNull(authentication);
-        this.authentication = authentication;
+    public ProxyConfiguration(ProxyAuthenticationType authentication, Proxy proxyAddress, String username, String password) {
+        this.authentication = Objects.requireNonNull(authentication, "'authentication' cannot be null.");
         this.proxyAddress = proxyAddress;
 
         if (username != null && password != null) {

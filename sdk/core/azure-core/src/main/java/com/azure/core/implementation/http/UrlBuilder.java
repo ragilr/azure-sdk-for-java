@@ -173,6 +173,24 @@ public final class UrlBuilder {
         return query;
     }
 
+    public String queryString() {
+        if (query.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder queryBuilder = new StringBuilder("?");
+        for (Map.Entry<String, String> entry : query.entrySet()) {
+            if (queryBuilder.length() > 1) {
+                queryBuilder.append("&");
+            }
+            queryBuilder.append(entry.getKey());
+            queryBuilder.append("=");
+            queryBuilder.append(entry.getValue());
+        }
+
+        return queryBuilder.toString();
+    }
+
     private UrlBuilder with(String text, UrlTokenizerState startState) {
         final UrlTokenizer tokenizer = new UrlTokenizer(text, startState);
 
@@ -212,8 +230,7 @@ public final class UrlBuilder {
                             if (nameValue.length == 2) {
                                 setQueryParameter(nameValue[0], nameValue[1]);
                             } else {
-                                throw logger.logExceptionAsError(new IllegalArgumentException("Malformed query entry: "
-                                    + entry));
+                                setQueryParameter(nameValue[0], "");
                             }
                         }
                     }
@@ -273,19 +290,7 @@ public final class UrlBuilder {
             result.append(path);
         }
 
-        if (!query.isEmpty()) {
-            StringBuilder queryBuilder = new StringBuilder("?");
-            for (Map.Entry<String, String> entry : query.entrySet()) {
-                if (queryBuilder.length() > 1) {
-                    queryBuilder.append("&");
-                }
-                queryBuilder.append(entry.getKey());
-                queryBuilder.append("=");
-                queryBuilder.append(entry.getValue());
-            }
-
-            result.append(queryBuilder.toString());
-        }
+        result.append(queryString());
 
         return result.toString();
     }
