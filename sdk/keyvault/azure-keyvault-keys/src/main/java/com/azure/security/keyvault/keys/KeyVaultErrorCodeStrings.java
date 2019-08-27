@@ -22,9 +22,10 @@ class KeyVaultErrorCodeStrings {
     static final String VAULT_END_POINT_REQUIRED = "vault_endpoint_required";
 
     /**
-     *  Gets the error String for the specified property.
+     * Gets the error String for the specified property.
      *
      * @param propertyName the property name for which error string is required.
+     *
      * @return The {@link String value} containing the error message.
      */
     static String getErrorString(String propertyName) {
@@ -34,7 +35,8 @@ class KeyVaultErrorCodeStrings {
 
     private static synchronized void loadProperties() {
         if (errorStrings == null) {
-            try (InputStream fileInputStream = KeyVaultErrorCodeStrings.class.getClassLoader().getResource((ERROR_STRINGS_FILE_NAME)).openStream()) {
+            try (InputStream fileInputStream =
+                KeyVaultErrorCodeStrings.class.getClassLoader().getResource((ERROR_STRINGS_FILE_NAME)).openStream()) {
                 errorStrings = new Properties();
                 errorStrings.load(fileInputStream);
             } catch (IOException ex) {

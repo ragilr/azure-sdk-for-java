@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A policy that authenticates requests with Azure Key Vault service. The content added by this policy
- * is leveraged in {@link TokenCredential} to get and set the correct "Authorization" header value.
+ * A policy that authenticates requests with Azure Key Vault service. The content added by this policy is leveraged in
+ * {@link TokenCredential} to get and set the correct "Authorization" header value.
  *
  * @see TokenCredential
  */
@@ -43,6 +43,7 @@ public final class KeyVaultCredentialPolicy implements HttpPipelinePolicy {
      *
      * @param context The request context
      * @param next The next HTTP pipeline policy to process the {@code context's} request after this policy completes.
+     *
      * @return A {@link Mono} representing the HTTP response that will arrive asynchronously.
      */
     @Override
@@ -67,13 +68,15 @@ public final class KeyVaultCredentialPolicy implements HttpPipelinePolicy {
      *
      * @param authenticateHeader The authentication header containing all the challenges.
      * @param authChallengePrefix The authentication challenge name.
+     *
      * @return a challenge map.
      */
     private static Map<String, String> extractChallenge(String authenticateHeader, String authChallengePrefix) {
         if (!isValidChallenge(authenticateHeader, authChallengePrefix)) {
             return null;
         }
-        authenticateHeader = authenticateHeader.toLowerCase(Locale.ROOT).replace(authChallengePrefix.toLowerCase(Locale.ROOT), "");
+        authenticateHeader =
+            authenticateHeader.toLowerCase(Locale.ROOT).replace(authChallengePrefix.toLowerCase(Locale.ROOT), "");
 
         String[] challenges = authenticateHeader.split(", ");
         Map<String, String> challengeMap = new HashMap<>();
@@ -89,6 +92,7 @@ public final class KeyVaultCredentialPolicy implements HttpPipelinePolicy {
      *
      * @param authenticateHeader The authentication header containing all the challenges.
      * @param authChallengePrefix The authentication challenge name.
+     *
      * @return A boolean indicating tha challenge is valid or not.
      */
     private static boolean isValidChallenge(String authenticateHeader, String authChallengePrefix) {

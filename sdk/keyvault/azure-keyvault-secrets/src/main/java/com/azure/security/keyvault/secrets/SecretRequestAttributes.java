@@ -16,8 +16,9 @@ import java.time.ZoneOffset;
 class SecretRequestAttributes {
 
     /**
-     * Creates an instance of SecretRequestAttributes. Reads secretBase.notBefore, secretBase.expires and secretBase.enabled fields
-     * from {@code secretBase}
+     * Creates an instance of SecretRequestAttributes. Reads secretBase.notBefore, secretBase.expires and
+     * secretBase.enabled fields from {@code secretBase}
+     *
      * @param secretBase the {@link SecretBase} object with populated attributes
      */
     SecretRequestAttributes(SecretBase secretBase) {
@@ -85,6 +86,7 @@ class SecretRequestAttributes {
      * Set the enabled value.
      *
      * @param enabled the enabled value to set
+     *
      * @return the Attributes object itself.
      */
     public SecretRequestAttributes enabled(Boolean enabled) {
@@ -108,6 +110,7 @@ class SecretRequestAttributes {
      * Set the notBefore value.
      *
      * @param notBefore the notBefore value to set
+     *
      * @return the Attributes object itself.
      */
     public SecretRequestAttributes notBefore(OffsetDateTime notBefore) {
@@ -135,6 +138,7 @@ class SecretRequestAttributes {
      * Set the expires value.
      *
      * @param expires the expires value to set
+     *
      * @return the Attributes object itself.
      */
     public SecretRequestAttributes expires(OffsetDateTime expires) {
@@ -155,7 +159,7 @@ class SecretRequestAttributes {
         if (this.created == null) {
             return null;
         }
-        return  OffsetDateTime.ofInstant(Instant.ofEpochMilli(this.created * 1000L), ZoneOffset.UTC);
+        return OffsetDateTime.ofInstant(Instant.ofEpochMilli(this.created * 1000L), ZoneOffset.UTC);
     }
 
     /**
@@ -167,7 +171,7 @@ class SecretRequestAttributes {
         if (this.updated == null) {
             return null;
         }
-        return  OffsetDateTime.ofInstant(Instant.ofEpochMilli(this.updated * 1000L), ZoneOffset.UTC);
+        return OffsetDateTime.ofInstant(Instant.ofEpochMilli(this.updated * 1000L), ZoneOffset.UTC);
     }
 
 }
