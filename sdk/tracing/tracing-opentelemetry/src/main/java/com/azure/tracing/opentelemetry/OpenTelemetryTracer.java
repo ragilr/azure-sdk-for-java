@@ -21,8 +21,10 @@ import java.util.Optional;
 public class OpenTelemetryTracer implements com.azure.core.implementation.tracing.Tracer {
     // Singleton OpenTelemetry tracer capable of starting and exporting spans.
     private static final Tracer TRACER = Tracing.getTracer();
-    private static final String OPENTELEMETRY_SPAN_KEY = com.azure.core.implementation.tracing.Tracer.OPENTELEMETRY_SPAN_KEY;
-    private static final String OPENTELEMETRY_SPAN_NAME_KEY = com.azure.core.implementation.tracing.Tracer.OPENTELEMETRY_SPAN_NAME_KEY;
+    private static final String OPENTELEMETRY_SPAN_KEY =
+        com.azure.core.implementation.tracing.Tracer.OPENTELEMETRY_SPAN_KEY;
+    private static final String OPENTELEMETRY_SPAN_NAME_KEY =
+        com.azure.core.implementation.tracing.Tracer.OPENTELEMETRY_SPAN_NAME_KEY;
 
     private final ClientLogger logger = new ClientLogger(OpenTelemetryTracer.class);
 
