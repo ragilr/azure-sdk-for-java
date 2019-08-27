@@ -15,7 +15,8 @@ import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
  * <ol>
  *   <li>No public or protected constructors</li>
  *   <li>No public static method named 'builder'</li>
- *   <li>Since these classes are supposed to be immutable, all fields in the service client classes should be final.</li>
+ *   <li>Since these classes are supposed to be immutable, all fields in the service client
+ *   classes should be final.</li>
  * </ol>
  */
 public class ServiceClientInstantiationCheck extends AbstractCheck {
@@ -168,7 +169,8 @@ public class ServiceClientInstantiationCheck extends AbstractCheck {
             // VARIABLE_DEF token will always MODIFIERS token. If there is no modifier at the variable, no child under
             // MODIFIERS token. Also the previous sibling of OBJBLOCK will always be class name IDENT node.
             if (!modifiersToken.branchContains(TokenTypes.FINAL)) {
-                log(modifiersToken, String.format("The variable field ''%s'' of class ''%s'' should be final. Classes annotated with @ServiceClient are supposed to be immutable.",
+                log(modifiersToken, String.format("The variable field ''%s'' of class ''%s'' should be final. Classes"
+                        + " annotated with @ServiceClient are supposed to be immutable.",
                     ast.findFirstToken(TokenTypes.IDENT).getText(), objBlockToken.getPreviousSibling().getText()));
             }
         }

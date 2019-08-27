@@ -20,9 +20,12 @@ public class ServiceClientChecks extends AbstractCheck {
     private static final String BUILDER_METHOD_NAME = "builder";
     private static final String SERVICE_CLIENT_CLASS_NAME = "com.azure.common.ServiceClient";
 
-    private static final String FAILED_TO_LOAD_MESSAGE = "%s class failed to load, ServiceClientChecks will be ignored.";
-    private static final String CONSTRUCTOR_ERROR_MESSAGE = "Descendants of ServiceClient cannot have public or protected constructors.";
-    private static final String BUILDER_ERROR_MESSAGE = "Descendants of ServiceClient must have a static method named builder.";
+    private static final String FAILED_TO_LOAD_MESSAGE = "%s class failed to load, ServiceClientChecks will be"
+        + " ignored.";
+    private static final String CONSTRUCTOR_ERROR_MESSAGE = "Descendants of ServiceClient cannot have public or "
+        + "protected constructors.";
+    private static final String BUILDER_ERROR_MESSAGE = "Descendants of ServiceClient must have a static method named"
+        + " builder.";
 
     private static final int[] TOKENS = new int[] {
         TokenTypes.PACKAGE_DEF,
@@ -116,7 +119,8 @@ public class ServiceClientChecks extends AbstractCheck {
     /**
      * Determines if the class extends ServiceClient.
      * @param packageDefinitionToken Package definition token.
-     * @return True if the package is not in "com.microsoft", the file is a class definition, and the class extends ServiceClient.
+     * @return True if the package is not in "com.microsoft", the file is a class definition, and the class
+     * extends ServiceClient.
      */
     private boolean extendsServiceClient(DetailAST packageDefinitionToken) {
         String packageName = FullIdent.createFullIdent(packageDefinitionToken.findFirstToken(TokenTypes.DOT)).getText();

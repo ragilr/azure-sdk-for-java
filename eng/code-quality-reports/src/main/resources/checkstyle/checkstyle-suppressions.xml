@@ -111,6 +111,7 @@
 
   <!-- Don't check for JavaDocPackage in samples or tests -->
   <suppress checks="JavadocPackage" files=".*[/\\](samples|test)[/\\].*\.java"/>
+  <suppress checks="LineLength" files=".*[/\\](samples|test)[/\\].*\.java"/>
 
   <!-- Don't apply custom Checkstyle rules to files under checkstyle package. -->
   <suppress checks="com\.azure\.tools\.checkstyle\.checks\..+" files=".*[/\\]tools[/\\]checkstyle[/\\].*"/>
@@ -133,7 +134,7 @@
 
   <!-- Suppress XX exception for Storage for preview 3. Save it for preview 4 -->
   <suppress checks="LineLength" files=".*[/\\]com[/\\]azure[/\\]storage[/\\]*"/>
-  
+
   <!-- JavadocInlineTagCheck Suppression for now, which need code owner's attention -->
   <suppress checks="com.azure.tools.checkstyle.checks.JavadocInlineTagCheck" files="com.azure.core.http.HttpResponse.java"/>
   <suppress checks="com.azure.tools.checkstyle.checks.JavadocInlineTagCheck" files="com.azure.security.keyvault.keys.KeyAsyncClient.java"/>
