@@ -636,8 +636,8 @@ public final class SecretAsyncClient {
     }
 
     /**
-     * Restores a backed up secret, and all its versions, to a vault. This operation requires the {@code
-     * secrets/restore} permission.
+     * Restores a backed up secret, and all its versions, to a vault. This operation requires the
+     * {@code secrets/restore} permission.
      *
      * <p><strong>Code Samples</strong></p>
      * <p>Restores the secret in the key vault from its backup. Subscribes to the call asynchronously
@@ -658,8 +658,8 @@ public final class SecretAsyncClient {
     }
 
     /**
-     * Restores a backed up secret, and all its versions, to a vault. This operation requires the {@code
-     * secrets/restore} permission.
+     * Restores a backed up secret, and all its versions, to a vault. This operation requires the
+     * {@code secrets/restore} permission.
      *
      * <p><strong>Code Samples</strong></p>
      * <p>Restores the secret in the key vault from its backup. Subscribes to the call asynchronously
@@ -746,8 +746,8 @@ public final class SecretAsyncClient {
 
     /**
      * Lists {@link DeletedSecret deleted secrets} of the key vault. The get deleted secrets operation returns the
-     * secrets that have been deleted for a vault enabled for soft-delete. This operation requires the {@code
-     * secrets/list} permission.
+     * secrets that have been deleted for a vault enabled for soft-delete. This operation requires the
+     * {@code secrets/list} permission.
      *
      * <p><strong>Code Samples</strong></p>
      * <p>Lists the deleted secrets in the key vault. Subscribes to the call asynchronously and prints out the

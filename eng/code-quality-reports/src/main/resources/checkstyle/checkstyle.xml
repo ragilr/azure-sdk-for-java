@@ -51,6 +51,8 @@ page at http://checkstyle.sourceforge.net/config.html -->
     <!-- Enforce line length to 120 char -->
     <module name="LineLength">
       <property name="max" value="120"/>
+      <!-- Allow codeSnippet to override max line length -->
+      <property name="ignorePattern" value=".*\{@codesnippet.*\}"/>
     </module>
 
     <!-- IMPORT CHECKS -->

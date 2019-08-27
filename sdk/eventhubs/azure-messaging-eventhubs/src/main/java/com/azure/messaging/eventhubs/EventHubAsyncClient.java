@@ -85,7 +85,7 @@ public class EventHubAsyncClient implements Closeable {
     private final EventHubConsumerOptions defaultConsumerOptions;
 
     EventHubAsyncClient(ConnectionOptions connectionOptions, ReactorProvider provider,
-    ReactorHandlerProvider handlerProvider) {
+        ReactorHandlerProvider handlerProvider) {
         Objects.requireNonNull(connectionOptions, "'connectionOptions' cannot be null.");
         Objects.requireNonNull(provider, "'provider' cannot be null.");
         Objects.requireNonNull(handlerProvider, "'handlerProvider' cannot be null.");
@@ -262,9 +262,11 @@ public class EventHubAsyncClient implements Closeable {
         Objects.requireNonNull(partitionId, "'partitionId' cannot be null.");
 
         if (consumerGroup.isEmpty()) {
-            throw logger.logExceptionAsError(new IllegalArgumentException("'consumerGroup' cannot be an empty string."));
+            throw logger
+                .logExceptionAsError(new IllegalArgumentException("'consumerGroup' cannot be an empty string."));
         } else if (partitionId.isEmpty()) {
-            throw logger.logExceptionAsError(new IllegalArgumentException("'partitionId' cannot be an empty string."));
+            throw logger
+                .logExceptionAsError(new IllegalArgumentException("'partitionId' cannot be an empty string."));
         }
 
         final EventHubConsumerOptions clonedOptions = options.clone();

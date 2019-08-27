@@ -124,8 +124,8 @@ public class Poller<T> {
      * {@link PollResponse}. However if poll operation returns {@link Mono#error(Throwable)}, the {@link Poller} will
      * disregard that and continue to poll.
      *
-     * @throws IllegalArgumentException if {@code pollInterval} is less than or equal to zero and if {@code
-     * pollInterval} or {@code pollOperation} are {@code null}
+     * @throws IllegalArgumentException if {@code pollInterval} is less than or equal to zero and if
+     * {@code pollInterval} or {@code pollOperation} are {@code null}
      */
     public Poller(Duration pollInterval, Function<PollResponse<T>, Mono<PollResponse<T>>> pollOperation) {
         this(pollInterval, pollOperation, null);
@@ -134,8 +134,8 @@ public class Poller<T> {
     /**
      * Create a {@link Poller} instance with poll interval, poll operation and cancel operation. The polling starts
      * immediately by invoking {@code pollOperation}. The next poll cycle will be defined by retryAfter value in {@link
-     * PollResponse}. In absence of {@link PollResponse#getRetryAfter()}, the {@link Poller} will use {@code
-     * pollInterval}.
+     * PollResponse}. In absence of {@link PollResponse#getRetryAfter()}, the {@link Poller} will use
+     * {@code pollInterval}.
      *
      * @param pollInterval Not-null and greater than zero poll interval.
      * @param pollOperation The polling operation to be called by the {@link Poller} instance. This is a callback into
@@ -147,8 +147,8 @@ public class Poller<T> {
      * @param cancelOperation cancel operation if cancellation is supported by the service. It can be {@code null} which
      * will indicate to the {@link Poller} that cancel operation is not supported by Azure service.
      *
-     * @throws IllegalArgumentException if {@code pollInterval} is less than or equal to zero and if {@code
-     * pollInterval} or {@code pollOperation} are {@code null}
+     * @throws IllegalArgumentException if {@code pollInterval} is less than or equal to zero and if
+     * {@code pollInterval} or {@code pollOperation} are {@code null}
      */
     public Poller(Duration pollInterval, Function<PollResponse<T>, Mono<PollResponse<T>>> pollOperation,
                   Consumer<Poller<T>> cancelOperation) {
@@ -262,8 +262,8 @@ public class Poller<T> {
     }
 
     /**
-     * Blocks until given {@link OperationStatus} is received or a timeout expires if provided. A {@code null} {@code
-     * timeout} will cause to block indefinitely for desired status.
+     * Blocks until given {@link OperationStatus} is received or a timeout expires if provided. A {@code null}
+     * {@code timeout} will cause to block indefinitely for desired status.
      *
      * @param statusToBlockFor The desired {@link OperationStatus} to block for and it can be any valid {@link
      * OperationStatus} value.
@@ -272,8 +272,8 @@ public class Poller<T> {
      *
      * @return {@link PollResponse} for matching desired status to block for.
      *
-     * @throws IllegalArgumentException if {@code timeout} is zero or negative and if {@code statusToBlockFor} is {@code
-     * null}.
+     * @throws IllegalArgumentException if {@code timeout} is zero or negative and if {@code statusToBlockFor} is
+     * {@code null}.
      */
     public PollResponse<T> blockUntil(OperationStatus statusToBlockFor, Duration timeout) {
         if (statusToBlockFor == null) {

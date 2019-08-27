@@ -46,8 +46,10 @@ public class RecordNetworkCallPolicy implements HttpPipelinePolicy {
     private static final String SIG = "sig";
 
     private static final Pattern DELEGATIONKEY_KEY_PATTERN = Pattern.compile("(?:<Value>)(.*)(?:</Value>)");
-    private static final Pattern DELEGATIONKEY_CLIENTID_PATTERN = Pattern.compile("(?:<SignedOid>)(.*)(?:</SignedOid>)");
-    private static final Pattern DELEGATIONKEY_TENANTID_PATTERN = Pattern.compile("(?:<SignedTid>)(.*)(?:</SignedTid>)");
+    private static final Pattern DELEGATIONKEY_CLIENTID_PATTERN = Pattern
+        .compile("(?:<SignedOid>)(.*)(?:</SignedOid>)");
+    private static final Pattern DELEGATIONKEY_TENANTID_PATTERN = Pattern
+        .compile("(?:<SignedTid>)(.*)(?:</SignedTid>)");
 
     private final ClientLogger logger = new ClientLogger(RecordNetworkCallPolicy.class);
     private final RecordedData recordedData;
@@ -190,9 +192,12 @@ public class RecordNetworkCallPolicy implements HttpPipelinePolicy {
             return content;
         }
 
-        content = redactionReplacement(content, DELEGATIONKEY_KEY_PATTERN.matcher(content), Base64.getEncoder().encodeToString("REDACTED".getBytes(StandardCharsets.UTF_8)));
-        content = redactionReplacement(content, DELEGATIONKEY_CLIENTID_PATTERN.matcher(content), UUID.randomUUID().toString());
-        content = redactionReplacement(content, DELEGATIONKEY_TENANTID_PATTERN.matcher(content), UUID.randomUUID().toString());
+        content = redactionReplacement(content, DELEGATIONKEY_KEY_PATTERN.matcher(content), Base64.getEncoder()
+            .encodeToString("REDACTED".getBytes(StandardCharsets.UTF_8)));
+        content = redactionReplacement(content, DELEGATIONKEY_CLIENTID_PATTERN.matcher(content), UUID.randomUUID()
+            .toString());
+        content = redactionReplacement(content, DELEGATIONKEY_TENANTID_PATTERN.matcher(content), UUID.randomUUID()
+            .toString());
 
         return content;
     }

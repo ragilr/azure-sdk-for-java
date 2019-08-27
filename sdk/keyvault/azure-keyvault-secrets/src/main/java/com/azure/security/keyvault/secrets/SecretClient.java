@@ -503,14 +503,14 @@ public final class SecretClient {
     }
 
     /**
-     * Restores a backed up secret, and all its versions, to a vault. This operation requires the {@code
-     * secrets/restore} permission.
+     * Restores a backed up secret, and all its versions, to a vault. This operation requires the
+     * {@code secrets/restore} permission.
      *
      * <p><strong>Code Samples</strong></p>
      * <p>Restores the secret in the key vault from its backup byte array. Prints out the details of the restored secret
      * returned
-     * in the response.</p> //Pass the secret backup byte array of the secret to be restored. {@codesnippet
-     * com.azure.security.keyvault.secretclient.restoreSecret#byte}
+     * in the response.</p> //Pass the secret backup byte array of the secret to be restored.
+     * {@codesnippet com.azure.security.keyvault.secretclient.restoreSecret#byte}
      *
      * @param backup The backup blob associated with the secret.
      *
@@ -523,14 +523,14 @@ public final class SecretClient {
     }
 
     /**
-     * Restores a backed up secret, and all its versions, to a vault. This operation requires the {@code
-     * secrets/restore} permission.
+     * Restores a backed up secret, and all its versions, to a vault. This operation requires the
+     * {@code secrets/restore} permission.
      *
      * <p><strong>Code Samples</strong></p>
      * <p>Restores the secret in the key vault from its backup byte array. Prints out the details of the restored secret
      * returned
-     * in the response.</p> //Pass the secret backup byte array of the secret to be restored. {@codesnippet
-     * com.azure.security.keyvault.secretclient.restoreSecretWithResponse#byte-Context}
+     * in the response.</p> //Pass the secret backup byte array of the secret to be restored.
+     * {@codesnippet com.azure.security.keyvault.secretclient.restoreSecretWithResponse#byte-Context}
      *
      * @param backup The backup blob associated with the secret.
      * @param context Additional context that is passed through the Http pipeline during the service call.
@@ -592,8 +592,8 @@ public final class SecretClient {
 
     /**
      * Lists {@link DeletedSecret deleted secrets} of the key vault. The get deleted secrets operation returns the
-     * secrets that have been deleted for a vault enabled for soft-delete. This operation requires the {@code
-     * secrets/list} permission.
+     * secrets that have been deleted for a vault enabled for soft-delete. This operation requires the
+     * {@code secrets/list} permission.
      *
      * <p><strong>Code Samples</strong></p>
      * <p>Lists the deleted secrets in the key vault and for each deleted secret prints out its recovery id.</p>
@@ -609,8 +609,8 @@ public final class SecretClient {
 
     /**
      * Lists {@link DeletedSecret deleted secrets} of the key vault. The get deleted secrets operation returns the
-     * secrets that have been deleted for a vault enabled for soft-delete. This operation requires the {@code
-     * secrets/list} permission.
+     * secrets that have been deleted for a vault enabled for soft-delete. This operation requires the
+     * {@code secrets/list} permission.
      *
      * <p><strong>Code Samples</strong></p>
      * <p>Lists the deleted secrets in the key vault and for each deleted secret prints out its recovery id.</p>

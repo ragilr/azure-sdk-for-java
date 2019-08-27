@@ -120,8 +120,8 @@ public final class ConfigurationClientBuilder {
     }
 
     /**
-     * Creates a {@link ConfigurationAsyncClient} based on options set in the Builder. Every time {@code
-     * buildAsyncClient()} is called a new instance of {@link ConfigurationAsyncClient} is created.
+     * Creates a {@link ConfigurationAsyncClient} based on options set in the Builder. Every time
+     * {@code buildAsyncClient()} is called a new instance of {@link ConfigurationAsyncClient} is created.
      *
      * <p>
      * If {@link #pipeline(HttpPipeline) pipeline} is set, then the {@code pipeline} and {@link #endpoint(String)

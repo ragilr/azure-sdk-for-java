@@ -128,7 +128,8 @@ public final class CryptographyClient {
      * EncryptionAlgorithm#A256CBC A256CBC} and {@link EncryptionAlgorithm#A256CBC_HS512 A256CBC-HS512} </p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Encrypts the content. Subscribes to the call asynchronously and prints out the encrypted content details when a response has been received.</p>
+     * <p>Encrypts the content. Subscribes to the call asynchronously and prints out the encrypted content details when
+     * a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.encrypt#EncryptionAlgorithm-byte-byte-byte-Context}
      *
      * @param algorithm The algorithm to be used for encryption.
@@ -163,7 +164,8 @@ public final class CryptographyClient {
      * EncryptionAlgorithm#A256CBC A256CBC} and {@link EncryptionAlgorithm#A256CBC_HS512 A256CBC-HS512} </p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Encrypts the content. Subscribes to the call asynchronously and prints out the encrypted content details when a response has been received.</p>
+     * <p>Encrypts the content. Subscribes to the call asynchronously and prints out the encrypted content details when
+     * a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.encrypt#EncryptionAlgorithm-byte}
      *
      * @param algorithm The algorithm to be used for encryption.
@@ -194,7 +196,8 @@ public final class CryptographyClient {
      * EncryptionAlgorithm#A256CBC A256CBC} and {@link EncryptionAlgorithm#A256CBC_HS512 A256CBC-HS512} </p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Decrypts the encrypted content. Subscribes to the call asynchronously and prints out the decrypted content details when a response has been received.</p>
+     * <p>Decrypts the encrypted content. Subscribes to the call asynchronously and prints out the decrypted content
+     * details when a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.decrypt#EncryptionAlgorithm-byte-byte-byte-byte}
      *
      * @param algorithm The algorithm to be used for decryption.
@@ -228,7 +231,8 @@ public final class CryptographyClient {
      * EncryptionAlgorithm#A256CBC A256CBC} and {@link EncryptionAlgorithm#A256CBC_HS512 A256CBC-HS512} </p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Decrypts the encrypted content. Subscribes to the call asynchronously and prints out the decrypted content details when a response has been received.</p>
+     * <p>Decrypts the encrypted content. Subscribes to the call asynchronously and prints out the decrypted content
+     * details when a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.decrypt#EncryptionAlgorithm-byte-byte-byte-byte-Context}
      *
      * @param algorithm The algorithm to be used for decryption.
@@ -263,7 +267,8 @@ public final class CryptographyClient {
      * EncryptionAlgorithm#A256CBC A256CBC} and {@link EncryptionAlgorithm#A256CBC_HS512 A256CBC-HS512} </p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Decrypts the encrypted content. Subscribes to the call asynchronously and prints out the decrypted content details when a response has been received.</p>
+     * <p>Decrypts the encrypted content. Subscribes to the call asynchronously and prints out the decrypted content
+     * details when a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.decrypt#EncryptionAlgorithm-byte}
      *
      * @param algorithm The algorithm to be used for decryption.
@@ -290,7 +295,8 @@ public final class CryptographyClient {
      * {@link SignatureAlgorithm#RS384 RS384} and {@link SignatureAlgorithm#RS512 RS512}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Sings the digest. Subscribes to the call asynchronously and prints out the signature details when a response has been received.</p>
+     * <p>Sings the digest. Subscribes to the call asynchronously and prints out the signature details when a response
+     * has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.sign#SignatureAlgorithm-byte-Context}
      *
      * @param algorithm The algorithm to use for signing.
@@ -318,7 +324,8 @@ public final class CryptographyClient {
      * {@link SignatureAlgorithm#RS384 RS384} and {@link SignatureAlgorithm#RS512 RS512}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Sings the digest. Subscribes to the call asynchronously and prints out the signature details when a response has been received.</p>
+     * <p>Sings the digest. Subscribes to the call asynchronously and prints out the signature details when a response
+     * has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.sign#SignatureAlgorithm-byte}
      *
      * @param algorithm The algorithm to use for signing.
@@ -346,7 +353,8 @@ public final class CryptographyClient {
      * {@link SignatureAlgorithm#RS384 RS384} and {@link SignatureAlgorithm#RS512 RS512}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Verifies the signature against the specified digest. Subscribes to the call asynchronously and prints out the verification details when a response has been received.</p>
+     * <p>Verifies the signature against the specified digest. Subscribes to the call asynchronously and prints out the
+     * verification details when a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.verify#SignatureAlgorithm-byte-byte}
      *
      * @param algorithm The algorithm to use for signing.
@@ -375,7 +383,8 @@ public final class CryptographyClient {
      * {@link SignatureAlgorithm#RS384 RS384} and {@link SignatureAlgorithm#RS512 RS512}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Verifies the signature against the specified digest. Subscribes to the call asynchronously and prints out the verification details when a response has been received.</p>
+     * <p>Verifies the signature against the specified digest. Subscribes to the call asynchronously and prints out the
+     * verification details when a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.verify#SignatureAlgorithm-byte-byte-Context}
      *
      * @param algorithm The algorithm to use for signing.
@@ -402,7 +411,8 @@ public final class CryptographyClient {
      * KeyWrapAlgorithm#RSA_OAEP_256 RSA_OAEP_256}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Wraps the key content. Subscribes to the call asynchronously and prints out the wrapped key details when a response has been received.</p>
+     * <p>Wraps the key content. Subscribes to the call asynchronously and prints out the wrapped key details when a
+     * response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.wrapKey#KeyWrapAlgorithm-byte}
      *
      * @param algorithm The encryption algorithm to use for wrapping the key.
@@ -428,7 +438,8 @@ public final class CryptographyClient {
      * KeyWrapAlgorithm#RSA_OAEP_256 RSA_OAEP_256}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Wraps the key content. Subscribes to the call asynchronously and prints out the wrapped key details when a response has been received.</p>
+     * <p>Wraps the key content. Subscribes to the call asynchronously and prints out the wrapped key details when a
+     * response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.wrapKey#KeyWrapAlgorithm-byte-Context}
      *
      * @param algorithm The encryption algorithm to use for wrapping the key.
@@ -458,7 +469,8 @@ public final class CryptographyClient {
      * A256KW}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Unwraps the key content. Subscribes to the call asynchronously and prints out the unwrapped key details when a response has been received.</p>
+     * <p>Unwraps the key content. Subscribes to the call asynchronously and prints out the unwrapped key details when
+     * a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.unwrapKey#KeyWrapAlgorithm-byte}
      *
      * @param algorithm The encryption algorithm to use for wrapping the key.
@@ -486,7 +498,8 @@ public final class CryptographyClient {
      * A256KW}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Unwraps the key content. Subscribes to the call asynchronously and prints out the unwrapped key details when a response has been received.</p>
+     * <p>Unwraps the key content. Subscribes to the call asynchronously and prints out the unwrapped key details when a
+     * response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.unwrapKey#KeyWrapAlgorithm-byte-Context}
      *
      * @param algorithm The encryption algorithm to use for wrapping the key.
@@ -514,7 +527,8 @@ public final class CryptographyClient {
      * {@link SignatureAlgorithm#RS384 RS384} and {@link SignatureAlgorithm#RS512 RS512}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Signs the raw data. Subscribes to the call asynchronously and prints out the signature details when a response has been received.</p>
+     * <p>Signs the raw data. Subscribes to the call asynchronously and prints out the signature details when a response
+     * has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.signData#SignatureAlgorithm-byte}
      *
      * @param algorithm The algorithm to use for signing.
@@ -541,7 +555,8 @@ public final class CryptographyClient {
      * {@link SignatureAlgorithm#RS384 RS384} and {@link SignatureAlgorithm#RS512 RS512}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Signs the raw data. Subscribes to the call asynchronously and prints out the signature details when a response has been received.</p>
+     * <p>Signs the raw data. Subscribes to the call asynchronously and prints out the signature details when a response
+     * has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.signData#SignatureAlgorithm-byte-Context}
      *
      * @param algorithm The algorithm to use for signing.
@@ -570,7 +585,8 @@ public final class CryptographyClient {
      * {@link SignatureAlgorithm#RS384 RS384} and {@link SignatureAlgorithm#RS512 RS512}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Verifies the signature against the raw data. Subscribes to the call asynchronously and prints out the verification details when a response has been received.</p>
+     * <p>Verifies the signature against the raw data. Subscribes to the call asynchronously and prints out the
+     * verification details when a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.verifyData#SignatureAlgorithm-byte-byte}
      *
      * @param algorithm The algorithm to use for signing.
@@ -599,7 +615,8 @@ public final class CryptographyClient {
      * {@link SignatureAlgorithm#RS384 RS384} and {@link SignatureAlgorithm#RS512 RS512}</p>
      *
      * <p><strong>Code Samples</strong></p>
-     * <p>Verifies the signature against the raw data. Subscribes to the call asynchronously and prints out the verification details when a response has been received.</p>
+     * <p>Verifies the signature against the raw data. Subscribes to the call asynchronously and prints out the
+     * verification details when a response has been received.</p>
      * {@codesnippet com.azure.security.keyvault.keys.cryptography.CryptographyClient.verifyData#SignatureAlgorithm-byte-byte-Context}
      *
      * @param algorithm The algorithm to use for signing.

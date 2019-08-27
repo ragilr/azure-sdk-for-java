@@ -155,7 +155,8 @@ public class EventHubClientBuilder {
         Objects.requireNonNull(eventHubName, "'eventHubName' cannot be null.");
 
         if (connectionString.isEmpty()) {
-            throw logger.logExceptionAsError(new IllegalArgumentException("'connectionString' cannot be an empty string."));
+            throw logger
+                .logExceptionAsError(new IllegalArgumentException("'connectionString' cannot be an empty string."));
         } else if (eventHubName.isEmpty()) {
             throw logger.logExceptionAsError(new IllegalArgumentException("'eventHubName' cannot be an empty string."));
         }

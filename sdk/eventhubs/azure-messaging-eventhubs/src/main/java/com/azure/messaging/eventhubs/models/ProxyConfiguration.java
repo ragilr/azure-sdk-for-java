@@ -45,8 +45,8 @@ public class ProxyConfiguration implements AutoCloseable {
     }
 
     /**
-     * Creates a proxy configuration that uses the {@code proxyAddress} and authenticates with provided {@code
-     * username}, {@code password} and {@code authentication}.
+     * Creates a proxy configuration that uses the {@code proxyAddress} and authenticates with provided
+     * {@code username}, {@code password} and {@code authentication}.
      *
      * @param authentication Authentication method to preemptively use with proxy.
      * @param proxyAddress Proxy to use. If {@code null} is passed in, then the system configured {@link java.net.Proxy}
@@ -59,7 +59,8 @@ public class ProxyConfiguration implements AutoCloseable {
      * @throws IllegalArgumentException if {@code authentication} is {@link ProxyAuthenticationType#BASIC} or {@link
      * ProxyAuthenticationType#DIGEST} and {@code username} or {@code password} are {@code null}.
      */
-    public ProxyConfiguration(ProxyAuthenticationType authentication, Proxy proxyAddress, String username, String password) {
+    public ProxyConfiguration(
+        ProxyAuthenticationType authentication, Proxy proxyAddress, String username, String password) {
         this.authentication = Objects.requireNonNull(authentication, "'authentication' cannot be null.");
         this.proxyAddress = proxyAddress;
 

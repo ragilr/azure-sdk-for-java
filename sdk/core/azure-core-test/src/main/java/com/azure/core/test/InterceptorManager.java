@@ -79,9 +79,9 @@ public class InterceptorManager implements AutoCloseable {
     }
 
     /**
-     * Creates a new InterceptorManager that replays test session records. It takes a set of {@code
-     * textReplacementRules}, that can be used by {@link PlaybackClient} to replace values in a {@link
-     * NetworkCallRecord#response()}.
+     * Creates a new InterceptorManager that replays test session records. It takes a set of
+     * {@code textReplacementRules}, that can be used by {@link PlaybackClient} to replace values in a
+     * {@link NetworkCallRecord#response()}.
      *
      * The test session records are read from: "<i>session-records/{@code testName}.json</i>"
      *
