@@ -16,14 +16,16 @@ import java.security.Provider;
 
 abstract class AesKw extends LocalKeyWrapAlgorithm {
 
-    static final byte[] DEFAULT_IV = new byte[] { (byte) 0xA6, (byte) 0xA6, (byte) 0xA6, (byte) 0xA6, (byte) 0xA6, (byte) 0xA6, (byte) 0xA6, (byte) 0xA6 };
+    static final byte[] DEFAULT_IV = new byte[]{(byte) 0xA6, (byte) 0xA6, (byte) 0xA6, (byte) 0xA6, (byte) 0xA6,
+        (byte) 0xA6, (byte) 0xA6, (byte) 0xA6};
     static final String CIPHER_NAME = "AESWrap";
 
     static class AesKwDecryptor implements ICryptoTransform {
 
         final Cipher cipher;
 
-        AesKwDecryptor(byte[] key, byte[] iv, Provider provider) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+        AesKwDecryptor(byte[] key, byte[] iv, Provider provider) throws NoSuchAlgorithmException,
+            NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
 
             if (provider == null) {
                 cipher = Cipher.getInstance(CIPHER_NAME);
@@ -33,7 +35,7 @@ abstract class AesKw extends LocalKeyWrapAlgorithm {
 
             // The default provider does not support the specification of IV. This
             // is guarded by the CreateEncrypter wrapper method and the iv parameter
-            // can be ignored when using the default provider 
+            // can be ignored when using the default provider
             if (provider == null) {
                 cipher.init(Cipher.UNWRAP_MODE, new SecretKeySpec(key, "AES"));
             } else {
@@ -42,7 +44,8 @@ abstract class AesKw extends LocalKeyWrapAlgorithm {
         }
 
         @Override
-        public byte[] doFinal(byte[] plaintext) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException {
+        public byte[] doFinal(byte[] plaintext) throws IllegalBlockSizeException, BadPaddingException,
+            InvalidKeyException, NoSuchAlgorithmException {
 
             return cipher.unwrap(plaintext, "AESWrap", Cipher.SECRET_KEY).getEncoded();
         }
@@ -53,7 +56,8 @@ abstract class AesKw extends LocalKeyWrapAlgorithm {
 
         final Cipher cipher;
 
-        AesKwEncryptor(byte[] key, byte[] iv, Provider provider) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+        AesKwEncryptor(byte[] key, byte[] iv, Provider provider) throws NoSuchAlgorithmException,
+            NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
 
             if (provider == null) {
                 cipher = Cipher.getInstance(CIPHER_NAME);
@@ -63,7 +67,7 @@ abstract class AesKw extends LocalKeyWrapAlgorithm {
 
             // The default provider does not support the specification of IV. This
             // is guarded by the CreateEncrypter wrapper method and the iv parameter
-            // can be ignored when using the default provider 
+            // can be ignored when using the default provider
             if (provider == null) {
                 cipher.init(Cipher.WRAP_MODE, new SecretKeySpec(key, "AES"));
             } else {
@@ -72,7 +76,8 @@ abstract class AesKw extends LocalKeyWrapAlgorithm {
         }
 
         @Override
-        public byte[] doFinal(byte[] plaintext) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+        public byte[] doFinal(byte[] plaintext) throws IllegalBlockSizeException, BadPaddingException,
+            InvalidKeyException {
 
             return cipher.wrap(new SecretKeySpec(plaintext, "AES"));
         }
@@ -84,25 +89,29 @@ abstract class AesKw extends LocalKeyWrapAlgorithm {
     }
 
     @Override
-    public ICryptoTransform createEncryptor(byte[] key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public ICryptoTransform createEncryptor(byte[] key) throws NoSuchAlgorithmException, NoSuchPaddingException,
+        InvalidKeyException, InvalidAlgorithmParameterException {
 
         return createEncryptor(key, null, null);
     }
 
     @Override
-    public ICryptoTransform createEncryptor(byte[] key, Provider provider) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public ICryptoTransform createEncryptor(byte[] key, Provider provider) throws NoSuchAlgorithmException,
+        NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
 
         return createEncryptor(key, null, provider);
     }
 
     @Override
-    public ICryptoTransform createEncryptor(byte[] key, byte[] iv) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public ICryptoTransform createEncryptor(byte[] key, byte[] iv) throws NoSuchAlgorithmException,
+        NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
 
         return createEncryptor(key, iv, null);
     }
 
     @Override
-    public ICryptoTransform createEncryptor(byte[] key, byte[] iv, Provider provider) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public ICryptoTransform createEncryptor(byte[] key, byte[] iv, Provider provider) throws NoSuchAlgorithmException,
+        NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
 
         if (key == null) {
             throw new IllegalArgumentException("key");
@@ -128,24 +137,28 @@ abstract class AesKw extends LocalKeyWrapAlgorithm {
     }
 
     @Override
-    public ICryptoTransform createDecryptor(byte[] key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public ICryptoTransform createDecryptor(byte[] key) throws NoSuchAlgorithmException, NoSuchPaddingException,
+        InvalidKeyException, InvalidAlgorithmParameterException {
 
         return createDecryptor(key, null, null);
     }
 
     @Override
-    public ICryptoTransform createDecryptor(byte[] key, Provider provider) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public ICryptoTransform createDecryptor(byte[] key, Provider provider) throws NoSuchAlgorithmException,
+        NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
 
         return createDecryptor(key, null, provider);
     }
 
     @Override
-    public ICryptoTransform createDecryptor(byte[] key, byte[] iv) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public ICryptoTransform createDecryptor(byte[] key, byte[] iv) throws NoSuchAlgorithmException,
+        NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
         return createDecryptor(key, iv, null);
     }
 
     @Override
-    public ICryptoTransform createDecryptor(byte[] key, byte[] iv, Provider provider) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public ICryptoTransform createDecryptor(byte[] key, byte[] iv, Provider provider) throws NoSuchAlgorithmException,
+        NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
 
         if (key == null) {
             throw new IllegalArgumentException("key");

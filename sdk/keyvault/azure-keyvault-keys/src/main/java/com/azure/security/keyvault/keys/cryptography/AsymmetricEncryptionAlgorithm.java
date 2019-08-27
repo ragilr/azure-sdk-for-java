@@ -11,7 +11,6 @@ import java.security.Provider;
 
 /**
  * Abstract base class for all asymmetric encryption implementation.
- *
  */
 abstract class AsymmetricEncryptionAlgorithm extends LocalEncryptionAlgorithm {
 
@@ -25,52 +24,64 @@ abstract class AsymmetricEncryptionAlgorithm extends LocalEncryptionAlgorithm {
     }
 
     /**
-     * Creates a {@link ICryptoTransform} implementation for encryption that
-     * uses the specified {@link KeyPair} and the default {@link Provider} provider.
+     * Creates a {@link ICryptoTransform} implementation for encryption that uses the specified {@link KeyPair} and the
+     * default {@link Provider} provider.
      *
      * @param keyPair The key pair to use.
+     *
      * @return abstract {@link ICryptoTransform}
+     *
      * @throws InvalidKeyException when key is not valid
      * @throws NoSuchAlgorithmException if algorithm is not found
      * @throws NoSuchPaddingException if padding is set wrong
      */
-    public abstract ICryptoTransform createEncryptor(KeyPair keyPair) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException;
+    public abstract ICryptoTransform createEncryptor(KeyPair keyPair) throws InvalidKeyException,
+        NoSuchAlgorithmException, NoSuchPaddingException;
 
     /**
-     * Creates a {@link ICryptoTransform} implementation for encryption that
-     * uses the specified {@link KeyPair} and {@link Provider}.
+     * Creates a {@link ICryptoTransform} implementation for encryption that uses the specified {@link KeyPair} and
+     * {@link Provider}.
      *
      * @param keyPair The key pair to use.
      * @param provider The provider to use.
+     *
      * @return abstract {@link ICryptoTransform}
+     *
      * @throws InvalidKeyException when key is not valid
      * @throws NoSuchAlgorithmException if algorithm is not found
      * @throws NoSuchPaddingException if padding is set wrong
      */
-    public abstract ICryptoTransform createEncryptor(KeyPair keyPair, Provider provider) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException;
+    public abstract ICryptoTransform createEncryptor(KeyPair keyPair, Provider provider) throws InvalidKeyException,
+        NoSuchAlgorithmException, NoSuchPaddingException;
 
     /**
-     * Creates a {@link ICryptoTransform} implementation for decryption that
-     * uses the specified {@link KeyPair} and the default {@link Provider} provider.
+     * Creates a {@link ICryptoTransform} implementation for decryption that uses the specified {@link KeyPair} and the
+     * default {@link Provider} provider.
      *
      * @param keyPair The key pair to use.
+     *
      * @return abstract {@link ICryptoTransform}
+     *
      * @throws InvalidKeyException when key is not valid
      * @throws NoSuchAlgorithmException if algorithm is not found
      * @throws NoSuchPaddingException if padding is set wrong
      */
-    public abstract ICryptoTransform createDecryptor(KeyPair keyPair) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException;
+    public abstract ICryptoTransform createDecryptor(KeyPair keyPair) throws InvalidKeyException,
+        NoSuchAlgorithmException, NoSuchPaddingException;
 
     /**
-     * Creates a {@link ICryptoTransform} implementation for decryption that
-     * uses the specified {@link KeyPair} and {@link Provider}.
+     * Creates a {@link ICryptoTransform} implementation for decryption that uses the specified {@link KeyPair} and
+     * {@link Provider}.
      *
      * @param keyPair The key pair to use.
      * @param provider The provider to use.
+     *
      * @return abstract {@link ICryptoTransform}
+     *
      * @throws InvalidKeyException when key is not valid
      * @throws NoSuchAlgorithmException if algorithm is not found
      * @throws NoSuchPaddingException if padding is set wrong
      */
-    public abstract ICryptoTransform createDecryptor(KeyPair keyPair, Provider provider) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException;
+    public abstract ICryptoTransform createDecryptor(KeyPair keyPair, Provider provider) throws InvalidKeyException,
+        NoSuchAlgorithmException, NoSuchPaddingException;
 }

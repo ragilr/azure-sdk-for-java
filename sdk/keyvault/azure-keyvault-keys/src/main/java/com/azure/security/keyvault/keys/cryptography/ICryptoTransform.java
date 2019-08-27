@@ -10,15 +10,16 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Defines the basic operations of cryptographic transformations.
- *
  */
 interface ICryptoTransform {
 
     /**
      * Transforms the specified region of the specified byte array as a single operation.
-     * 
+     *
      * @param input The byte array to be transformed
+     *
      * @return The transformed result.
      */
-    byte[] doFinal(byte[] input) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException;
+    byte[] doFinal(byte[] input) throws IllegalBlockSizeException, BadPaddingException, InvalidKeyException,
+        NoSuchAlgorithmException;
 }

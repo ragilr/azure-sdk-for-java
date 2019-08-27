@@ -57,13 +57,14 @@ public abstract class KeyClientTestBase extends TestBase {
 
     <T> T clientSetup(Function<HttpPipeline, T> clientBuilder) {
         final String endpoint = interceptorManager.isPlaybackMode()
-                ? "http://localhost:8080"
-                : System.getenv("AZURE_KEYVAULT_ENDPOINT");
+            ? "http://localhost:8080"
+            : System.getenv("AZURE_KEYVAULT_ENDPOINT");
 
         TokenCredential credential;
 
         if (interceptorManager.isPlaybackMode()) {
-            credential = resource -> Mono.just(new AccessToken("Some fake token", OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(30))));
+            credential = resource -> Mono.just(new AccessToken("Some fake token",
+                OffsetDateTime.now(ZoneOffset.UTC).plus(Duration.ofMinutes(30))));
         } else {
             credential = new DefaultAzureCredentialBuilder().build();
         }
@@ -71,7 +72,8 @@ public abstract class KeyClientTestBase extends TestBase {
         HttpClient httpClient;
         // Closest to API goes first, closest to wire goes last.
         final List<HttpPipelinePolicy> policies = new ArrayList<>();
-        policies.add(new UserAgentPolicy(AzureKeyVaultConfiguration.SDK_NAME, AzureKeyVaultConfiguration.SDK_VERSION,  ConfigurationManager.getConfiguration().clone()));
+        policies.add(new UserAgentPolicy(AzureKeyVaultConfiguration.SDK_NAME, AzureKeyVaultConfiguration.SDK_VERSION,
+            ConfigurationManager.getConfiguration().clone()));
         HttpPolicyProviders.addBeforeRetryPolicies(policies);
         policies.add(new RetryPolicy());
         policies.add(new BearerTokenAuthenticationPolicy(credential, KeyAsyncClient.KEY_VAULT_SCOPE));
@@ -125,7 +127,8 @@ public abstract class KeyClientTestBase extends TestBase {
         testRunner.accept(key);
     }
 
-    @Test public abstract void setKeyNull();
+    @Test
+    public abstract void setKeyNull();
 
 
     @Test
@@ -137,12 +140,12 @@ public abstract class KeyClientTestBase extends TestBase {
         tags.put("first tag", "first value");
         tags.put("second tag", "second value");
         final KeyCreateOptions originalKey = new KeyCreateOptions("testKey1", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC))
-                .tags(tags);
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC))
+            .tags(tags);
 
         final KeyCreateOptions updatedKey = new KeyCreateOptions("testKey1", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2060, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC))
-                .tags(tags);
+            .expires(OffsetDateTime.of(2060, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC))
+            .tags(tags);
 
         testRunner.accept(originalKey, updatedKey);
     }
@@ -156,11 +159,11 @@ public abstract class KeyClientTestBase extends TestBase {
         final Map<String, String> tags = new HashMap<>();
 
         final KeyCreateOptions originalKey = new KeyCreateOptions("testKey2", EC_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC))
-                .enabled(false);
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC))
+            .enabled(false);
 
         final KeyCreateOptions updatedKey = new KeyCreateOptions("testKey2", EC_KEY_TYPE)
-                .expires(OffsetDateTime.of(2060, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2060, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
 
         testRunner.accept(originalKey, updatedKey);
     }
@@ -170,7 +173,7 @@ public abstract class KeyClientTestBase extends TestBase {
 
     void getKeyRunner(Consumer<KeyCreateOptions> testRunner) {
         final KeyCreateOptions originalKey = new KeyCreateOptions("testKey4", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
 
         testRunner.accept(originalKey);
     }
@@ -180,10 +183,10 @@ public abstract class KeyClientTestBase extends TestBase {
 
     void getKeySpecificVersionRunner(BiConsumer<KeyCreateOptions, KeyCreateOptions> testRunner) {
         final KeyCreateOptions key = new KeyCreateOptions("testKey3", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
 
         final KeyCreateOptions keyWithNewVal = new KeyCreateOptions("testKey3", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
 
         testRunner.accept(key, keyWithNewVal);
     }
@@ -196,7 +199,7 @@ public abstract class KeyClientTestBase extends TestBase {
 
     void deleteKeyRunner(Consumer<KeyCreateOptions> testRunner) {
         final KeyCreateOptions keyToDelete = new KeyCreateOptions("testKey5", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
 
         testRunner.accept(keyToDelete);
     }
@@ -209,7 +212,7 @@ public abstract class KeyClientTestBase extends TestBase {
 
     void getDeletedKeyRunner(Consumer<KeyCreateOptions> testRunner) {
         final KeyCreateOptions keyToDeleteAndGet = new KeyCreateOptions("testKey6", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
         testRunner.accept(keyToDeleteAndGet);
     }
 
@@ -221,7 +224,7 @@ public abstract class KeyClientTestBase extends TestBase {
 
     void recoverDeletedKeyRunner(Consumer<KeyCreateOptions> testRunner) {
         final KeyCreateOptions keyToDeleteAndRecover = new KeyCreateOptions("testKey7", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
         testRunner.accept(keyToDeleteAndRecover);
     }
 
@@ -233,7 +236,7 @@ public abstract class KeyClientTestBase extends TestBase {
 
     void backupKeyRunner(Consumer<KeyCreateOptions> testRunner) {
         final KeyCreateOptions keyToBackup = new KeyCreateOptions("testKey8", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
         testRunner.accept(keyToBackup);
     }
 
@@ -245,7 +248,7 @@ public abstract class KeyClientTestBase extends TestBase {
 
     void restoreKeyRunner(Consumer<KeyCreateOptions> testRunner) {
         final KeyCreateOptions keyToBackupAndRestore = new KeyCreateOptions("testKey9", RSA_KEY_TYPE)
-                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
         testRunner.accept(keyToBackupAndRestore);
     }
 
@@ -260,8 +263,8 @@ public abstract class KeyClientTestBase extends TestBase {
         String keyName;
         for (int i = 0; i < 30; i++) {
             keyName = "listKey" + i;
-            KeyCreateOptions key =  new KeyCreateOptions(keyName, RSA_KEY_TYPE)
-                    .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
+            KeyCreateOptions key = new KeyCreateOptions(keyName, RSA_KEY_TYPE)
+                .expires(OffsetDateTime.of(2050, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC));
             keys.put(keyName, key);
         }
         testRunner.accept(keys);
@@ -276,7 +279,7 @@ public abstract class KeyClientTestBase extends TestBase {
         for (int i = 1; i < 5; i++) {
             keyName = "listKeyVersion";
             keys.add(new KeyCreateOptions(keyName, RSA_KEY_TYPE)
-                    .expires(OffsetDateTime.of(2090, 5, i, 0, 0, 0, 0, ZoneOffset.UTC)));
+                .expires(OffsetDateTime.of(2090, 5, i, 0, 0, 0, 0, ZoneOffset.UTC)));
         }
 
         testRunner.accept(keys);
@@ -291,14 +294,15 @@ public abstract class KeyClientTestBase extends TestBase {
         for (int i = 0; i < 3; i++) {
             keyName = "listDeletedKeysTest" + i;
             keys.put(keyName, new KeyCreateOptions(keyName, RSA_KEY_TYPE)
-                    .expires(OffsetDateTime.of(2090, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC)));
+                .expires(OffsetDateTime.of(2090, 5, 25, 0, 0, 0, 0, ZoneOffset.UTC)));
 
         }
         testRunner.accept(keys);
     }
 
     /**
-     * Helper method to verify that the Response matches what was expected. This method assumes a response status of 200.
+     * Helper method to verify that the Response matches what was expected. This method assumes a response status of
+     * 200.
      *
      * @param expected Key expected to be returned by the service
      * @param response Response returned by the service, the body should contain a Key
@@ -336,8 +340,8 @@ public abstract class KeyClientTestBase extends TestBase {
 
     public String getEndpoint() {
         final String endpoint = interceptorManager.isPlaybackMode()
-                ? "http://localhost:8080"
-                : System.getenv("AZURE_KEYVAULT_ENDPOINT");
+            ? "http://localhost:8080"
+            : System.getenv("AZURE_KEYVAULT_ENDPOINT");
         Objects.requireNonNull(endpoint);
         return endpoint;
     }
@@ -346,7 +350,9 @@ public abstract class KeyClientTestBase extends TestBase {
         assertRestException(exceptionThrower, HttpResponseException.class, expectedStatusCode);
     }
 
-    static void assertRestException(Runnable exceptionThrower, Class<? extends HttpResponseException> expectedExceptionType, int expectedStatusCode) {
+    static void assertRestException(Runnable exceptionThrower,
+                                    Class<? extends HttpResponseException> expectedExceptionType,
+                                    int expectedStatusCode) {
         try {
             exceptionThrower.run();
             fail();
@@ -365,7 +371,8 @@ public abstract class KeyClientTestBase extends TestBase {
         assertRestException(exception, HttpResponseException.class, expectedStatusCode);
     }
 
-    static void assertRestException(Throwable exception, Class<? extends HttpResponseException> expectedExceptionType, int expectedStatusCode) {
+    static void assertRestException(Throwable exception, Class<? extends HttpResponseException> expectedExceptionType,
+                                    int expectedStatusCode) {
         assertEquals(expectedExceptionType, exception.getClass());
         assertEquals(expectedStatusCode, ((HttpResponseException) exception).response().statusCode());
     }

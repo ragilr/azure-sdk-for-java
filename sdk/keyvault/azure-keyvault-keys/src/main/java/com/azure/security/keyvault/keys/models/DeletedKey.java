@@ -5,6 +5,7 @@ package com.azure.security.keyvault.keys.models;
 
 import com.azure.security.keyvault.keys.models.webkey.JsonWebKey;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -13,8 +14,7 @@ import java.util.Map;
 public final class DeletedKey extends KeyBase {
 
     /**
-     * The url of the recovery object, used to identify and recover the deleted
-     * key.
+     * The url of the recovery object, used to identify and recover the deleted key.
      */
     @JsonProperty(value = "recoveryId")
     private String recoveryId;
@@ -61,17 +61,18 @@ public final class DeletedKey extends KeyBase {
     }
 
     /**
-     * Unpacks the scheduledPurageDate json response. Converts the {@link Long scheduledPurgeDate} epoch second value to OffsetDateTime and updates the
-     * value of class variable scheduledPurgeDate.
+     * Unpacks the scheduledPurageDate json response. Converts the {@link Long scheduledPurgeDate} epoch second value to
+     * OffsetDateTime and updates the value of class variable scheduledPurgeDate.
      */
     @JsonProperty("scheduledPurgeDate")
     private void unpackScheduledPurgeDate(Long scheduledPurgeDate) {
-        this.scheduledPurgeDate = OffsetDateTime.ofInstant(Instant.ofEpochMilli(scheduledPurgeDate * 1000L), ZoneOffset.UTC);
+        this.scheduledPurgeDate = OffsetDateTime.ofInstant(Instant.ofEpochMilli(scheduledPurgeDate * 1000L),
+            ZoneOffset.UTC);
     }
 
     /**
-     * Unpacks the deletedDate json response. Converts the {@link Long deletedDate} epoch second value to OffsetDateTime and updates the
-     * value of class variable deletedDate.
+     * Unpacks the deletedDate json response. Converts the {@link Long deletedDate} epoch second value to OffsetDateTime
+     * and updates the value of class variable deletedDate.
      */
     @JsonProperty("deletedDate")
     private void unpackDeletedDate(Long deletedDate) {
@@ -80,6 +81,7 @@ public final class DeletedKey extends KeyBase {
 
     /**
      * Unpacks the key material json response and updates the variables in the Key Base object.
+     *
      * @param key The key value mapping of the key material
      */
     @JsonProperty("key")

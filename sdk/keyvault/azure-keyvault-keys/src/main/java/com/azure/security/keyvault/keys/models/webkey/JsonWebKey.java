@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.GeneralSecurityException;
@@ -49,7 +50,8 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18.
  */
-@JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY, setterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
+@JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY, setterVisibility =
+    JsonAutoDetect.Visibility.PUBLIC_ONLY)
 public class JsonWebKey {
     private final ClientLogger logger = new ClientLogger(JsonWebKey.class);
 
@@ -60,8 +62,7 @@ public class JsonWebKey {
     private String kid;
 
     /**
-     * JsonWebKey key type (kty). Possible values include: 'EC', 'EC-HSM', 'RSA',
-     * 'RSA-HSM', 'oct'.
+     * JsonWebKey key type (kty). Possible values include: 'EC', 'EC-HSM', 'RSA', 'RSA-HSM', 'oct'.
      */
     @JsonProperty(value = "kty")
     private KeyType kty;
@@ -133,8 +134,8 @@ public class JsonWebKey {
     private byte[] t;
 
     /**
-     * Elliptic curve name. For valid values, see KeyCurveName. Possible
-     * values include: 'P-256', 'P-384', 'P-521', 'SECP256K1'.
+     * Elliptic curve name. For valid values, see KeyCurveName. Possible values include: 'P-256', 'P-384', 'P-521',
+     * 'SECP256K1'.
      */
     @JsonProperty(value = "crv")
     private KeyCurveName crv;
@@ -165,6 +166,7 @@ public class JsonWebKey {
      * Set the key identifier value.
      *
      * @param kid The kid value to set
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey kid(String kid) {
@@ -186,6 +188,7 @@ public class JsonWebKey {
      * Set the key type value.
      *
      * @param kty The key type
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey kty(KeyType kty) {
@@ -207,6 +210,7 @@ public class JsonWebKey {
      * Set the keyOps value.
      *
      * @param keyOps The keyOps value to set
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey keyOps(List<KeyOperation> keyOps) {
@@ -230,6 +234,7 @@ public class JsonWebKey {
      * Set the n value.
      *
      * @param n The n value to set
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey n(byte[] n) {
@@ -253,6 +258,7 @@ public class JsonWebKey {
      * Set the e value.
      *
      * @param e The e value to set
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey e(byte[] e) {
@@ -276,6 +282,7 @@ public class JsonWebKey {
      * Set the d value.
      *
      * @param d The d value to set
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey d(byte[] d) {
@@ -299,6 +306,7 @@ public class JsonWebKey {
      * Set RSA Private Key Parameter value.
      *
      * @param dp The RSA Private Key Parameter value to set.
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey dp(byte[] dp) {
@@ -322,6 +330,7 @@ public class JsonWebKey {
      * Set RSA Private Key Parameter value .
      *
      * @param dq The RSA Private Key Parameter value to set.
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey dq(byte[] dq) {
@@ -345,6 +354,7 @@ public class JsonWebKey {
      * Set RSA Private Key Parameter value.
      *
      * @param qi The RSA Private Key Parameter value to set.
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey qi(byte[] qi) {
@@ -368,6 +378,7 @@ public class JsonWebKey {
      * Set the RSA secret prime value.
      *
      * @param p The RSA secret prime value.
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey p(byte[] p) {
@@ -391,6 +402,7 @@ public class JsonWebKey {
      * Set the RSA secret prime, with p &lt; q value.
      *
      * @param q The the RSA secret prime, with p &lt; q value to be set.
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey q(byte[] q) {
@@ -414,6 +426,7 @@ public class JsonWebKey {
      * Set the Symmetric key value.
      *
      * @param k The symmetric key value to set.
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey k(byte[] k) {
@@ -437,6 +450,7 @@ public class JsonWebKey {
      * Set HSM Token value, used with Bring Your Own Key.
      *
      * @param t The HSM Token value to set, used with Bring Your Own Key
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey t(byte[] t) {
@@ -472,6 +486,7 @@ public class JsonWebKey {
      * Set the crv value.
      *
      * @param crv The crv value to set
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey crv(KeyCurveName crv) {
@@ -495,6 +510,7 @@ public class JsonWebKey {
      * Set the x value.
      *
      * @param x The x value to set
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey x(byte[] x) {
@@ -518,6 +534,7 @@ public class JsonWebKey {
      * Set the y value.
      *
      * @param y The y value to set
+     *
      * @return the JsonWebKey object itself.
      */
     public JsonWebKey y(byte[] y) {
@@ -543,13 +560,14 @@ public class JsonWebKey {
     private RSAPrivateKeySpec getRSAPrivateKeySpec() {
 
         return new RSAPrivateCrtKeySpec(toBigInteger(n), toBigInteger(e), toBigInteger(d), toBigInteger(p),
-                toBigInteger(q), toBigInteger(dp), toBigInteger(dq), toBigInteger(qi));
+            toBigInteger(q), toBigInteger(dp), toBigInteger(dq), toBigInteger(qi));
     }
 
     /**
      * Get the RSA public key value.
      *
      * @param provider The Java security provider.
+     *
      * @return the RSA public key value
      */
     private PublicKey getRSAPublicKey(Provider provider) {
@@ -557,7 +575,7 @@ public class JsonWebKey {
         try {
             RSAPublicKeySpec publicKeySpec = getRSAPublicKeySpec();
             KeyFactory factory = provider != null ? KeyFactory.getInstance("RSA", provider)
-                    : KeyFactory.getInstance("RSA");
+                : KeyFactory.getInstance("RSA");
 
             return factory.generatePublic(publicKeySpec);
         } catch (GeneralSecurityException e) {
@@ -569,6 +587,7 @@ public class JsonWebKey {
      * Get the RSA private key value.
      *
      * @param provider The Java security provider.
+     *
      * @return the RSA private key value
      */
     private PrivateKey getRSAPrivateKey(Provider provider) {
@@ -576,7 +595,7 @@ public class JsonWebKey {
         try {
             RSAPrivateKeySpec privateKeySpec = getRSAPrivateKeySpec();
             KeyFactory factory = provider != null ? KeyFactory.getInstance("RSA", provider)
-                    : KeyFactory.getInstance("RSA");
+                : KeyFactory.getInstance("RSA");
 
             return factory.generatePrivate(privateKeySpec);
         } catch (GeneralSecurityException e) {
@@ -589,7 +608,7 @@ public class JsonWebKey {
         try {
             ECPublicKeySpec pubSpec = new ECPublicKeySpec(ecPoint, curveSpec);
             KeyFactory kf = provider != null ? KeyFactory.getInstance("EC", provider)
-                    : KeyFactory.getInstance("EC", "SunEC");
+                : KeyFactory.getInstance("EC", "SunEC");
             return (ECPublicKey) kf.generatePublic(pubSpec);
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException(e);
@@ -600,7 +619,7 @@ public class JsonWebKey {
         try {
             ECPrivateKeySpec priSpec = new ECPrivateKeySpec(new BigInteger(1, d), curveSpec);
             KeyFactory kf = provider != null ? KeyFactory.getInstance("EC", provider)
-                    : KeyFactory.getInstance("EC", "SunEC");
+                : KeyFactory.getInstance("EC", "SunEC");
             return (ECPrivateKey) kf.generatePrivate(priSpec);
         } catch (GeneralSecurityException e) {
             throw new IllegalStateException(e);
@@ -642,6 +661,7 @@ public class JsonWebKey {
      * Converts RSA key pair to JSON web key.
      *
      * @param keyPair Tbe RSA key pair
+     *
      * @return the JSON web key, converted from RSA key pair.
      */
     public static JsonWebKey fromRSA(KeyPair keyPair) {
@@ -652,18 +672,18 @@ public class JsonWebKey {
         if (privateKey != null) {
 
             key = new JsonWebKey().kty(KeyType.RSA).n(toByteArray(privateKey.getModulus()))
-                    .e(toByteArray(privateKey.getPublicExponent()))
-                    .d(toByteArray(privateKey.getPrivateExponent())).p(toByteArray(privateKey.getPrimeP()))
-                    .q(toByteArray(privateKey.getPrimeQ())).dp(toByteArray(privateKey.getPrimeExponentP()))
-                    .dq(toByteArray(privateKey.getPrimeExponentQ()))
-                    .qi(toByteArray(privateKey.getCrtCoefficient()));
+                .e(toByteArray(privateKey.getPublicExponent()))
+                .d(toByteArray(privateKey.getPrivateExponent())).p(toByteArray(privateKey.getPrimeP()))
+                .q(toByteArray(privateKey.getPrimeQ())).dp(toByteArray(privateKey.getPrimeExponentP()))
+                .dq(toByteArray(privateKey.getPrimeExponentQ()))
+                .qi(toByteArray(privateKey.getCrtCoefficient()));
         } else {
 
             RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
 
             key = new JsonWebKey().kty(KeyType.RSA).n(toByteArray(publicKey.getModulus()))
-                    .e(toByteArray(publicKey.getPublicExponent())).d(null).p(null).q(null).dp(null)
-                    .dq(null).qi(null);
+                .e(toByteArray(publicKey.getPublicExponent())).d(null).p(null).q(null).dp(null)
+                .dq(null).qi(null);
         }
 
         return key;
@@ -679,10 +699,10 @@ public class JsonWebKey {
     }
 
     /**
-     * Converts JSON web key to RSA key pair and include the private key if set to
-     * true.
+     * Converts JSON web key to RSA key pair and include the private key if set to true.
      *
      * @param includePrivateParameters true if the RSA key pair should include the private key. False otherwise.
+     *
      * @return RSA key pair
      */
     public KeyPair toRSA(boolean includePrivateParameters) {
@@ -690,11 +710,11 @@ public class JsonWebKey {
     }
 
     /**
-     * Converts JSON web key to RSA key pair and include the private key if set to
-     * true.
+     * Converts JSON web key to RSA key pair and include the private key if set to true.
      *
      * @param provider The Java security provider.
      * @param includePrivateParameters true if the RSA key pair should include the private key. False otherwise.
+     *
      * @return RSA key pair
      */
     public KeyPair toRSA(boolean includePrivateParameters, Provider provider) {
@@ -710,8 +730,7 @@ public class JsonWebKey {
     }
 
     /**
-     * Converts JSON web key to EC key pair and include the private key if set to
-     * true.
+     * Converts JSON web key to EC key pair and include the private key if set to true.
      *
      * @return EC key pair
      */
@@ -720,10 +739,10 @@ public class JsonWebKey {
     }
 
     /**
-     * Converts JSON web key to EC key pair and include the private key if set to
-     * true.
+     * Converts JSON web key to EC key pair and include the private key if set to true.
      *
      * @param includePrivateParameters true if the EC key pair should include the private key. False otherwise.
+     *
      * @return EC key pair
      */
     public KeyPair toEC(boolean includePrivateParameters) {
@@ -731,12 +750,13 @@ public class JsonWebKey {
     }
 
     /**
-     * Converts JSON web key to EC key pair and include the private key if set to
-     * true.
+     * Converts JSON web key to EC key pair and include the private key if set to true.
      *
      * @param includePrivateParameters true if the EC key pair should include the private key. False otherwise.
      * @param provider The Java security provider
+     *
      * @return EC key pair
+     *
      * @throws IllegalArgumentException if the key type is not EC or EC HSM
      * @throws IllegalStateException if an instance of EC key pair cannot be generated
      */
@@ -768,7 +788,7 @@ public class JsonWebKey {
 
             if (includePrivateParameters) {
                 realKeyPair = new KeyPair(getECPublicKey(ecPoint, aspec, provider),
-                        getECPrivateKey(d, aspec, provider));
+                    getECPrivateKey(d, aspec, provider));
             } else {
                 realKeyPair = new KeyPair(getECPublicKey(ecPoint, aspec, provider), null);
             }
@@ -784,6 +804,7 @@ public class JsonWebKey {
      *
      * @param keyPair The EC key pair
      * @param provider The Java security provider
+     *
      * @return the JSON web key, converted from EC key pair.
      */
     public static JsonWebKey fromEC(KeyPair keyPair, Provider provider) {
@@ -794,12 +815,12 @@ public class JsonWebKey {
 
         if (apriv != null) {
             return new JsonWebKey().kty(KeyType.EC).crv(getCurveFromKeyPair(keyPair, provider))
-                    .x(point.getAffineX().toByteArray()).y(point.getAffineY().toByteArray())
-                    .d(apriv.getS().toByteArray()).kty(KeyType.EC);
+                .x(point.getAffineX().toByteArray()).y(point.getAffineY().toByteArray())
+                .d(apriv.getS().toByteArray()).kty(KeyType.EC);
         } else {
             return new JsonWebKey().kty(KeyType.EC).crv(getCurveFromKeyPair(keyPair, provider))
-                    .x(point.getAffineX().toByteArray()).y(point.getAffineY().toByteArray())
-                    .kty(KeyType.EC);
+                .x(point.getAffineX().toByteArray()).y(point.getAffineY().toByteArray())
+                .kty(KeyType.EC);
         }
     }
 
@@ -812,7 +833,7 @@ public class JsonWebKey {
             EllipticCurve crv = spec.getCurve();
 
             List<KeyCurveName> curveList = Arrays.asList(KeyCurveName.P_256, KeyCurveName.P_384,
-                    KeyCurveName.P_521, KeyCurveName.P_256K);
+                KeyCurveName.P_521, KeyCurveName.P_256K);
 
             for (KeyCurveName curve : curveList) {
                 ECGenParameterSpec gps = new ECGenParameterSpec(CURVE_TO_SPEC_NAME.get(curve));
@@ -842,6 +863,7 @@ public class JsonWebKey {
      * Converts AES key to JSON web key.
      *
      * @param secretKey The AES key
+     *
      * @return the JSON web key, converted from AES key.
      */
     public static JsonWebKey fromAes(SecretKey secretKey) {
@@ -881,8 +903,8 @@ public class JsonWebKey {
      * Indicates whether some other {@link JsonWebKey} is "equal to" this one.
      *
      * @param jwk The other {@link JsonWebKey} to compare with.
-     * @return true if this {@link JsonWebKey} is the same as the jwk argument;
-     *         false otherwise.
+     *
+     * @return true if this {@link JsonWebKey} is the same as the jwk argument; false otherwise.
      */
     public boolean equals(JsonWebKey jwk) {
         if (jwk == null) {
@@ -981,7 +1003,8 @@ public class JsonWebKey {
         }
 
         if (keyOps != null) {
-            final Set<KeyOperation> set = new HashSet<KeyOperation>(Collections.unmodifiableList(Arrays.asList(KeyOperation.values())));
+            final Set<KeyOperation> set =
+                new HashSet<KeyOperation>(Collections.unmodifiableList(Arrays.asList(KeyOperation.values())));
             for (int i = 0; i < keyOps.size(); i++) {
                 if (!set.contains(keyOps.get(i))) {
                     return false;
@@ -1147,7 +1170,7 @@ public class JsonWebKey {
     private static final Map<KeyCurveName, String> CURVE_TO_SPEC_NAME = setupCurveToSpecMap();
 
     private static Map<KeyCurveName, String> setupCurveToSpecMap() {
-        Map<KeyCurveName, String>  curveToSpecMap = new HashMap<>();
+        Map<KeyCurveName, String> curveToSpecMap = new HashMap<>();
         curveToSpecMap.put(KeyCurveName.P_256, "secp256r1");
         curveToSpecMap.put(KeyCurveName.P_384, "secp384r1");
         curveToSpecMap.put(KeyCurveName.P_521, "secp521r1");

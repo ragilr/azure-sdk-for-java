@@ -16,6 +16,7 @@ class KeyRequestAttributes {
     /**
      * Creates an instance of KeyRequestAttributes. Reads keyBase.notBefore, keyBase.expires and keyBase.enabled fields
      * from {@code keyBase}
+     *
      * @param keyBase the {@link KeyBase} object with populated attributes
      */
     KeyRequestAttributes(KeyBase keyBase) {
@@ -29,8 +30,9 @@ class KeyRequestAttributes {
     }
 
     /**
-     * Creates an instance of KeyRequestAttributes. Reads KeyCreateOptions.notBefore, KeyCreateOptions.expires and KeyCreateOptions.enabled fields
-     * from {@code keyOptions}
+     * Creates an instance of KeyRequestAttributes. Reads KeyCreateOptions.notBefore, KeyCreateOptions.expires and
+     * KeyCreateOptions.enabled fields from {@code keyOptions}
+     *
      * @param keyOptions the {@link KeyCreateOptions} object with populated attributes
      */
     KeyRequestAttributes(KeyCreateOptions keyOptions) {
@@ -86,6 +88,7 @@ class KeyRequestAttributes {
      * Set the enabled value.
      *
      * @param enabled the enabled value to set
+     *
      * @return the Attributes object itself.
      */
     public KeyRequestAttributes enabled(Boolean enabled) {
@@ -109,6 +112,7 @@ class KeyRequestAttributes {
      * Set the notBefore value.
      *
      * @param notBefore the notBefore value to set
+     *
      * @return the Attributes object itself.
      */
     public KeyRequestAttributes notBefore(OffsetDateTime notBefore) {
@@ -136,6 +140,7 @@ class KeyRequestAttributes {
      * Set the expires value.
      *
      * @param expires the expires value to set
+     *
      * @return the Attributes object itself.
      */
     public KeyRequestAttributes expires(OffsetDateTime expires) {
@@ -156,7 +161,7 @@ class KeyRequestAttributes {
         if (this.created == null) {
             return null;
         }
-        return  OffsetDateTime.ofInstant(Instant.ofEpochMilli(this.created * 1000L), ZoneOffset.UTC);
+        return OffsetDateTime.ofInstant(Instant.ofEpochMilli(this.created * 1000L), ZoneOffset.UTC);
     }
 
     /**
@@ -168,6 +173,6 @@ class KeyRequestAttributes {
         if (this.updated == null) {
             return null;
         }
-        return  OffsetDateTime.ofInstant(Instant.ofEpochMilli(this.updated * 1000L), ZoneOffset.UTC);
+        return OffsetDateTime.ofInstant(Instant.ofEpochMilli(this.updated * 1000L), ZoneOffset.UTC);
     }
 }
