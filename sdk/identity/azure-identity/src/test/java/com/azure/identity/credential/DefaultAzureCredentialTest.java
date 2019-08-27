@@ -49,7 +49,9 @@ public class DefaultAzureCredentialTest {
 
             // mock
             IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-            when(identityClient.authenticateWithClientSecret(secret, scopes1)).thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
+            when(identityClient
+                .authenticateWithClientSecret(secret, scopes1))
+                .thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
             PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
             // test
@@ -69,12 +71,13 @@ public class DefaultAzureCredentialTest {
     public void testUseManagedIdentityCredential() throws Exception {
         // setup
         String token1 = "token1";
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
         IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-        when(identityClient.authenticateToIMDSEndpoint(scopes)).thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
+        when(identityClient.authenticateToIMDSEndpoint(scopes)).thenReturn(TestUtils.getMockAccessToken(token1,
+            expiresOn));
         PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
         // test
@@ -87,11 +90,12 @@ public class DefaultAzureCredentialTest {
     @Test
     public void testNoCredentialWorks() throws Exception {
         // setup
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
 
         // mock
         IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-        when(identityClient.authenticateToIMDSEndpoint(scopes)).thenReturn(Mono.error(new RuntimeException("Hidden error message")));
+        when(identityClient.authenticateToIMDSEndpoint(scopes)).thenReturn(Mono.error(new RuntimeException("Hidden "
+            + "error message")));
         PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
         // test

@@ -21,11 +21,14 @@ import java.util.concurrent.CompletableFuture;
 public final class TestUtils {
     /**
      * Creates a mock {@link IAuthenticationResult} instance.
+     *
      * @param accessToken the access token to return
      * @param expiresOn the expiration time
+     *
      * @return a completable future of the result
      */
-    public static CompletableFuture<IAuthenticationResult> getMockAuthenticationResult(String accessToken, OffsetDateTime expiresOn) {
+    public static CompletableFuture<IAuthenticationResult> getMockAuthenticationResult(String accessToken,
+                                                                                       OffsetDateTime expiresOn) {
         return CompletableFuture.completedFuture(new IAuthenticationResult() {
             @Override
             public String accessToken() {
@@ -62,8 +65,10 @@ public final class TestUtils {
 
     /**
      * Creates a mock {@link MsalToken} instance.
+     *
      * @param accessToken the access token to return
      * @param expiresOn the expiration time
+     *
      * @return a Mono publisher of the result
      */
     public static Mono<MsalToken> getMockMsalToken(String accessToken, OffsetDateTime expiresOn) {
@@ -73,8 +78,10 @@ public final class TestUtils {
 
     /**
      * Creates a mock {@link AccessToken} instance.
+     *
      * @param accessToken the access token to return
      * @param expiresOn the expiration time
+     *
      * @return a Mono publisher of the result
      */
     public static Mono<AccessToken> getMockAccessToken(String accessToken, OffsetDateTime expiresOn) {

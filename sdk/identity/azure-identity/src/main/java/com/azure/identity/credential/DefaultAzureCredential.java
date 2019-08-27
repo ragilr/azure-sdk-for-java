@@ -16,13 +16,13 @@ import java.util.Arrays;
 public final class DefaultAzureCredential extends ChainedTokenCredential {
 
     /**
-     * Creates default DefaultAzureCredential instance to use. This will use AZURE_CLIENT_ID,
-     * AZURE_CLIENT_SECRET, and AZURE_TENANT_ID environment variables to create a
-     * ClientSecretCredential.
+     * Creates default DefaultAzureCredential instance to use. This will use AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and
+     * AZURE_TENANT_ID environment variables to create a ClientSecretCredential.
      *
      * @param identityClientOptions the options to configure the IdentityClient
      */
     DefaultAzureCredential(IdentityClientOptions identityClientOptions) {
-        super(new ArrayDeque<>(Arrays.asList(new EnvironmentCredential(identityClientOptions), new ManagedIdentityCredential(null, identityClientOptions))));
+        super(new ArrayDeque<>(Arrays.asList(new EnvironmentCredential(identityClientOptions),
+            new ManagedIdentityCredential(null, identityClientOptions))));
     }
 }

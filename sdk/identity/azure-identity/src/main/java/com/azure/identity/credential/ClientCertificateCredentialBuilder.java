@@ -19,7 +19,9 @@ public class ClientCertificateCredentialBuilder extends AadCredentialBuilderBase
 
     /**
      * Sets the tenant ID of the application.
+     *
      * @param tenantId the tenant ID of the application.
+     *
      * @return the ClientCertificateCredentialBuilder itself
      */
     public ClientCertificateCredentialBuilder tenantId(String tenantId) {
@@ -31,6 +33,7 @@ public class ClientCertificateCredentialBuilder extends AadCredentialBuilderBase
      * Sets the client certificate for authenticating to AAD.
      *
      * @param certificatePath the PEM file containing the certificate
+     *
      * @return the ClientCertificateCredentialBuilder itself
      */
     public ClientCertificateCredentialBuilder pemCertificate(String certificatePath) {
@@ -43,6 +46,7 @@ public class ClientCertificateCredentialBuilder extends AadCredentialBuilderBase
      *
      * @param certificatePath the password protected PFX file containing the certificate
      * @param clientCertificatePassword the password protecting the PFX file
+     *
      * @return the ClientCertificateCredentialBuilder itself
      */
     public ClientCertificateCredentialBuilder pfxCertificate(String certificatePath, String clientCertificatePassword) {
@@ -60,6 +64,7 @@ public class ClientCertificateCredentialBuilder extends AadCredentialBuilderBase
                 put("tenantId", tenantId);
                 put("clientCertificate", clientCertificate);
             }});
-        return new ClientCertificateCredential(tenantId, clientId, clientCertificate, clientCertificatePassword, identityClientOptions);
+        return new ClientCertificateCredential(tenantId, clientId, clientCertificate, clientCertificatePassword,
+            identityClientOptions);
     }
 }

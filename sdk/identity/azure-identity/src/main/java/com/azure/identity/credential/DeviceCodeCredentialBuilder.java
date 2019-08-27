@@ -18,13 +18,15 @@ public class DeviceCodeCredentialBuilder extends AadCredentialBuilderBase<Device
     private Consumer<DeviceCodeChallenge> deviceCodeChallengeConsumer;
 
     /**
-     * Sets the port for the local HTTP server, for which {@code http://localhost:{port}} must be
-     * registered as a valid reply URL on the application.
+     * Sets the port for the local HTTP server, for which {@code http://localhost:{port}} must be registered as a valid
+     * reply URL on the application.
      *
      * @param deviceCodeChallengeConsumer a method allowing the user to meet the device code challenge
+     *
      * @return the InteractiveBrowserCredentialBuilder itself
      */
-    public DeviceCodeCredentialBuilder deviceCodeChallengeConsumer(Consumer<DeviceCodeChallenge> deviceCodeChallengeConsumer) {
+    public DeviceCodeCredentialBuilder deviceCodeChallengeConsumer(
+        Consumer<DeviceCodeChallenge> deviceCodeChallengeConsumer) {
         this.deviceCodeChallengeConsumer = deviceCodeChallengeConsumer;
         return this;
     }
@@ -33,10 +35,11 @@ public class DeviceCodeCredentialBuilder extends AadCredentialBuilderBase<Device
      * @return a {@link DeviceCodeCredential} with the current configurations.
      */
     public DeviceCodeCredential build() {
-        ValidationUtil.validate(getClass().getSimpleName(), new HashMap<String, Object>() {{
-                put("clientId", clientId);
-                put("deviceCodeChallengeConsumer", deviceCodeChallengeConsumer);
-            }});
+        ValidationUtil.validate(getClass().getSimpleName(),
+            new HashMap<String, Object>() {{
+                    put("clientId", clientId);
+                    put("deviceCodeChallengeConsumer", deviceCodeChallengeConsumer);
+                }});
         return new DeviceCodeCredential(clientId, deviceCodeChallengeConsumer, identityClientOptions);
     }
 }

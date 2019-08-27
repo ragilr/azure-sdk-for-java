@@ -70,7 +70,9 @@ public class ManagedIdentityCredentialTest {
 
             // mock
             IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-            when(identityClient.authenticateToManagedIdentityEndpoint(endpoint, secret, scopes1)).thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
+            when(identityClient
+                .authenticateToManagedIdentityEndpoint(endpoint, secret, scopes1))
+                .thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
             PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
             // test
@@ -89,12 +91,13 @@ public class ManagedIdentityCredentialTest {
     public void testIMDS() throws Exception {
         // setup
         String token1 = "token1";
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
         IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-        when(identityClient.authenticateToIMDSEndpoint(scopes)).thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
+        when(identityClient.authenticateToIMDSEndpoint(scopes)).thenReturn(TestUtils.getMockAccessToken(token1,
+            expiresOn));
         PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
         // test

@@ -15,8 +15,7 @@ import com.azure.identity.implementation.IdentityClientOptions;
 import reactor.core.publisher.Mono;
 
 /**
- * A credential provider that provides token credentials based on environment
- * variables.
+ * A credential provider that provides token credentials based on environment variables.
  */
 @Immutable
 public class EnvironmentCredential implements TokenCredential {
@@ -26,6 +25,7 @@ public class EnvironmentCredential implements TokenCredential {
 
     /**
      * Creates an instance of the default environment credential provider.
+     *
      * @param identityClientOptions the options for configuring the identity client
      */
     EnvironmentCredential(IdentityClientOptions identityClientOptions) {
@@ -47,7 +47,8 @@ public class EnvironmentCredential implements TokenCredential {
             }
 
             // Other environment variables
-            throw logger.logExceptionAsError(new ClientAuthenticationException("Cannot create any credentials with the current environment variables", null));
+            throw logger.logExceptionAsError(new ClientAuthenticationException("Cannot create any credentials with "
+                + "the current environment variables", null));
         }).flatMap(cred -> cred.getToken(scopes));
     }
 }

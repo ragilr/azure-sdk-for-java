@@ -33,7 +33,8 @@ import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ ConfidentialClientApplication.class, ConfidentialClientApplication.Builder.class, PublicClientApplication.class, PublicClientApplication.Builder.class, IdentityClient.class })
+@PrepareForTest({ConfidentialClientApplication.class, ConfidentialClientApplication.Builder.class,
+    PublicClientApplication.class, PublicClientApplication.Builder.class, IdentityClient.class})
 @PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*"})
 public class IdentityClientTests {
 
@@ -46,7 +47,7 @@ public class IdentityClientTests {
         // setup
         String secret = "secret";
         String accessToken = "token";
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
@@ -64,7 +65,7 @@ public class IdentityClientTests {
         // setup
         String secret = "secret";
         String accessToken = "token";
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
@@ -85,7 +86,7 @@ public class IdentityClientTests {
         // setup
         String pfxPath = getClass().getResource("/keyStore.pfx").getPath();
         String accessToken = "token";
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
@@ -103,7 +104,7 @@ public class IdentityClientTests {
         // setup
         String pfxPath = getClass().getResource("/keyStore.pfx").getPath();
         String accessToken = "token";
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
@@ -123,7 +124,7 @@ public class IdentityClientTests {
     public void testValidDeviceCodeFlow() throws Exception {
         // setup
         String accessToken = "token";
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
@@ -131,14 +132,16 @@ public class IdentityClientTests {
 
         // test
         IdentityClient client = new IdentityClientBuilder().tenantId(tenantId).clientId(clientId).build();
-        AccessToken token = client.authenticateWithDeviceCode(scopes, deviceCodeChallenge -> { /* do nothing */ }).block();
+        AccessToken token =
+            client.authenticateWithDeviceCode(scopes, deviceCodeChallenge -> { /* do nothing */ }).block();
         Assert.assertEquals(accessToken, token.token());
         Assert.assertEquals(expiresOn.getSecond(), token.expiresOn().getSecond());
     }
 
     /****** mocks ******/
 
-    private void mockForClientSecret(String secret, String[] scopes, String accessToken, OffsetDateTime expiresOn) throws Exception {
+    private void mockForClientSecret(
+        String secret, String[] scopes, String accessToken, OffsetDateTime expiresOn) throws Exception {
         ConfidentialClientApplication application = PowerMockito.mock(ConfidentialClientApplication.class);
         when(application.acquireToken(any(ClientCredentialParameters.class))).thenAnswer(invocation -> {
             ClientCredentialParameters argument = (ClientCredentialParameters) invocation.getArguments()[0];
@@ -166,7 +169,8 @@ public class IdentityClientTests {
         });
     }
 
-    private void mockForClientCertificate(String[] scopes, String accessToken, OffsetDateTime expiresOn) throws Exception {
+    private void mockForClientCertificate(
+        String[] scopes, String accessToken, OffsetDateTime expiresOn) throws Exception {
         ConfidentialClientApplication application = PowerMockito.mock(ConfidentialClientApplication.class);
         when(application.acquireToken(any(ClientCredentialParameters.class))).thenAnswer(invocation -> {
             ClientCredentialParameters argument = (ClientCredentialParameters) invocation.getArguments()[0];

@@ -40,13 +40,15 @@ public class DeviceCodeCredentialTest {
         Consumer<DeviceCodeChallenge> consumer = deviceCodeChallenge -> { /* do nothing */ };
         String token1 = "token1";
         String token2 = "token2";
-        String[] scopes1 = new String[] { "https://management.azure.com" };
-        String[] scopes2 = new String[] { "https://vault.azure.net" };
+        String[] scopes1 = new String[]{"https://management.azure.com"};
+        String[] scopes2 = new String[]{"https://vault.azure.net"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
         IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-        when(identityClient.authenticateWithDeviceCode(eq(scopes1), eq(consumer))).thenReturn(TestUtils.getMockMsalToken(token1, expiresOn));
+        when(identityClient
+            .authenticateWithDeviceCode(eq(scopes1), eq(consumer)))
+            .thenReturn(TestUtils.getMockMsalToken(token1, expiresOn));
         when(identityClient.authenticateWithUserRefreshToken(any(), any()))
             .thenAnswer(invocation -> {
                 String[] argument = (String[]) invocation.getArguments()[0];
@@ -55,13 +57,15 @@ public class DeviceCodeCredentialTest {
                 } else if (argument.length == 1 && argument[0].equals(scopes1[0])) {
                     return Mono.error(new UnsupportedOperationException("nothing cached"));
                 } else {
-                    throw new InvalidUseOfMatchersException(String.format("Argument %s does not match", (Object) argument));
+                    throw new InvalidUseOfMatchersException(String.format("Argument %s does not match",
+                        (Object) argument));
                 }
             });
         PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
         // test
-        DeviceCodeCredential credential = new DeviceCodeCredentialBuilder().deviceCodeChallengeConsumer(consumer).clientId(clientId).build();
+        DeviceCodeCredential credential =
+            new DeviceCodeCredentialBuilder().deviceCodeChallengeConsumer(consumer).clientId(clientId).build();
         AccessToken token = credential.getToken(scopes1).block();
         Assert.assertEquals(token1, token.token());
         Assert.assertEquals(expiresOn.getSecond(), token.expiresOn().getSecond());

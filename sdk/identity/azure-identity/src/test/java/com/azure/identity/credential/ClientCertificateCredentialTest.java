@@ -38,22 +38,32 @@ public class ClientCertificateCredentialTest {
         String pfxPassword = "password";
         String token1 = "token1";
         String token2 = "token2";
-        String[] scopes1 = new String[] { "https://management.azure.com" };
-        String[] scopes2 = new String[] { "https://vault.azure.net" };
+        String[] scopes1 = new String[]{"https://management.azure.com"};
+        String[] scopes2 = new String[]{"https://vault.azure.net"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
         IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-        when(identityClient.authenticateWithPemCertificate(pemPath, scopes1)).thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
-        when(identityClient.authenticateWithPfxCertificate(pfxPath, pfxPassword, scopes2)).thenReturn(TestUtils.getMockAccessToken(token2, expiresOn));
+        when(identityClient
+            .authenticateWithPemCertificate(pemPath, scopes1))
+            .thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
+        when(identityClient
+            .authenticateWithPfxCertificate(pfxPath, pfxPassword, scopes2))
+            .thenReturn(TestUtils.getMockAccessToken(token2, expiresOn));
         PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
         // test
-        ClientCertificateCredential credential = new ClientCertificateCredentialBuilder().tenantId(tenantId).clientId(clientId).pemCertificate(pemPath).build();
+        ClientCertificateCredential credential = new ClientCertificateCredentialBuilder()
+            .tenantId(tenantId)
+            .clientId(clientId)
+            .pemCertificate(pemPath)
+            .build();
         AccessToken token = credential.getToken(scopes1).block();
         Assert.assertEquals(token1, token.token());
         Assert.assertEquals(expiresOn.getSecond(), token.expiresOn().getSecond());
-        credential = new ClientCertificateCredentialBuilder().tenantId(tenantId).clientId(clientId).pfxCertificate(pfxPath, pfxPassword).build();
+        credential =
+            new ClientCertificateCredentialBuilder().tenantId(tenantId).clientId(clientId).pfxCertificate(pfxPath,
+                pfxPassword).build();
         token = credential.getToken(scopes2).block();
         Assert.assertEquals(token2, token.token());
         Assert.assertEquals(expiresOn.getSecond(), token.expiresOn().getSecond());
@@ -65,25 +75,34 @@ public class ClientCertificateCredentialTest {
         String pemPath = "C:\\fakepath\\cert1.pem";
         String pfxPath = "C:\\fakepath\\cert2.pfx";
         String pfxPassword = "password";
-        String[] scopes1 = new String[] { "https://management.azure.com" };
-        String[] scopes2 = new String[] { "https://vault.azure.net" };
+        String[] scopes1 = new String[]{"https://management.azure.com"};
+        String[] scopes2 = new String[]{"https://vault.azure.net"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
         IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-        when(identityClient.authenticateWithPemCertificate(pemPath, scopes1)).thenThrow(new MsalServiceException("bad pem", "BadPem"));
-        when(identityClient.authenticateWithPfxCertificate(pfxPath, pfxPassword, scopes2)).thenThrow(new MsalServiceException("bad pfx", "BadPfx"));
+        when(identityClient.authenticateWithPemCertificate(pemPath, scopes1)).thenThrow(new MsalServiceException("bad"
+            + " pem", "BadPem"));
+        when(identityClient
+            .authenticateWithPfxCertificate(pfxPath, pfxPassword, scopes2))
+            .thenThrow(new MsalServiceException("bad pfx", "BadPfx"));
         PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
         // test
         try {
-            ClientCertificateCredential credential = new ClientCertificateCredentialBuilder().tenantId(tenantId).clientId(clientId).pemCertificate(pemPath).build();
+            ClientCertificateCredential credential = new ClientCertificateCredentialBuilder()
+                .tenantId(tenantId)
+                .clientId(clientId)
+                .pemCertificate(pemPath)
+                .build();
             credential.getToken(scopes1).block();
         } catch (MsalServiceException e) {
             Assert.assertEquals("bad pem", e.getMessage());
         }
         try {
-            ClientCertificateCredential credential = new ClientCertificateCredentialBuilder().tenantId(tenantId).clientId(clientId).pfxCertificate(pfxPath, pfxPassword).build();
+            ClientCertificateCredential credential =
+                new ClientCertificateCredentialBuilder().tenantId(tenantId).clientId(clientId).pfxCertificate(pfxPath,
+                    pfxPassword).build();
             credential.getToken(scopes2).block();
             fail();
         } catch (MsalServiceException e) {
@@ -96,31 +115,35 @@ public class ClientCertificateCredentialTest {
         // setup
         String pemPath = "C:\\fakepath\\cert1.pem";
         String token1 = "token1";
-        String[] scopes = new String[] { "https://management.azure.com" };
+        String[] scopes = new String[]{"https://management.azure.com"};
         OffsetDateTime expiresOn = OffsetDateTime.now(ZoneOffset.UTC).plusHours(1);
 
         // mock
         IdentityClient identityClient = PowerMockito.mock(IdentityClient.class);
-        when(identityClient.authenticateWithPemCertificate(pemPath, scopes)).thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
+        when(identityClient.authenticateWithPemCertificate(pemPath, scopes))
+            .thenReturn(TestUtils.getMockAccessToken(token1, expiresOn));
         PowerMockito.whenNew(IdentityClient.class).withAnyArguments().thenReturn(identityClient);
 
         // test
         try {
-            ClientCertificateCredential credential = new ClientCertificateCredentialBuilder().clientId(clientId).pemCertificate(pemPath).build();
+            ClientCertificateCredential credential =
+                new ClientCertificateCredentialBuilder().clientId(clientId).pemCertificate(pemPath).build();
             credential.getToken(scopes).block();
             fail();
         } catch (IllegalArgumentException e) {
             Assert.assertTrue(e.getMessage().contains("tenantId"));
         }
         try {
-            ClientCertificateCredential credential = new ClientCertificateCredentialBuilder().tenantId(tenantId).pemCertificate(pemPath).build();
+            ClientCertificateCredential credential =
+                new ClientCertificateCredentialBuilder().tenantId(tenantId).pemCertificate(pemPath).build();
             credential.getToken(scopes).block();
             fail();
         } catch (IllegalArgumentException e) {
             Assert.assertTrue(e.getMessage().contains("clientId"));
         }
         try {
-            ClientCertificateCredential credential = new ClientCertificateCredentialBuilder().tenantId(tenantId).clientId(clientId).build();
+            ClientCertificateCredential credential =
+                new ClientCertificateCredentialBuilder().tenantId(tenantId).clientId(clientId).build();
             credential.getToken(scopes).block();
             fail();
         } catch (IllegalArgumentException e) {

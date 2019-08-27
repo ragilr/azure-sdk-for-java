@@ -28,20 +28,23 @@ public final class CertificateUtil {
 
     /**
      * Extracts the PrivateKey from a PEM certificate.
+     *
      * @param pem the contents of a PEM certificate.
+     *
      * @return the PrivateKey
      */
     public static PrivateKey privateKeyFromPem(byte[] pem) {
         Pattern pattern = Pattern.compile("(?s)-----BEGIN PRIVATE KEY-----.*-----END PRIVATE KEY-----");
         Matcher matcher = pattern.matcher(new String(pem, StandardCharsets.UTF_8));
         if (!matcher.find()) {
-            throw LOGGER.logExceptionAsError(new IllegalArgumentException("Certificate file provided is not a valid PEM file."));
+            throw LOGGER.logExceptionAsError(new IllegalArgumentException("Certificate file provided is not a valid "
+                + "PEM file."));
         }
         String base64 = matcher.group()
-                .replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replace("\n", "")
-                .replace("\r", "");
+            .replace("-----BEGIN PRIVATE KEY-----", "")
+            .replace("-----END PRIVATE KEY-----", "")
+            .replace("\n", "")
+            .replace("\r", "");
         byte[] key = Base64Util.decode(base64.getBytes(StandardCharsets.UTF_8));
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(key);
         try {
@@ -54,14 +57,17 @@ public final class CertificateUtil {
 
     /**
      * Extracts the X509Certificate certificate from a PEM certificate.
+     *
      * @param pem the contents of a PEM certificate.
+     *
      * @return the X509Certificate certificate
      */
     public static X509Certificate publicKeyFromPem(byte[] pem) {
         Pattern pattern = Pattern.compile("(?s)-----BEGIN CERTIFICATE-----.*-----END CERTIFICATE-----");
         Matcher matcher = pattern.matcher(new String(pem, StandardCharsets.UTF_8));
         if (!matcher.find()) {
-            throw LOGGER.logExceptionAsError(new IllegalArgumentException("PEM certificate provided does not contain -----BEGIN CERTIFICATE-----END CERTIFICATE----- block"));
+            throw LOGGER.logExceptionAsError(new IllegalArgumentException("PEM certificate provided does not contain "
+                + "-----BEGIN CERTIFICATE-----END CERTIFICATE----- block"));
         }
         try {
             CertificateFactory factory = CertificateFactory.getInstance("X.509");
@@ -72,5 +78,6 @@ public final class CertificateUtil {
         }
     }
 
-    private CertificateUtil() { }
+    private CertificateUtil() {
+    }
 }

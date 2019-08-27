@@ -30,17 +30,24 @@ public class ClientCertificateCredential implements TokenCredential {
 
     /**
      * Creates a ClientSecretCredential with default identity client options.
+     *
      * @param tenantId the tenant ID of the application
      * @param clientId the client ID of the application
      * @param certificatePath the PEM file / PFX file containing the certificate
      * @param certificatePassword the password protecting the PFX file
      * @param identityClientOptions the options to configure the identity client
      */
-    ClientCertificateCredential(String tenantId, String clientId, String certificatePath, String certificatePassword, IdentityClientOptions identityClientOptions) {
+    ClientCertificateCredential(String tenantId, String clientId, String certificatePath, String certificatePassword,
+                                IdentityClientOptions identityClientOptions) {
         Objects.requireNonNull(certificatePath);
         this.clientCertificate = certificatePath;
         this.clientCertificatePassword = certificatePassword;
-        identityClient = new IdentityClientBuilder().tenantId(tenantId).clientId(clientId).identityClientOptions(identityClientOptions).build();
+        identityClient =
+            new IdentityClientBuilder().
+                tenantId(tenantId).
+                clientId(clientId).
+                identityClientOptions(identityClientOptions).
+                build();
     }
 
     @Override
