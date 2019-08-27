@@ -130,4 +130,7 @@
   <suppress checks="com.azure.tools.checkstyle.checks.ThrowFromClientLoggerCheck" files="com.azure.storage.blob.BlobOutputStream.java"/>
   <suppress checks="com.azure.tools.checkstyle.checks.ThrowFromClientLoggerCheck" files="com.azure.storage.blob.BlockBlobClient.java"/>
   <suppress checks="com.azure.tools.checkstyle.checks.ThrowFromClientLoggerCheck" files="com.azure.storage.blob.PageBlobAsyncClient.java"/>
+
+  <!-- Suppress XX exception for Storage for preview 3. Save it for preview 4 -->
+  <suppress checks="LineLength" files=".*[/\\]com[/\\]azure[/\\]storage[/\\]*"/>
 </suppressions>
