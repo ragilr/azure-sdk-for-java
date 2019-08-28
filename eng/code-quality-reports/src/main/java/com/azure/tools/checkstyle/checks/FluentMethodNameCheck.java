@@ -128,11 +128,15 @@ public class FluentMethodNameCheck extends AbstractCheck {
         // Always has MODIFIERS node
         final DetailAST modifiersToken = methodDefToken.findFirstToken(TokenTypes.MODIFIERS);
         // If no @Fluent annotated with this class, return false
-        return TokenUtil.findFirstTokenByPredicate(modifiersToken,
-                    annotationToken -> annotationToken.getType() == TokenTypes.ANNOTATION
-                        && TokenUtil.findFirstTokenByPredicate(annotationToken,
-                            identToken -> identToken.getType() == TokenTypes.IDENT &&
-                                "Fluent".equals(identToken.getText())).isPresent())
+        return TokenUtil
+            .findFirstTokenByPredicate(
+                modifiersToken,
+                annotationToken -> annotationToken.getType() == TokenTypes.ANNOTATION
+                    && TokenUtil.findFirstTokenByPredicate(
+                        annotationToken,
+                        identToken -> identToken.getType() == TokenTypes.IDENT
+                            && "Fluent".equals(identToken.getText()))
+                    .isPresent())
             .isPresent();
     }
 }
