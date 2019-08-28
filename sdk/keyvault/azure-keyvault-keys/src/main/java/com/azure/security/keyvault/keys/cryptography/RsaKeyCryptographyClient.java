@@ -54,8 +54,8 @@ class RsaKeyCryptographyClient extends LocalKeyCryptographyClient {
         keyPair = getKeyPair(jsonWebKey);
 
         if (iv != null || authenticationData != null) {
-            Mono.error(new IllegalArgumentException("iv and authenticationData parameters are not allowed for Rsa "
-                + "encrypt operation"));
+            Mono.error(new IllegalArgumentException(
+                "iv and authenticationData parameters are not allowed for Rsa encrypt operation"));
         }
 
         // Interpret the requested algorithm
@@ -74,8 +74,8 @@ class RsaKeyCryptographyClient extends LocalKeyCryptographyClient {
             if (serviceCryptoAvailable()) {
                 return serviceClient.encrypt(algorithm, plaintext, context);
             }
-            return Mono.error(new IllegalArgumentException("Public portion of the key not available to perform "
-                + "encrypt operation"));
+            return Mono.error(new IllegalArgumentException(
+                "Public portion of the key not available to perform encrypt operation"));
         }
 
         AsymmetricEncryptionAlgorithm algo = (AsymmetricEncryptionAlgorithm) baseAlgorithm;
@@ -100,8 +100,8 @@ class RsaKeyCryptographyClient extends LocalKeyCryptographyClient {
                                      JsonWebKey jsonWebKey) {
 
         if (iv != null || authenticationData != null || authenticationTag != null) {
-            return Mono.error(new IllegalArgumentException("iv, authenticationData and authenticationTag parameters "
-                + "are not supported for Rsa decrypt operation"));
+            return Mono.error(new IllegalArgumentException(
+                "iv, authenticationData and authenticationTag parameters are not supported for Rsa decrypt operation"));
         }
 
         keyPair = getKeyPair(jsonWebKey);
@@ -121,8 +121,8 @@ class RsaKeyCryptographyClient extends LocalKeyCryptographyClient {
             if (serviceCryptoAvailable()) {
                 return serviceClient.decrypt(algorithm, cipherText, context);
             }
-            return Mono.error(new IllegalArgumentException("Private portion of the key not available to perform "
-                + "decrypt operation"));
+            return Mono.error(new IllegalArgumentException(
+                "Private portion of the key not available to perform decrypt operation"));
         }
 
         AsymmetricEncryptionAlgorithm algo = (AsymmetricEncryptionAlgorithm) baseAlgorithm;
@@ -175,8 +175,8 @@ class RsaKeyCryptographyClient extends LocalKeyCryptographyClient {
             if (serviceCryptoAvailable()) {
                 return serviceClient.wrapKey(algorithm, key, context);
             }
-            return Mono.error(new IllegalArgumentException("Public portion of the key not available to perform wrap "
-                + "key operation"));
+            return Mono.error(new IllegalArgumentException(
+                "Public portion of the key not available to perform wrap key operation"));
         }
 
         AsymmetricEncryptionAlgorithm algo = (AsymmetricEncryptionAlgorithm) baseAlgorithm;
@@ -217,8 +217,8 @@ class RsaKeyCryptographyClient extends LocalKeyCryptographyClient {
             if (serviceCryptoAvailable()) {
                 return serviceClient.unwrapKey(algorithm, encryptedKey, context);
             }
-            return Mono.error(new IllegalArgumentException("Private portion of the key not available to perform "
-                + "unwrap operation"));
+            return Mono.error(new IllegalArgumentException(
+                "Private portion of the key not available to perform unwrap operation"));
         }
 
         AsymmetricEncryptionAlgorithm algo = (AsymmetricEncryptionAlgorithm) baseAlgorithm;

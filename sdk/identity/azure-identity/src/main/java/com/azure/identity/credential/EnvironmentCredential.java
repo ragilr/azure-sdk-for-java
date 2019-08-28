@@ -47,8 +47,8 @@ public class EnvironmentCredential implements TokenCredential {
             }
 
             // Other environment variables
-            throw logger.logExceptionAsError(new ClientAuthenticationException("Cannot create any credentials with "
-                + "the current environment variables", null));
+            throw logger.logExceptionAsError(new ClientAuthenticationException(
+                "Cannot create any credentials with the current environment variables", null));
         }).flatMap(cred -> cred.getToken(scopes));
     }
 }

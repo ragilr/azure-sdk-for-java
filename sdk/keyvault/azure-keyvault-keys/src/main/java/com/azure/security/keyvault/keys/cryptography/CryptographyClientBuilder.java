@@ -131,8 +131,9 @@ public final class CryptographyClientBuilder {
             : configuration;
 
         if (jsonWebKey == null && Strings.isNullOrEmpty(keyId)) {
-            throw logger.logExceptionAsError(new IllegalStateException("Json Web Key or jsonWebKey identifier are "
-                + "required to create cryptography client"));
+            throw logger.logExceptionAsError(
+                new IllegalStateException(
+                    "Json Web Key or jsonWebKey identifier are required to create cryptography client"));
         }
 
         if (pipeline != null) {
@@ -144,8 +145,8 @@ public final class CryptographyClientBuilder {
         }
 
         if (credential == null) {
-            throw logger.logExceptionAsError(new IllegalStateException("Key Vault credentials " + "are required to "
-                + "build the Cryptography async client"));
+            throw logger.logExceptionAsError(
+                new IllegalStateException("Key Vault credentials are required to build the Cryptography async client"));
         }
 
         // Closest to API goes first, closest to wire goes last.

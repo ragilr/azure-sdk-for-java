@@ -423,8 +423,9 @@ public class IdentityClient {
                         sleep(retryTimeoutInMs);
                     }
                 } else {
-                    return Mono.error(new RuntimeException("Couldn't acquire access token from IMDS, verify your "
-                        + "objectId, clientId or msiResourceId", exception));
+                    return Mono.error(new RuntimeException(
+                        "Couldn't acquire access token from IMDS, verify your objectId, clientId or msiResourceId",
+                        exception));
                 }
             } finally {
                 if (connection != null) {

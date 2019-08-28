@@ -181,8 +181,11 @@ abstract class PollStrategy {
         } else {
             try {
                 final Object resultObject =
-                    restProxy.handleRestReturnType(new HttpResponseDecoder(restProxy.serializer())
-                            .decode(Mono.just(httpResponse), this.methodParser), methodParser,
+                    restProxy.handleRestReturnType(
+                        new HttpResponseDecoder(
+                            restProxy.serializer()).decode(Mono.just(httpResponse),
+                            this.methodParser),
+                        methodParser,
                         operationStatusResultType,
                         context);
                 operationStatus = new OperationStatus<>(resultObject, status());

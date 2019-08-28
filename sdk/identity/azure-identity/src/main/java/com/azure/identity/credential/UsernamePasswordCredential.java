@@ -42,11 +42,11 @@ public class UsernamePasswordCredential implements TokenCredential {
         this.username = username;
         this.password = password;
         identityClient =
-            new IdentityClientBuilder().
-                tenantId("common").
-                clientId(clientId).
-                identityClientOptions(identityClientOptions).
-                build();
+            new IdentityClientBuilder()
+                .tenantId("common")
+                .clientId(clientId)
+                .identityClientOptions(identityClientOptions)
+                .build();
         cachedToken = new AtomicReference<>();
     }
 

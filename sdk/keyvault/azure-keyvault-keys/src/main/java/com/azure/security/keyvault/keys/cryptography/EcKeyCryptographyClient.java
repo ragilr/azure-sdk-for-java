@@ -58,16 +58,16 @@ class EcKeyCryptographyClient extends LocalKeyCryptographyClient {
     @Override
     Mono<EncryptResult> encryptAsync(EncryptionAlgorithm algorithm, byte[] plaintext, byte[] iv,
                                      byte[] authenticationData, Context context, JsonWebKey key) {
-        throw logger.logExceptionAsError(new UnsupportedOperationException("Encrypt operation is not supported for EC"
-            + " key"));
+        throw logger.logExceptionAsError(new UnsupportedOperationException(
+            "Encrypt operation is not supported for EC key"));
     }
 
     @Override
     Mono<DecryptResult> decryptAsync(EncryptionAlgorithm algorithm, byte[] cipherText, byte[] iv,
                                      byte[] authenticationData, byte[] authenticationTag, Context context,
                                      JsonWebKey key) {
-        throw logger.logExceptionAsError(new UnsupportedOperationException("Decrypt operation is not supported for EC"
-            + " key"));
+        throw logger.logExceptionAsError(new UnsupportedOperationException(
+            "Decrypt operation is not supported for EC key"));
     }
 
     @Override
@@ -90,8 +90,8 @@ class EcKeyCryptographyClient extends LocalKeyCryptographyClient {
             if (serviceCryptoAvailable()) {
                 return serviceClient.sign(algorithm, digest, context);
             }
-            return Mono.error(new IllegalArgumentException("Private portion of the key not available to perform sign "
-                + "operation"));
+            return Mono.error(new IllegalArgumentException(
+                "Private portion of the key not available to perform sign operation"));
         }
 
         Ecdsa algo;
@@ -132,8 +132,8 @@ class EcKeyCryptographyClient extends LocalKeyCryptographyClient {
             if (serviceCryptoAvailable()) {
                 return serviceClient.verify(algorithm, digest, signature, context);
             }
-            return Mono.error(new IllegalArgumentException("Public portion of the key not available to perform verify"
-                + " operation"));
+            return Mono.error(new IllegalArgumentException(
+                "Public portion of the key not available to perform verify operation"));
         }
 
         Ecdsa algo;
@@ -160,8 +160,8 @@ class EcKeyCryptographyClient extends LocalKeyCryptographyClient {
     @Override
     Mono<KeyUnwrapResult> unwrapKeyAsync(KeyWrapAlgorithm algorithm, byte[] encryptedKey, Context context,
                                          JsonWebKey key) {
-        throw logger.logExceptionAsError(new UnsupportedOperationException("Unwrap key operation is not supported for"
-            + " Ec key"));
+        throw logger.logExceptionAsError(new UnsupportedOperationException(
+            "Unwrap key operation is not supported for Ec key"));
     }
 
     @Override

@@ -92,11 +92,14 @@ public final class ProvisioningStatePollStrategy extends PollStrategy {
                         if (resource == null
                             || resource.properties() == null
                             || resource.properties().provisioningState() == null) {
-                            throw logger.logExceptionAsError(new CloudException("The polling response does not "
-                                + "contain a valid body", bufferedHttpPollResponse, null));
+                            throw logger.logExceptionAsError(new CloudException(
+                                "The polling response does not contain a valid body",
+                                bufferedHttpPollResponse,
+                                null));
                         } else if (OperationState.isFailedOrCanceled(resource.properties().provisioningState())) {
-                            throw logger.logExceptionAsError(new CloudException("Async operation failed with "
-                                + "provisioning state: " + resource.properties().provisioningState(),
+                            throw logger.logExceptionAsError(new CloudException(
+                                "Async operation failed with provisioning state: "
+                                    + resource.properties().provisioningState(),
                                 bufferedHttpPollResponse));
                         } else {
                             setStatus(resource.properties().provisioningState());

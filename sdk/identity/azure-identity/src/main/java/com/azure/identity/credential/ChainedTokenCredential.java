@@ -35,7 +35,7 @@ public class ChainedTokenCredential implements TokenCredential {
         return Flux.fromIterable(credentials)
             .flatMap(p -> p.getToken(scopes).onErrorResume(t -> Mono.empty()))
             .next()
-            .switchIfEmpty(Mono.error(new ClientAuthenticationException("No credential can provide a token in the "
-                + "chain", null)));
+            .switchIfEmpty(Mono.error(new ClientAuthenticationException(
+                "No credential can provide a token in the chain", null)));
     }
 }

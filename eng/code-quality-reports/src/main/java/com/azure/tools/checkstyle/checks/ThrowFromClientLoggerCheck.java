@@ -104,8 +104,8 @@ public class ThrowFromClientLoggerCheck extends AbstractCheck {
 
                 String methodCallName = FullIdent.createFullIdent(methodCallToken.findFirstToken(TokenTypes.DOT))
                     .getText();
-                if (!LOGGER_LOG_EXCEPTION_AS_ERROR.equals(methodCallName) && !LOGGER_LOG_EXCEPTION_AS_WARNING
-                    .equals(methodCallName)) {
+                if (!LOGGER_LOG_EXCEPTION_AS_ERROR.equals(methodCallName)
+                    && !LOGGER_LOG_EXCEPTION_AS_WARNING.equals(methodCallName)) {
                     log(token, String.format(THROW_LOGGER_EXCEPTION_MESSAGE, LOGGER_LOG_EXCEPTION_AS_ERROR,
                         LOGGER_LOG_EXCEPTION_AS_WARNING));
                 }

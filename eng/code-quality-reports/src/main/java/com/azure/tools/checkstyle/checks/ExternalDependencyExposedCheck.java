@@ -69,8 +69,8 @@ public class ExternalDependencyExposedCheck extends AbstractCheck {
                 // CLASS_DEF always has MODIFIERS
                 final AccessModifier accessModifier = CheckUtil.getAccessModifierFromModifiersToken(
                     token.findFirstToken(TokenTypes.MODIFIERS));
-                isPublicClass = accessModifier.equals(AccessModifier.PUBLIC) || accessModifier
-                    .equals(AccessModifier.PROTECTED);
+                isPublicClass = accessModifier.equals(AccessModifier.PUBLIC)
+                    || accessModifier.equals(AccessModifier.PROTECTED);
                 break;
             case TokenTypes.METHOD_DEF:
                 if (!isPublicClass) {

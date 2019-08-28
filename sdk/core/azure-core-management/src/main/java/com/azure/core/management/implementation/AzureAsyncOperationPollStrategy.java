@@ -101,8 +101,8 @@ public final class AzureAsyncOperationPollStrategy extends PollStrategy {
                 pollUrl = data.originalResourceUrl;
             }
         } else {
-            throw logger.logExceptionAsError(new IllegalStateException("Polling is completed and did not succeed. "
-                + "Cannot create a polling request."));
+            throw logger.logExceptionAsError(new IllegalStateException(
+                "Polling is completed and did not succeed. Cannot create a polling request."));
         }
 
         return new HttpRequest(HttpMethod.GET, pollUrl);
@@ -125,8 +125,10 @@ public final class AzureAsyncOperationPollStrategy extends PollStrategy {
                             }
                             //
                             if (operationResource == null || operationResource.status() == null) {
-                                throw logger.logExceptionAsError(new CloudException("The polling response does not "
-                                    + "contain a valid body", bufferedHttpPollResponse, null));
+                                throw logger.logExceptionAsError(new CloudException(
+                                    "The polling response does not contain a valid body",
+                                    bufferedHttpPollResponse,
+                                    null));
                             } else {
                                 final String status = operationResource.status();
                                 setStatus(status);
@@ -137,8 +139,9 @@ public final class AzureAsyncOperationPollStrategy extends PollStrategy {
                                     clearDelayInMilliseconds();
 
                                     if (!data.pollingSucceeded) {
-                                        throw logger.logExceptionAsError(new CloudException("Async operation failed "
-                                            + "with provisioning state: " + status, bufferedHttpPollResponse));
+                                        throw logger.logExceptionAsError(new CloudException(
+                                            "Async operation failed with provisioning state: " + status,
+                                            bufferedHttpPollResponse));
                                     }
 
                                     if (operationResource.id() != null) {

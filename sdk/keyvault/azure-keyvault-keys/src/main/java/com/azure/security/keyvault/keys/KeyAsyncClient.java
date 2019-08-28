@@ -139,8 +139,8 @@ public final class KeyAsyncClient {
 
     Mono<Response<Key>> createKeyWithResponse(String name, KeyType keyType, Context context) {
         KeyRequestParameters parameters = new KeyRequestParameters().kty(keyType);
-        return service.createKey(endpoint, name, API_VERSION, ACCEPT_LANGUAGE, parameters, CONTENT_TYPE_HEADER_VALUE,
-            context)
+        return service
+            .createKey(endpoint, name, API_VERSION, ACCEPT_LANGUAGE, parameters, CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Creating key - {}", name))
             .doOnSuccess(response -> logger.info("Created key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to create key - {}", name, error));
@@ -187,8 +187,9 @@ public final class KeyAsyncClient {
             .kty(keyCreateOptions.keyType())
             .keyOps(keyCreateOptions.keyOperations())
             .keyAttributes(new KeyRequestAttributes(keyCreateOptions));
-        return service.createKey(endpoint, keyCreateOptions.name(), API_VERSION, ACCEPT_LANGUAGE, parameters,
-            CONTENT_TYPE_HEADER_VALUE, context)
+        return service
+            .createKey(endpoint, keyCreateOptions.name(), API_VERSION, ACCEPT_LANGUAGE, parameters,
+                CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Creating key - {}", keyCreateOptions.name()))
             .doOnSuccess(response -> logger.info("Created key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to create key - {}", keyCreateOptions.name(), error));
@@ -265,8 +266,9 @@ public final class KeyAsyncClient {
             .keySize(rsaKeyCreateOptions.keySize())
             .keyOps(rsaKeyCreateOptions.keyOperations())
             .keyAttributes(new KeyRequestAttributes(rsaKeyCreateOptions));
-        return service.createKey(endpoint, rsaKeyCreateOptions.name(), API_VERSION, ACCEPT_LANGUAGE, parameters,
-            CONTENT_TYPE_HEADER_VALUE, context)
+        return service
+            .createKey(endpoint, rsaKeyCreateOptions.name(), API_VERSION, ACCEPT_LANGUAGE, parameters,
+                CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Creating Rsa key - {}", rsaKeyCreateOptions.name()))
             .doOnSuccess(response -> logger.info("Created Rsa key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to create Rsa key - {}", rsaKeyCreateOptions.name(), error));
@@ -350,8 +352,9 @@ public final class KeyAsyncClient {
             .curve(ecKeyCreateOptions.curve())
             .keyOps(ecKeyCreateOptions.keyOperations())
             .keyAttributes(new KeyRequestAttributes(ecKeyCreateOptions));
-        return service.createKey(endpoint, ecKeyCreateOptions.name(), API_VERSION, ACCEPT_LANGUAGE, parameters,
-            CONTENT_TYPE_HEADER_VALUE, context)
+        return service
+            .createKey(endpoint, ecKeyCreateOptions.name(), API_VERSION, ACCEPT_LANGUAGE, parameters,
+                CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Creating Ec key - {}", ecKeyCreateOptions.name()))
             .doOnSuccess(response -> logger.info("Created Ec key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to create Ec key - {}", ecKeyCreateOptions.name(), error));
@@ -387,8 +390,8 @@ public final class KeyAsyncClient {
 
     Mono<Response<Key>> importKeyWithResponse(String name, JsonWebKey keyMaterial, Context context) {
         KeyImportRequestParameters parameters = new KeyImportRequestParameters().key(keyMaterial);
-        return service.importKey(endpoint, name, API_VERSION, ACCEPT_LANGUAGE, parameters, CONTENT_TYPE_HEADER_VALUE,
-            context)
+        return service
+            .importKey(endpoint, name, API_VERSION, ACCEPT_LANGUAGE, parameters, CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Importing key - {}", name))
             .doOnSuccess(response -> logger.info("Imported key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to import key - {}", name, error));
@@ -479,8 +482,9 @@ public final class KeyAsyncClient {
             .key(keyImportOptions.keyMaterial())
             .hsm(keyImportOptions.hsm())
             .keyAttributes(new KeyRequestAttributes(keyImportOptions));
-        return service.importKey(endpoint, keyImportOptions.name(), API_VERSION, ACCEPT_LANGUAGE, parameters,
-            CONTENT_TYPE_HEADER_VALUE, context)
+        return service
+            .importKey(endpoint, keyImportOptions.name(), API_VERSION, ACCEPT_LANGUAGE, parameters,
+                CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Importing key - {}", keyImportOptions.name()))
             .doOnSuccess(response -> logger.info("Imported key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to import key - {}", keyImportOptions.name(), error));
@@ -652,8 +656,9 @@ public final class KeyAsyncClient {
         KeyRequestParameters parameters = new KeyRequestParameters()
             .tags(key.tags())
             .keyAttributes(new KeyRequestAttributes(key));
-        return service.updateKey(endpoint, key.name(), key.version(), API_VERSION, ACCEPT_LANGUAGE, parameters,
-            CONTENT_TYPE_HEADER_VALUE, context)
+        return service
+            .updateKey(endpoint, key.name(), key.version(), API_VERSION, ACCEPT_LANGUAGE, parameters,
+                CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Updating key - {}", key.name()))
             .doOnSuccess(response -> logger.info("Updated key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to update key - {}", key.name(), error));
@@ -724,8 +729,9 @@ public final class KeyAsyncClient {
             .tags(key.tags())
             .keyOps(Arrays.asList(keyOperations))
             .keyAttributes(new KeyRequestAttributes(key));
-        return service.updateKey(endpoint, key.name(), key.version(), API_VERSION, ACCEPT_LANGUAGE, parameters,
-            CONTENT_TYPE_HEADER_VALUE, context)
+        return service
+            .updateKey(endpoint, key.name(), key.version(), API_VERSION, ACCEPT_LANGUAGE, parameters,
+                CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Updating key - {}", key.name()))
             .doOnSuccess(response -> logger.info("Updated key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to update key - {}", key.name(), error));
@@ -821,8 +827,8 @@ public final class KeyAsyncClient {
      *
      * <p><strong>Code Samples</strong></p>
      * <p> Gets the deleted key from the key vault enabled for soft-delete. Subscribes to the call asynchronously and
-     * prints out the
-     * deleted key details when a response has been received.</p> //Assuming key is deleted on a soft-delete enabled
+     * prints out the deleted key details when a response has been received.</p>
+     * //Assuming key is deleted on a soft-delete enabled
      * vault. {@codesnippet com.azure.security.keyvault.keys.async.keyclient.getDeletedKeyWithResponse#string}
      *
      * @param name The name of the deleted key.
@@ -922,8 +928,8 @@ public final class KeyAsyncClient {
     }
 
     Mono<Response<Key>> recoverDeletedKeyWithResponse(String name, Context context) {
-        return service.recoverDeletedKey(endpoint, name, API_VERSION, ACCEPT_LANGUAGE, CONTENT_TYPE_HEADER_VALUE,
-            context)
+        return service
+            .recoverDeletedKey(endpoint, name, API_VERSION, ACCEPT_LANGUAGE, CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Recovering deleted key - {}", name))
             .doOnSuccess(response -> logger.info("Recovered deleted key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to recover deleted key - {}", name, error));
@@ -1060,8 +1066,8 @@ public final class KeyAsyncClient {
 
     Mono<Response<Key>> restoreKeyWithResponse(byte[] backup, Context context) {
         KeyRestoreRequestParameters parameters = new KeyRestoreRequestParameters().keyBackup(backup);
-        return service.restoreKey(endpoint, API_VERSION, parameters, ACCEPT_LANGUAGE, CONTENT_TYPE_HEADER_VALUE,
-            context)
+        return service
+            .restoreKey(endpoint, API_VERSION, parameters, ACCEPT_LANGUAGE, CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Attempting to restore key"))
             .doOnSuccess(response -> logger.info("Restored Key - {}", response.value().name()))
             .doOnError(error -> logger.warning("Failed to restore key - {}", error));
@@ -1116,8 +1122,9 @@ public final class KeyAsyncClient {
      * DEFAULT_MAX_PAGE_RESULTS} values.
      */
     private Mono<PagedResponse<KeyBase>> listKeysFirstPage(Context context) {
-        return service.getKeys(endpoint, DEFAULT_MAX_PAGE_RESULTS, API_VERSION, ACCEPT_LANGUAGE,
-            CONTENT_TYPE_HEADER_VALUE, context)
+        return service
+            .getKeys(endpoint, DEFAULT_MAX_PAGE_RESULTS, API_VERSION, ACCEPT_LANGUAGE,
+                CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Listing keys"))
             .doOnSuccess(response -> logger.info("Listed keys"))
             .doOnError(error -> logger.warning("Failed to list keys", error));
@@ -1170,8 +1177,9 @@ public final class KeyAsyncClient {
      * DEFAULT_MAX_PAGE_RESULTS} values.
      */
     private Mono<PagedResponse<DeletedKey>> listDeletedKeysFirstPage(Context context) {
-        return service.getDeletedKeys(endpoint, DEFAULT_MAX_PAGE_RESULTS, API_VERSION, ACCEPT_LANGUAGE,
-            CONTENT_TYPE_HEADER_VALUE, context)
+        return service
+            .getDeletedKeys(endpoint, DEFAULT_MAX_PAGE_RESULTS, API_VERSION, ACCEPT_LANGUAGE,
+                CONTENT_TYPE_HEADER_VALUE, context)
             .doOnRequest(ignored -> logger.info("Listing deleted keys"))
             .doOnSuccess(response -> logger.info("Listed deleted keys"))
             .doOnError(error -> logger.warning("Failed to list deleted keys", error));

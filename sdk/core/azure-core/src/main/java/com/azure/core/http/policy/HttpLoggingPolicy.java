@@ -95,7 +95,9 @@ public class HttpLoggingPolicy implements HttpPipelinePolicy {
                         Mono<byte[]> collectedBytes = FluxUtil.collectBytesInByteBufferStream(request.body());
                         reqBodyLoggingMono = collectedBytes.flatMap(bytes -> {
                             String bodyString = new String(bytes, StandardCharsets.UTF_8);
-                            bodyString = prettyPrintIfNeeded(logger, request.headers().value("Content-Type"),
+                            bodyString = prettyPrintIfNeeded(
+                                logger,
+                                request.headers().value("Content-Type"),
                                 bodyString);
                             logger.info("{}-byte body:%n{}", contentLength, bodyString);
                             logger.info("--> END {}", request.httpMethod());

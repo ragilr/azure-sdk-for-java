@@ -118,8 +118,9 @@ public final class SecretClientBuilder {
         URL buildEndpoint = getBuildEndpoint(buildConfiguration);
 
         if (buildEndpoint == null) {
-            throw logger.logExceptionAsError(new IllegalStateException(KeyVaultErrorCodeStrings
-                .getErrorString(KeyVaultErrorCodeStrings.VAULT_END_POINT_REQUIRED)));
+            throw logger.logExceptionAsError(
+                new IllegalStateException(KeyVaultErrorCodeStrings
+                    .getErrorString(KeyVaultErrorCodeStrings.VAULT_END_POINT_REQUIRED)));
         }
 
         if (pipeline != null) {
@@ -127,14 +128,16 @@ public final class SecretClientBuilder {
         }
 
         if (credential == null) {
-            throw logger.logExceptionAsError(new IllegalStateException(KeyVaultErrorCodeStrings
-                .getErrorString(KeyVaultErrorCodeStrings.CREDENTIAL_REQUIRED)));
+            throw logger.logExceptionAsError(
+                new IllegalStateException(KeyVaultErrorCodeStrings
+                    .getErrorString(KeyVaultErrorCodeStrings.CREDENTIAL_REQUIRED)));
         }
 
         // Closest to API goes first, closest to wire goes last.
         final List<HttpPipelinePolicy> policies = new ArrayList<>();
-        policies.add(new UserAgentPolicy(AzureKeyVaultConfiguration.SDK_NAME, AzureKeyVaultConfiguration.SDK_VERSION,
-            buildConfiguration));
+        policies.add(
+            new UserAgentPolicy(AzureKeyVaultConfiguration.SDK_NAME, AzureKeyVaultConfiguration.SDK_VERSION,
+                buildConfiguration));
         HttpPolicyProviders.addBeforeRetryPolicies(policies);
         policies.add(retryPolicy);
         policies.add(new KeyVaultCredentialPolicy(credential));
